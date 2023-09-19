@@ -8,7 +8,7 @@ screen_height = 768
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
-PlayerRobot = player.Player(screen_width/2,screen_height/2,screen)
+PlayerRobot = player.Player(screen_width/2,screen_height/2,screen, "CLAVIER")
 Ennemi1 = ennemi.Ennemi(0,0,screen)
 
 enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot)
