@@ -1,5 +1,6 @@
-import pygame, sys
-import buttons
+import pygame, sys, math
+
+import player, ennemi, ennemiFactory, obstacle, level, mapManager
 
 pygame.init()
 screen_width = 1024
@@ -8,77 +9,49 @@ screen_height = 768
 screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 
+PlayerRobot = player.Player(screen_width/2,screen_height/2,screen)
+Ennemi1 = ennemi.Ennemi(0,0,screen)
 
-game_paused = False
-menu_state = "main"
-sound_state = True
+enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot)
 
-font = pygame.font.SysFont("arialblack", 40)
+level1 = level.Level(screen,64)
+#level1.updateLevel()
 
-TEXT_COL = (255,255,255)
+image2 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Plain.png")
+image1 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Shadow.png")
+
+my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image2], map_csv='assets/levels/battle room 1/battle room 1.csv')
 
 
-resume_img = pygame.image.load("assets/resume.png").convert_alpha()
-resume_button = buttons.Button(screen_width/2-100, screen_height/3+50, resume_img, 8)
-
-home_img = pygame.image.load("assets/Home.png").convert_alpha()
-home_button = buttons.Button(screen_width/2+30, screen_height/2+98, home_img, 6)
-
-setting_img = pygame.image.load("assets/settings.png").convert_alpha()
-settings_button = buttons.Button(screen_width/2-150, screen_height/2+100, setting_img, 6)
-
-sound_img = pygame.image.load("assets/sound.png").convert_alpha()
-sound_button = buttons.Button(screen_width/2-100, screen_height/3+50, sound_img, 6)
-
-nosound_img = pygame.image.load("assets/nosound.png").convert_alpha()
-nosound_button = buttons.Button(screen_width/2-100, screen_height/3+50, nosound_img, 6)
-
-def draw_text(text, font, text_col, x, y):
-    img = font.render(text, True, text_col)
-    screen.blit(img, (x,y))
 
 run = True
 
 while run:
 
-    screen.fill((52,78,91))
+    screen.fill('black')
+    
+    my_map_manager.draw_map(screen)  # Où 'screen' est la surface Pygame sur laquelle vous voulez dessiner la carte
+    
+    #level1.showLevel()
 
-    if game_paused == True:
-        if menu_state == "main":
-            if resume_button.draw(screen):
-                game_paused = False
-            if settings_button.draw(screen):
-                menu_state = "settings"
-            if home_button.draw(screen):
-                run = False
-        
-        if menu_state == "settings":
-            if sound_state == True:
-                if sound_button.draw(screen):
-                    sound_state = False
-            else:
-                if nosound_button.draw(screen):
-                    sound_state = True
-    else:
-        draw_text("Press ECHAP to pause", font, TEXT_COL, screen_width/3,screen_height/2)
+    PlayerRobot.update()
+    PlayerRobot.show()
 
+    #PlayerRobot.position.x,PlayerRobot.position.y = pygame.mouse.get_pos()
 
+    
 
+    enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
+    
+
+    enemy_factory.update_enemies()
+    enemy_factory.draw_enemies()
 
     # gestion des evènements
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                if game_paused == False:
-                    game_paused = True
-                    menu_state = "main"
-                else:
-                    game_paused = False
-                print("Pause")
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-            run = False
 
     pygame.display.update()
     clock.tick(60)
