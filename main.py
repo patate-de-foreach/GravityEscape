@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 PlayerRobot = player.Player(screen_width/2,screen_height/2,screen, "CLAVIER")
 Ennemi1 = ennemi.Ennemi(0,0,screen)
 
-enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot)
+enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot,15,25)
 
 
 
@@ -22,6 +22,7 @@ image = pygame.image.load("assets/graphics/all_tiles.png")
 
 my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image], map_csv='assets/levels_csv/battle_area1.csv')
 
+clock = pygame.time.Clock()
 
 
 while True:

@@ -1,16 +1,26 @@
 import random
 
 from ennemi import *
+from drone import *
 
 class EnemyFactory:
-    def __init__(self, screen, target):
+    def __init__(self, screen, target, minRespawnTime, maxRespawnTime):
+        
+        self.minRespawnTime = minRespawnTime*100
+        self.maxRespawnTime = maxRespawnTime*100
+
+        self.last_spawn_time = 0  # Temps du dernier spawn
+        self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
+
+        self.clock = pygame.time.Clock()
         self.screen = screen
         self.target = target
         self.enemies = []
         self.max_enemies = 10
 
     def create_enemy(self):
-        if len(self.enemies)<self.max_enemies:
+        current_time = pygame.time.get_ticks()
+        if len(self.enemies)<self.max_enemies and current_time - self.last_spawn_time >= self.spawn_delay:
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
                 x = random.randint(0, self.screen.get_width())
@@ -24,8 +34,12 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
-            enemy = Ennemi(x, y, self.screen)
+            enemy = Drone(x, y, self.screen)
             self.enemies.append(enemy)
+            
+            # Mettez à jour le temps du dernier spawn et le délai de spawn
+            self.last_spawn_time = current_time
+            self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
         for enemy in self.enemies:

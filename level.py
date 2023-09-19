@@ -2,13 +2,22 @@ import pygame
 import json
 import csv
 
+import mapManager, ennemiFactory
+
+
 class Level:
-    def __init__(self, num_lvl, screen, mapManager, enemmiFactory):
+    def __init__(self, screen):
         self.screen = screen
-        self.mapManager = mapManager
-        self.ennemiFactory = enemmiFactory
-        with open('names' + num_lvl + ".csv", newline='') as csvfile:
-            self.csv = csv.DictReader(csvfile)
-        self.tiles = pygame.image.load('names' + num_lvl + '.png')
+
         
-        self.obstacle = json.load('names' + num_lvl + '.json')    
+        self.mapManager = mapManager.MapManager()
+
+        self.ennemiFactory = ennemiFactory.EnemyFactory() 
+
+        self.obstacles = self.extract_json()
+
+
+    
+    def extract_json(self, json_path):
+        json.load(json_path)
+        
