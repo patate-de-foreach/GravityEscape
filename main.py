@@ -5,6 +5,8 @@ import player, ennemi, ennemiFactory, obstacle, level, mapManager, main_menu
 pygame.init()
 screen_width = 1024
 screen_height = 768
+BackGround = pygame.image.load("assets/graphics/background/bg.png")
+
 surface = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
 
 #Variable pour détécter si le jeu est en pause ou pas defaut : False
@@ -30,46 +32,68 @@ image1 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Shadow.png")
 my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image2], map_csv='assets/levels/battle room 1/battle room 1.csv')
 
 
+def Play():
+     pygame.display.set_caption("In-Game")
 
-run = True
+     while True:     
+        my_map_manager.draw_map(screen)  # Où 'screen' est la surface Pygame sur laquelle vous voulez dessiner la carte
+        PlayerRobot.update()
+        PlayerRobot.show()
+        enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
+        enemy_factory.update_enemies()
+        enemy_factory.draw_enemies()
 
-while True:
+def Start_page():
+    pygame.display.set_caption("Menu Principal")
 
-    
-    my_map_manager.draw_map(screen)  # Où 'screen' est la surface Pygame sur laquelle vous voulez dessiner la carte
-    
-    # #level1.showLevel()
+    while True:
+        screen.blit(BackGround, (0,0))
 
-    # si le jeu est en pause mettre a jour le menu 
-    if pause == True:
-        MainMenuManager.update_menu()
-    
-
-    PlayerRobot.update()
-    PlayerRobot.show()
-
-    #PlayerRobot.position.x,PlayerRobot.position.y = pygame.mouse.get_pos()
-
-    
-
-    enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
-    
-
-    enemy_factory.update_enemies()
-    enemy_factory.draw_enemies()
-
-    # gestion des evènements
-    for event in pygame.event.get():
+        for event in pygame.event.get():
         # detection de la touche echap : mettre pause ou enlever pause
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
                     if pause == False:
                         pause = True
                     else:
                         pause = False
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
-    pygame.display.update()
-    clock.tick(60)
+        pygame.display.update()
+
+Start_page()
+# run = True
+
+# while True:
+
+#     # #level1.showLevel()
+
+#     # si le jeu est en pause mettre a jour le menu 
+#     if pause == True:
+#         MainMenuManager.update_menu()
+    
+
+    
+
+#     #PlayerRobot.position.x,PlayerRobot.position.y = pygame.mouse.get_pos()
+
+    
+
+
+#     # gestion des evènements
+#     for event in pygame.event.get():
+#         # detection de la touche echap : mettre pause ou enlever pause
+#         if event.type == pygame.KEYDOWN:
+#             if event.key == pygame.K_ESCAPE:
+#                     if pause == False:
+#                         pause = True
+#                     else:
+#                         pause = False
+#         if event.type == pygame.QUIT:
+#             pygame.quit()
+#             sys.exit()
+
+#     pygame.display.update()
+#     clock.tick(60)
