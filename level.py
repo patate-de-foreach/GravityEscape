@@ -1,10 +1,7 @@
 import json
-
 import pygame
-
 from mapManager import *
 from ennemiFactory import * 
-
 
 class Level:
     def __init__(self, num_lvl, screen):
@@ -15,6 +12,7 @@ class Level:
         # self.tiles = pygame.image.load('names' + str(num_lvl) + '.png')
         with open('testConfig.json') as json_file:
             self.obstacle = json.load(json_file)
+
         self.level = self.obstacle['levels' + str(self.num_lvl)]['num_level']
         self.csv_path = self.obstacle['levels' + str(self.num_lvl)]['csv_path']
         self.list_obstacle = self.obstacle['levels' + str(self.num_lvl)]['list_obstacle']

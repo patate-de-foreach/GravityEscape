@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b38ffb45-73d5-42ef-94f9-b83a3b4ca28b" name="Changes" comment="Collisions">
-      <change afterPath="$PROJECT_DIR$/testConfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/levels/battle room 1/battle room 1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/assets/levels/battle_room_1/battle_room_1.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/levels/battle room 1/battle room 1.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/levels/battle_room_1/battle_room_1.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,7 @@
       <workItem from="1695113329016" duration="8522000" />
       <workItem from="1695122094358" duration="2270000" />
       <workItem from="1695128742379" duration="567000" />
-      <workItem from="1695129318062" duration="8953000" />
+      <workItem from="1695129318062" duration="9936000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -159,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695137046143</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Collisions">
+      <option name="closed" value="true" />
+      <created>1695141958162</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1695141958162</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,6 +186,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Collisions" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/GravityEscape$main.coverage" NAME="main Coverage Results" MODIFIED="1695141767633" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GravityEscape$main.coverage" NAME="main Coverage Results" MODIFIED="1695141778226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
