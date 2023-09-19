@@ -37,7 +37,7 @@ class EnemyFactory:
             enemy = Drone(x, y, self.screen)
             self.enemies.append(enemy)
             
-            # Mettez à jour le temps du dernier spawn et le délai de spawn
+            # Mettre à jour le temps du dernier spawn et le délai de spawn
             self.last_spawn_time = current_time
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
 

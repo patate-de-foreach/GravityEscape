@@ -18,17 +18,18 @@ enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot,15,25)
 #level1 = level.Level(screen,64)
 #level1.updateLevel()
 
-image2 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Plain.png")
-image1 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Shadow.png")
+image = pygame.image.load("assets/graphics/all_tiles.png")
 
-my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image2], map_csv='assets/levels/battle room 1/battle room 1.csv')
+my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image], map_csv='assets/levels_csv/battle_area1.csv')
 
 clock = pygame.time.Clock()
 
 
 while True:
     screen.fill('black')
-    
+    background_surface = pygame.image.load('assets/graphics/background/awesomeCavePixelArt.png').convert()
+    background_surface.set_alpha(120)
+    screen.blit(background_surface,(0,0))
     my_map_manager.draw_map(screen)  # Où 'screen' est la surface Pygame sur laquelle vous voulez dessiner la carte
     
     #level1.showLevel()
