@@ -21,7 +21,7 @@ enemy_factory = ennemiFactory.EnemyFactory(screen, PlayerRobot)
 image2 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Plain.png")
 image1 = pygame.image.load("assets/graphics/[64x64] Dungeon Bricks Shadow.png")
 
-my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image2], map_csv='assets/levels/battle room 1/battle room 1.csv')
+my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image2], map_csv='assets/levels/battle_room_1/battle_room_1.csv')
 
 
 
@@ -49,6 +49,8 @@ while True:
 
     enemy_factory.update_enemies()
     enemy_factory.draw_enemies()
+
+    level1 = level.Level(1, screen)
 
     # gestion des evènements
     for event in pygame.event.get():
