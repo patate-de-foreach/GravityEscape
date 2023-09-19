@@ -9,7 +9,12 @@ class Player_Controls:
             # Initialisation des manettes
             pygame.joystick.init()
             # Vérifier le nombre de manettes connectées
-            num_manette = pygame.joystick.get_count()
+            self.joystick_count = pygame.joystick.get_count()
+            self.joystick = None  # On initialise la manette à None pour le moment
+            if self.joystick_count > 0:
+                # Sélectionnez la première manette disponible
+                self.joystick = pygame.joystick.Joystick(0)
+                self.joystick.init()  # Initialisez la manette sélectionnée
         elif controllerType == "CLAVIER":
             self.keysMap = {
                 'left' : pygame.K_q,
@@ -22,7 +27,7 @@ class Player_Controls:
                 'gravity_up' : pygame.K_3,
                 'gravity_left' : pygame.K_4,
             }
-            pass
+            
 
 
     def get_control_pressed(self):
@@ -38,5 +43,4 @@ class Player_Controls:
         return return_keys
 
 
-    def remap_keys(self):
-        pass
+    
