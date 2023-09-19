@@ -33,5 +33,5 @@ class Drone(Ennemi):
     # assurez-vous de les définir ici.
     def changeSprite(self, spritePath):
         self.sprite_sheet = pygame.image.load(spritePath)  # Chargez votre feuille de sprites
-        self.sprite_animator = SpriteAnimator(self.sprite_sheet, num_frames=4, frame_width=48, frame_height=48, frame_duration=200)
+        self.sprite_animator = SpriteAnimator(self.sprite_sheet, num_frames=4, frame_width=48, frame_height=48, frame_duration=500)
 
