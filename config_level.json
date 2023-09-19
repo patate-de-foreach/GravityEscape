@@ -1,0 +1,34 @@
+{
+	"levels1": {
+		"num_level": 1,
+		"csv_path": "assets/levels/battle_room_1/battle_room_1.csv",
+		"list_obstacle": [
+			26,
+			33,
+			42,
+			35
+		],
+		"opened_door": 13,
+		"closed_door": 12,
+		"nbr_enemi": 4,
+		"tps_min_spawn": 4,
+		"tps_max_spawn": 7,
+		"tiles_size": 64
+	},
+	"levels2": {
+		"num_level": 1,
+		"csv_path": "assets/levels/battle_room_1/battle_room_1.csv",
+		"list_obstacle": [
+			26,
+			33,
+			42,
+			35
+		],
+		"opened_door": 13,
+		"closed_door": 12,
+		"nbr_enemi": 4,
+		"tps_min_spawn": 4,
+		"tps_max_spawn": 7,
+		"tiles_size": 64
+	}
+}
