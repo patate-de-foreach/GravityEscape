@@ -31,7 +31,6 @@ class Ennemi:
     def show(self):
         pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(int(self.position.x), int(self.position.y), self.hit_box_radius, self.hit_box_radius))
 
-
         velocity_line_end = self.position + self.velocity * 10  # Visualisation de la velocité
         acceleration_line_end = self.position + self.acceleration * 10  # Visualisation de la velocité
 
@@ -73,6 +72,7 @@ class Ennemi:
                 steering.scale_to_length(self.max_force)
             self.apply_force(steering)
 
+    # Va sur la cible en ralentissant
     def arrive(self, target):
         desired = pygame.Vector2(target.position.x - self.position.x, target.position.y - self.position.y)
         distance = math.sqrt(desired.x**2 + desired.y**2)
@@ -89,6 +89,7 @@ class Ennemi:
         steering = pygame.Vector2(desired.x - self.velocity.x, desired.y - self.velocity.y)
         self.apply_force(steering)
 
+    # Fonce sur la cible
     def arrive_and_stop(self, target):
         desired = pygame.Vector2(target.position.x - self.position.x, target.position.y - self.position.y)
         distance = math.sqrt(desired.x**2 + desired.y**2)
