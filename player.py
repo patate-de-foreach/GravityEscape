@@ -1,35 +1,112 @@
 import pygame
 import math
-import random
+
+from player_controls import *
 
 class Player:
-    def __init__(self, x, y, fenetre):
-        self.position = pygame.Vector2(x, y)
+    def __init__(self, x, y, fenetre, playerControlType):
         
-        self.velocity = pygame.Vector2(0, 0)
-        self.acceleration = pygame.Vector2(0, 0)
         self.screen = fenetre
 
+        self.player_control = Player_Controls(playerControlType)
+        
+        self.action_dictionnary = {
+            "GRAVITY_UP":{
+                "left" : self.go_left,
+                "right" : self.go_right,
+                "jump" : self.jump,
+                "gravity_down" : "GRAVITY_DOWN",
+                "gravity_left" : "GRAVITY_LEFT", 
+                "gravity_right" : "GRAVITY_RIGHT",
+            },
+            "GRAVITY_DOWN":{
+                "left" : self.go_left,
+                "right" : self.go_right,
+                "jump" : self.jump,
+                "gravity_up" : "GRAVITY_UP",
+                "gravity_left" : "GRAVITY_LEFT", 
+                "gravity_right" : "GRAVITY_RIGHT",
+            },
+            "GRAVITY_LEFT":{
+                "up": self.go_up,
+                "down" : self.go_down,
+                "jump" : self.jump,
+                "gravity_down" : "GRAVITY_DOWN",
+                "gravity_up" : "GRAVITY_UP",
+                "gravity_right" : "GRAVITY_RIGHT",
+            },
+            "GRAVITY_RIGHT":{
+                "up": self.go_up,
+                "down" : self.go_down,
+                "jump" : self.jump,
+                "gravity_down" : "GRAVITY_DOWN",
+                "gravity_up" : "GRAVITY_UP",
+                "gravity_left" : "GRAVITY_LEFT", 
+            }
+        }
+        
+
+        self.position = pygame.Vector2(x, y)
+        self.velocity = pygame.Vector2(0, 0)
+        self.acceleration = pygame.Vector2(0, 0)
+        
+        self.speed = 10
+        self.GRAVITY_SIDE = "GRAVITY_RIGHT"
         self.health = 10
         self.hit_box_radius = 16
         self.maxSpeed = 4
         self.maxForce = 0.4 # Force d'acceleration
 
     def update(self):
-        # La Vélocité est la dérivée de l'acceleration
+        # Convertie les touches appuyé par le joueur en actions sur son joueur
+        self.convert_control_into_action(self.player_control.get_control_pressed())
+        
         self.velocity += self.acceleration
-        # La Position est la dérivée de la vélocité
         self.position += self.velocity
-        # Mise à zéro de l'accélération
         self.acceleration = pygame.Vector2(0, 0)
 
         self.apply_gravity()
         
+    def convert_control_into_action(self, actionSet):
+        print(actionSet)
+        for action in actionSet:
+            if "gravity" in action:
+                try:
+                    gravity_direction = self.action_dictionnary[self.GRAVITY_SIDE][action]
+                    if gravity_direction:
+                        self.GRAVITY_SIDE = gravity_direction
+                except:
+                    pass
+            else:
+                try:
+                    function_action = self.action_dictionnary[self.GRAVITY_SIDE][action]
+                    if function_action:
+                        function_action()
+                except:
+                    pass
+            
+
+
+    def go_up(self):
+        self.apply_force((0,-self.speed))
+
+    def go_down(self):
+        self.apply_force((0,self.speed))
+
+    def go_left(self):
+        self.apply_force((-self.speed,0))
+
+    def go_right(self):
+        self.apply_force((self.speed,0))
+
+    def jump(self):
+        pass
+    
         
     def apply_gravity(self):
-        GRAVITY_SIDE = "DOWN"
+        
         GRAVITY_STRENGHT = 0.8
-        if GRAVITY_SIDE == "DOWN":
+        if self.GRAVITY_SIDE == "GRAVITY_DOWN":
             # GRAVITY DOWN
             if self.position.y <= 640 :
                 self.apply_force((0,GRAVITY_STRENGHT))
@@ -39,7 +116,7 @@ class Player:
                 self.acceleration = pygame.Vector2(0, 0)
         
         # GRAVITY UP
-        if GRAVITY_SIDE == "UP":
+        if self.GRAVITY_SIDE == "GRAVITY_UP":
             # GRAVITY UP
             if self.position.y >= 120 :
                 self.apply_force((0,-GRAVITY_STRENGHT))
@@ -49,7 +126,7 @@ class Player:
                 self.acceleration = pygame.Vector2(0, 0)
         
         # GRAVITY LEFT
-        if GRAVITY_SIDE == "LEFT":
+        if self.GRAVITY_SIDE == "GRAVITY_LEFT":
             # GRAVITY LEFT
             if self.position.x >= 124 :
                 self.apply_force((-GRAVITY_STRENGHT,0))
@@ -58,7 +135,7 @@ class Player:
                 self.velocity = pygame.Vector2(0, 0)
                 self.acceleration = pygame.Vector2(0, 0)
         # GRAVITY RIGHT
-        if GRAVITY_SIDE == "RIGHT":
+        if self.GRAVITY_SIDE == "GRAVITY_RIGHT":
             # GRAVITY RIGHT
             if self.position.x <= 890 :
                 self.apply_force((GRAVITY_STRENGHT,0))
