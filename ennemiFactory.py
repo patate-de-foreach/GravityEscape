@@ -1,18 +1,15 @@
-import pygame
-import math
 import random
-import utils
-import ennemi
+
+from ennemi import *
 
 class EnemyFactory:
     def __init__(self, screen, target):
         self.screen = screen
         self.target = target
         self.enemies = []
-        self.max_enemies = 20
+        self.max_enemies = 10
 
     def create_enemy(self):
-        
         if len(self.enemies)<self.max_enemies:
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
@@ -27,7 +24,7 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
-            enemy = ennemi.Ennemi(x, y, self.screen)
+            enemy = Ennemi(x, y, self.screen)
             self.enemies.append(enemy)
 
     def update_enemies(self):
@@ -59,6 +56,5 @@ class EnemyFactory:
             for j, enemy2 in enumerate(self.enemies):
                 if i != j:  # Évitez de vérifier une collision avec le même ennemi
                     if enemy1.get_hitbox().colliderect(enemy2.get_hitbox()):
-                        print(f"Collision entre ennemi {i} et ennemi {j} !")
                         enemy1.avoid_collision(enemy2)
                         enemy2.avoid_collision(enemy1)

@@ -13,7 +13,7 @@ class Player:
         self.health = 10
         self.hit_box_radius = 16
         self.maxSpeed = 4
-        self.maxForce = 0.25 # Force d'acceleration
+        self.maxForce = 0.4 # Force d'acceleration
 
     def update(self):
         # La Vélocité est la dérivée de l'acceleration
@@ -22,8 +22,52 @@ class Player:
         self.position += self.velocity
         # Mise à zéro de l'accélération
         self.acceleration = pygame.Vector2(0, 0)
+
+        self.apply_gravity()
         
         
+    def apply_gravity(self):
+        GRAVITY_SIDE = "RIGHT"
+        GRAVITY_STRENGHT = 0.8
+        if GRAVITY_SIDE == "DOWN":
+            # GRAVITY DOWN
+            if self.position.y <= 640 :
+                self.apply_force((0,GRAVITY_STRENGHT))
+            else:
+                self.position.y = 640
+                self.velocity = pygame.Vector2(0, 0)
+                self.acceleration = pygame.Vector2(0, 0)
+        
+        # GRAVITY UP
+        if GRAVITY_SIDE == "UP":
+            # GRAVITY UP
+            if self.position.y >= 120 :
+                self.apply_force((0,-GRAVITY_STRENGHT))
+            else:
+                self.position.y = 120
+                self.velocity = pygame.Vector2(0, 0)
+                self.acceleration = pygame.Vector2(0, 0)
+        
+        # GRAVITY LEFT
+        if GRAVITY_SIDE == "LEFT":
+            # GRAVITY LEFT
+            if self.position.x >= 124 :
+                self.apply_force((-GRAVITY_STRENGHT,0))
+            else:
+                self.position.x = 120
+                self.velocity = pygame.Vector2(0, 0)
+                self.acceleration = pygame.Vector2(0, 0)
+        # GRAVITY RIGHT
+        if GRAVITY_SIDE == "RIGHT":
+            # GRAVITY RIGHT
+            if self.position.x <= 890 :
+                self.apply_force((GRAVITY_STRENGHT,0))
+            else:
+                self.position.x = 890
+                self.velocity = pygame.Vector2(0, 0)
+                self.acceleration = pygame.Vector2(0, 0)
+        
+
     def get_hitbox(self):
         return pygame.Rect(self.position.x, self.position.y, self.hit_box_radius, self.hit_box_radius)
 
@@ -43,3 +87,13 @@ class Player:
 
     def apply_force(self, force):
         self.acceleration += force
+
+    def avoid_collision(self, obstacle):
+        # Calculez la direction de l'autre ennemi par rapport à cet ennemi
+        direction = pygame.Vector2(self.position.x - obstacle.position.x, self.position.y - obstacle.position.y)
+        direction_length = direction.length()
+        
+        if direction_length < self.hit_box_radius * 2:  # Si les ennemis se chevauchent
+            # Calculez une force de répulsion pour les éloigner l'un de l'autre
+            repulsion_force = direction.normalize() * (self.max_force * 2)
+            self.apply_force(repulsion_force)
