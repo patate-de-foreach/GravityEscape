@@ -1,7 +1,8 @@
 import pygame
 import math
 import random
-import utils
+
+from utils import *
 
 class Ennemi:
     def __init__(self, x, y, fenetre):
@@ -58,7 +59,7 @@ class Ennemi:
     # Fonce sur la cible
     def seek(self, target):
         # Si la distance entre l'ennemi et la target et inférieur à DIST_TARGET alors arreter de seek
-        if(utils.dist(self.position.x, self.position.y, target.position.x, target.position.y) > 50):
+        if(dist(self.position.x, self.position.y, target.position.x, target.position.y) > 50):
 
             desired = target.position - self.position
 
