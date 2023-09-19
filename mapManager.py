@@ -14,7 +14,7 @@ class MapManager:
 
     # Découpe dans l'images des tuiles
     def cut_image_into_tiles(self, image, tile_size):
-        largeur_tuile, hauteur_tuile = tile_size
+        largeur_tuile = hauteur_tuile = tile_size
         largeur_image = image.get_width()
         hauteur_image = image.get_height()
         nombre_tuiles_largeur = largeur_image // largeur_tuile

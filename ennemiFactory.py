@@ -4,7 +4,7 @@ from ennemi import *
 from drone import *
 
 class EnemyFactory:
-    def __init__(self, screen, target, minRespawnTime, maxRespawnTime):
+    def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime):
         
         self.minRespawnTime = minRespawnTime*100
         self.maxRespawnTime = maxRespawnTime*100
@@ -16,7 +16,7 @@ class EnemyFactory:
         self.screen = screen
         self.target = target
         self.enemies = []
-        self.max_enemies = 10
+        self.max_enemies = max_enemies
 
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
