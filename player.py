@@ -27,7 +27,7 @@ class Player:
         
         
     def apply_gravity(self):
-        GRAVITY_SIDE = "RIGHT"
+        GRAVITY_SIDE = "DOWN"
         GRAVITY_STRENGHT = 0.8
         if GRAVITY_SIDE == "DOWN":
             # GRAVITY DOWN

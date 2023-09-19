@@ -1,55 +1,92 @@
-# import pygame
-# import buttons
+import pygame
+import buttons
 
-# class MainMenu():
-#     def __init__(width, height):
-#         game_paused = False
-#         menu_state = "main"
-#         sound_state = True
-#         screen_width = width
-#         screen_height = height
-#         font = pygame.font.SysFont("arialblack", 40)
-#         TEXT_COL = (255,255,255)
+class Mainmenu():
+    def __init__(self,width, height, window, surf):
+        # on prends la largeur de la fenêtre
+        self.screen_width = width
+        #on prends la longeur de la fenêtre
+        self.screen_height = height
+        # on prends la fenêtre
+        self.screen = window
+        #on prends la surface de la fenêtre
+        self.surface = surf
 
-
-#         resume_img = pygame.image.load("assets/resume.png").convert_alpha()
-#         resume_button = buttons.Button(screen_width/2-100, screen_height/3+50, resume_img, 8)
-
-#         home_img = pygame.image.load("assets/Home.png").convert_alpha()
-#         home_button = buttons.Button(screen_width/2+30, screen_height/2+98, home_img, 6)
-
-#         setting_img = pygame.image.load("assets/settings.png").convert_alpha()
-#         settings_button = buttons.Button(screen_width/2-150, screen_height/2+100, setting_img, 6)
-
-#         sound_img = pygame.image.load("assets/sound.png").convert_alpha()
-#         sound_button = buttons.Button(screen_width/2-100, screen_height/3+50, sound_img, 6)
-
-#         nosound_img = pygame.image.load("assets/nosound.png").convert_alpha()
-#         nosound_button = buttons.Button(screen_width/2-100, screen_height/3+50, nosound_img, 6)
+        # etat du jeu ( en pause ou non)
+        self.game_paused = False
+        #etat du menu : main ou settings 
+        self.menu_state = "main"
+        #etat du son ( activer / desactiver)
+        self.sound_state = True
 
 
+    #Affichage du menu main
+    def draw_pause_menu(self):
+        #ajout du background noir avec transparence de 120 ( max: 255 / min: 0)
+        self.screen.blit(self.surface, (0,0))
+        pygame.draw.rect(self.surface, (0,0,0,120), [0,0,self.screen_width,self.screen_height])
+
+        #image + boutton RESUME
+        resume_img = pygame.image.load("assets/graphics/menubuttons/resume.png").convert_alpha()
+        self.resume_button = buttons.Button(self.screen_width/2-100, self.screen_height/3, resume_img, 8)
+
+        #image + boutton HOME
+        home_img = pygame.image.load("assets/graphics/menubuttons/Home.png").convert_alpha()
+        self.home_button = buttons.Button(self.screen_width/2+30, self.screen_height/2+48, home_img, 6)
+
+        #image + boutton Settings
+        setting_img = pygame.image.load("assets/graphics/menubuttons/settings.png").convert_alpha()
+        self.settings_button = buttons.Button(self.screen_width/2-150, self.screen_height/2+50, setting_img, 6)
+
+        
+    #Affichage du menu settings
+    def draw_settings(self):
+        
+        #image + boutton Son -ON
+        sound_img = pygame.image.load("assets/graphics/menubuttons/sound.png").convert_alpha()
+        self.sound_button = buttons.Button(self.screen_width/2-60, self.screen_height/3+10, sound_img, 6)
+
+        #image + boutton Son -OFF
+        nosound_img = pygame.image.load("assets/graphics/menubuttons/nosound.png").convert_alpha()
+        self.nosound_button = buttons.Button(self.screen_width/2-60, self.screen_height/3+10, nosound_img, 6)
+
+        #image + boutton RETOUR
+        back_img = pygame.image.load("assets/graphics/menubuttons/goback.png").convert_alpha()
+        self.back_button = buttons.Button(self.screen_width/2-450, self.screen_height/3-150, back_img, 5)
 
 
-#     def draw_text(text, font, text_col, x, y, screen):
-#         img = font.render(text, True, text_col)
-#         screen.blit(img, (x,y))
 
 
-#     if game_paused == True:
-#             if menu_state == "main":
-#                 if resume_button.draw(screen):
-#                     game_paused = False
-#                 if settings_button.draw(screen):
-#                     menu_state = "settings"
-#                 if home_button.draw(screen):
-#                     run = False
+    # def draw_text(text, font, text_col, x, y, screen):
+    #     img = font.render(text, True, text_col)
+    #     screen.blit(img, (x,y))
+
+    
+    #Actualisation des etats du menu
+    def update_menu(self):
+        #si le jeu est en pause : dessiner le menu principal (main)
+        if self.game_paused == False:
+            self.draw_pause_menu()
+
+            # si letat du menu est main dessiner les boutons respectifs
+            if self.menu_state == "main":
+                if self.resume_button.draw(self.screen):
+                    self.game_paused = False
+                if self.home_button.draw(self.screen):
+                    pass
+                if self.settings_button.draw(self.screen):
+                    self.menu_state = "settings"
             
-#             if menu_state == "settings":
-#                 if sound_state == True:
-#                     if sound_button.draw(screen):
-#                         sound_state = False
-#                 else:
-#                     if nosound_button.draw(screen):
-#                         sound_state = True
-#         else:
-#             draw_text("Press ECHAP to pause", font, TEXT_COL, screen_width/3,screen_height/2)
+            # sinon letat settings et donc dessiner les boutons respectifs
+            if self.menu_state == "settings":
+                self.draw_settings()
+                if self.sound_state == True:
+                    if self.sound_button.draw(self.screen):
+                        self.sound_state = False
+                else:
+                    if self.nosound_button.draw(self.screen):
+                        self.sound_state = True
+                
+                if self.back_button.draw(self.screen):
+                    self.menu_state = "main"
+    
