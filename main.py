@@ -30,7 +30,7 @@ my_map_manager = mapManager.MapManager(tile_size=(64, 64), images=[image1, image
 
 
 
-# run = True
+run = True
 
 while True:
 
