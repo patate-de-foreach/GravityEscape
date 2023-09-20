@@ -1,24 +1,6 @@
 {
 	"level1": {
 		"num_level": 1,
-		"csv_path": "assets/levels_csv/starting_area.csv",
-		"resource_path": "assets/graphics/all_tiles.png",
-		"background_path": "",
-		"obstacle_list": [
-			0
-		],
-		"open_door": 13,
-		"closed_door": 19,
-		"nbr_ennemis": 0,
-		"tps_min_spawn": 15,
-		"tps_max_spawn": 25,
-		"tiles_size": 64,
-		"roaming_bgm": "roaming",
-		"battle_bgm": "",
-		"battle_bgm_intro": ""
-	},
-	"level2": {
-		"num_level": 2,
 		"csv_path": "assets/levels_csv/battle_area1.csv",
 		"resource_path": "assets/graphics/all_tiles.png",
 		"background_path": "assets/graphics/background/awesomeCavePixelArt.png",

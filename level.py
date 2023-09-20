@@ -21,6 +21,7 @@ class Level(game_state.Game_State):
         )
 
         AudioManager().play_bgm(self.background_music, loop=-1)
+
         self.map_manager = MapManager(
             self.tiles_size,
             [self.level_graphic_resource],
