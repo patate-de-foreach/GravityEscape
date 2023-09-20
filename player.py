@@ -2,6 +2,7 @@ import pygame
 import math
 from player_controls import *
 from sprite_animator import SpriteAnimator
+from audio_manager import AudioManager
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, fenetre, playerControlType, clock):
@@ -54,14 +55,15 @@ class Player(pygame.sprite.Sprite):
         self.GRAVITY_STRENGHT = 2.8
         self.jump_force = 60
         self.speed = 2
-        self.GRAVITY_SIDE = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
+        self.GRAVITY_DIRECTION = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
         self.health = 10
         self.hit_box_radius = 16
         self.maxSpeed = 1
         self.maxForce = 0.2 # Force d'acceleration
 
-        self.player_surface = pygame.image.load("assets/graphics/entities/hero/idle/idle1.png").convert_alpha()
-        self.player_rect = self.player_surface.get_rect(midbottom = (self.position.x,self.position.y))
+        self.original_surface = pygame.image.load("assets/graphics/entities/hero/idle/idle1.png").convert_alpha()
+        self.rotated_surface = pygame.image.load("assets/graphics/entities/hero/idle/idle1.png").convert_alpha()
+        self.player_rect = self.rotated_surface.get_rect(midbottom = (self.position.x,self.position.y))
 
     def update(self):
         # Convertit les touches appuyées par le joueur en actions
@@ -75,18 +77,19 @@ class Player(pygame.sprite.Sprite):
         self.convert_control_into_action(self.player_control.get_control_pressed())
 
     def convert_control_into_action(self, actionSet):
-        print(actionSet)
+        # print(actionSet)
         for action in actionSet:
             if "gravity" in action:
                 try:
-                    gravity_direction = self.action_dictionnary[self.GRAVITY_SIDE][action]
+                    gravity_direction = self.action_dictionnary[self.GRAVITY_DIRECTION][action]
                     if gravity_direction:
                         self.set_gravity(gravity_direction)
-                except:
+                except Exception as error:
+                    print("An exception occurred:", error)
                     pass
             else:
                 try:
-                    function_action = self.action_dictionnary[self.GRAVITY_SIDE][action]
+                    function_action = self.action_dictionnary[self.GRAVITY_DIRECTION][action]
                     if function_action:
                         function_action()
                 except:
@@ -107,17 +110,17 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         if self.on_floor == True:
-            if self.GRAVITY_SIDE == "GRAVITY_UP":
+            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
                 self.apply_force((0,self.jump_force))
-            elif self.GRAVITY_SIDE == "GRAVITY_DOWN":
+            elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
                 self.apply_force((0,-self.jump_force))
-            elif self.GRAVITY_SIDE == "GRAVITY_LEFT":
+            elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
                 self.apply_force((self.jump_force,0))
-            elif self.GRAVITY_SIDE == "GRAVITY_RIGHT":
+            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
                 self.apply_force((-self.jump_force,0))
         
     def apply_gravity(self):
-        if self.GRAVITY_SIDE == "GRAVITY_DOWN":
+        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
             # GRAVITY DOWN
             if self.position.y <= 640 :
                 self.apply_force((0,self.GRAVITY_STRENGHT))
@@ -126,7 +129,7 @@ class Player(pygame.sprite.Sprite):
                 self.on_floor = True
                 self.position.y = 640
         # GRAVITY UP
-        if self.GRAVITY_SIDE == "GRAVITY_UP":
+        if self.GRAVITY_DIRECTION == "GRAVITY_UP":
             # GRAVITY UP
             if self.position.y >= 120 :
                 self.apply_force((0,-self.GRAVITY_STRENGHT))
@@ -135,7 +138,7 @@ class Player(pygame.sprite.Sprite):
                 self.on_floor = True
                 self.position.y = 120
         # GRAVITY LEFT
-        if self.GRAVITY_SIDE == "GRAVITY_LEFT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
             # GRAVITY LEFT
             if self.position.x >= 124 :
                 self.apply_force((-self.GRAVITY_STRENGHT,0))
@@ -144,7 +147,7 @@ class Player(pygame.sprite.Sprite):
                 self.on_floor = True
                 self.position.x = 120
         # GRAVITY RIGHT
-        if self.GRAVITY_SIDE == "GRAVITY_RIGHT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
             # GRAVITY RIGHT
             if self.position.x <= 890 :
                 self.apply_force((self.GRAVITY_STRENGHT,0))
@@ -164,8 +167,8 @@ class Player(pygame.sprite.Sprite):
         # dt = self.clock.tick(60)
         # self.sprite_animator.update(dt)
         # current_frame = self.sprite_animator.get_current_frame()
-        # player_rect = player_surface.get_rect(midbottom = (self.position.x,self.position.y))
-        self.screen.blit(self.player_surface, self.player_rect)
+        # player_rect = rotated_surface.get_rect(midbottom = (self.position.x,self.position.y))
+        self.screen.blit(self.rotated_surface, self.player_rect)
         # self.update()
 
     def changeSprite(self, spritePath):
@@ -188,16 +191,20 @@ class Player(pygame.sprite.Sprite):
             self.apply_force(repulsion_force)
 
     def set_gravity(self, gravity_direction):
-        self.GRAVITY_SIDE = gravity_direction
+        self.GRAVITY_DIRECTION = gravity_direction
         self.flipSprite()
+        AudioManager().player_sounds['gravity'].play()
 
-    def flipSprite():
-        if self.GRAVITY_SIDE == 'GRAVITY_DOWN':
-            pass
-        if self.GRAVITY_SIDE == 'GRAVITY_LEFT':
-            pass
-        if self.GRAVITY_SIDE == 'GRAVITY_UP':
-            pass
-        if self.GRAVITY_SIDE == 'GRAVITY_RIGHT':
-            pass
-        pass
+    def flipSprite(self):
+        if self.GRAVITY_DIRECTION == 'GRAVITY_DOWN':
+            self.rotated_surface = self.original_surface
+            self.player_rect = self.rotated_surface.get_rect(midbottom = (self.position.x, self.position.y))
+        if self.GRAVITY_DIRECTION == 'GRAVITY_LEFT':
+            self.rotated_surface = pygame.transform.rotate(self.original_surface, -90)
+            self.player_rect = self.rotated_surface.get_rect(midleft = (self.position.x, self.position.y))
+        if self.GRAVITY_DIRECTION == 'GRAVITY_UP':
+            self.rotated_surface = pygame.transform.rotate(self.original_surface, 180)
+            self.player_rect = self.rotated_surface.get_rect(midtop = (self.position.x, self.position.y))
+        if self.GRAVITY_DIRECTION == 'GRAVITY_RIGHT':
+            self.rotated_surface = pygame.transform.rotate(self.original_surface, 90)
+            self.player_rect = self.rotated_surface.get_rect(midright = (self.position.x, self.position.y))

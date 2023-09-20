@@ -12,11 +12,11 @@ class Start:
         self.screen = screen
         self.clock = pygame.time.Clock()
 
-    #récupere la font choisi et l'applique au txt demandé
+    #récupere la font choisie et l'applique au txt demandé
     def get_font(self,size):
         return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
 
-    # fonction qui apelle le jeu
+    # fonction qui appelle le jeu
     def Play(self):
         pygame.display.set_caption("GravityEscape - In-Game")
 

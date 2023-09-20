@@ -12,7 +12,9 @@
 		"tps_min_spawn": 15,
 		"tps_max_spawn": 25,
 		"tiles_size": 64,
-		"music_path": "assets/audio/bgm/roaming.mp3"
+		"roaming_bgm": "roaming",
+		"battle_bgm":"",
+		"battle_bgm_intro":""
 	},
 	"level2": {
 		"num_level": 1,
@@ -30,6 +32,8 @@
 		"tps_min_spawn": 4,
 		"tps_max_spawn": 7,
 		"tiles_size": 64,
-		"music_path": "assets/audio/bgm/roaming.mp3"
+		"roaming_bgm": "roaming",
+		"battle_bgm":"",
+		"battle_bgm_intro":""
 	}
 }

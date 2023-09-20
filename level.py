@@ -1,7 +1,7 @@
 import json
 import pygame
 
-from audio import Audio
+from audio_manager import AudioManager
 from mapManager import *
 from ennemiFactory import * 
 
@@ -19,24 +19,28 @@ class Level:
         self.level_graphic_resource = pygame.image.load(self.level_graphic_resource_path)
         
         self.map_manager = MapManager(self.tiles_size,[self.level_graphic_resource],self.csv_path,self.obstacles_ids)
+        AudioManager().play_bgm(self.background_music, loop=-1)
         self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_ennemis ,self.tps_min_spawn, self.tps_max_spawn, self.clock)
         
 
     def get_level_config(self,configPath):
         with open(configPath) as json_file:
             self.config_json = json.load(json_file)
+        level_config = self.config_json['level' + str(self.num_lvl)]
 
-        self.level = self.config_json['level' + str(self.num_lvl)]['num_level']
-        self.csv_path = self.config_json['level' + str(self.num_lvl)]['csv_path']
-        self.level_graphic_resource_path = self.config_json['level' + str(self.num_lvl)]['resource_path']
-        self.obstacles_ids = self.config_json['level' + str(self.num_lvl)]['obstacle_list']
-        self.open_door_id = self.config_json['level' + str(self.num_lvl)]['open_door']
-        self.closed_door_id = self.config_json['level' + str(self.num_lvl)]['closed_door']
-        self.nbr_ennemis = self.config_json['level' + str(self.num_lvl)]['nbr_ennemis']
-        self.tps_min_spawn = self.config_json['level' + str(self.num_lvl)]['tps_min_spawn']
-        self.tps_max_spawn = self.config_json['level' + str(self.num_lvl)]['tps_max_spawn']
-        self.tiles_size = self.config_json['level' + str(self.num_lvl)]['tiles_size']
-        self.background_music = Audio(self.config_json['level' + str(self.num_lvl)]['music_path']).play
+        self.level = level_config['num_level']
+        self.csv_path = level_config['csv_path']
+        self.level_graphic_resource_path = level_config['resource_path']
+        self.obstacles_ids = level_config['obstacle_list']
+        self.open_door_id = level_config['open_door']
+        self.closed_door_id = level_config['closed_door']
+        self.nbr_ennemis = level_config['nbr_ennemis']
+        self.tps_min_spawn = level_config['tps_min_spawn']
+        self.tps_max_spawn = level_config['tps_max_spawn']
+        self.tiles_size = level_config['tiles_size']
+        self.background_music = level_config['roaming_bgm']
+        self.battle_music = level_config['battle_bgm']
+        self.battle_music_intro = level_config['battle_bgm_intro']
 
     def update_level(self):
         # Remise à zero de l'affichage
@@ -66,3 +70,9 @@ class Level:
         for obstacle in self.map_manager.tiles_obstacles:
             pass
             #print(obstacle)
+
+    def enter_battle(self):
+        # handle battle event
+        AudioManager().play_bgm(self.battle_music, introName=self.battle_music_intro)
+        
+        
