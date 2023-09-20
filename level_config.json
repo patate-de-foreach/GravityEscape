@@ -1,32 +1,32 @@
 {
-	"levels1": {
+	"level1": {
 		"num_level": 1,
 		"csv_path": "assets/levels_csv/battle_area1.csv",
-		"ressource_path": "assets/graphics/all_tiles.png",
-		"list_obstacle": [
+		"resource_path": "assets/graphics/all_tiles.png",
+		"obstacle_list": [
 			0
 		],
-		"opened_door": 13,
+		"open_door": 13,
 		"closed_door": 19,
-		"nbr_enemi": 0,
+		"nbr_ennemis": 0,
 		"tps_min_spawn": 15,
 		"tps_max_spawn": 25,
 		"tiles_size": 64,
 		"soung_path": "assets/audio/bgm/roaming.mp3"
 	},
-	"levels2": {
+	"level2": {
 		"num_level": 1,
 		"csv_path": "",
-		"ressource_path": "assets/graphics/all_tiles.png",
-		"list_obstacle": [
+		"resource_path": "assets/graphics/all_tiles.png",
+		"obstacle_list": [
 			26,
 			33,
 			42,
 			35
 		],
-		"opened_door": 13,
+		"open_door": 13,
 		"closed_door": 12,
-		"nbr_enemi": 4,
+		"nbr_ennemis": 4,
 		"tps_min_spawn": 4,
 		"tps_max_spawn": 7,
 		"tiles_size": 64,
