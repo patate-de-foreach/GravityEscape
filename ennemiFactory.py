@@ -14,7 +14,7 @@ class EnemyFactory:
         self.last_spawn_time = 0  # Temps du dernier spawn
         self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
 
-        self.clock = pygame.time.Clock()
+        self.clock = clock
         self.screen = screen
         self.target = target
         self.enemies = []
@@ -36,7 +36,7 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
-            enemy = Drone(x, y, self.screen)
+            enemy = Drone(x, y, self.screen, clock)
             self.enemies.append(enemy)
             self.max_enemies -= 1
 
@@ -63,7 +63,6 @@ class EnemyFactory:
             if enemy.get_hitbox().colliderect(self.target.get_hitbox()):
                 print("Collision avec la cible !")
 
-        # Détectez les collisions entre les ennemis
         self.detect_enemy_collisions()
     
     def draw_enemies(self):
