@@ -5,6 +5,7 @@ from buttons import Button
 import game_state
 
 
+# naming : conflit avec "main_menu"
 class Start(game_state.Game_State):
     def __init__(self, screen):
         super().__init__()

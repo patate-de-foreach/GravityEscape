@@ -11,6 +11,8 @@ class LevelManager(Game_State):
         self.screen = screen
         self.player = player
 
+        # redirect l'état level1, level2, etc
+
     def set_current_level(self, num_level):
         self.set_current_level = num_level
 
