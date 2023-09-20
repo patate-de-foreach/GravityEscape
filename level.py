@@ -3,11 +3,13 @@ import pygame
 
 from audio_manager import AudioManager
 from mapManager import *
-from ennemiFactory import * 
+from ennemiFactory import *
+import game_state
 
-class Level:
+class Level(game_state.Game_State):
 
     def __init__(self, num_lvl, screen, player, clock):
+        super().__init__()
         self.screen = screen
         self.num_lvl = num_lvl
         self.player = player
@@ -42,7 +44,7 @@ class Level:
         self.battle_music = level_config['battle_bgm']
         self.battle_music_intro = level_config['battle_bgm_intro']
 
-    def update_level(self):
+    def run(self):
         # Remise à zero de l'affichage
         self.screen.fill('black')
 
@@ -54,6 +56,7 @@ class Level:
         self.player.update()
         self.player.show()
 
+        Hud(self.screen, self.player).dysplay_life_bar()
         self.update_obstacles()
 
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
