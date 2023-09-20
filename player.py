@@ -131,22 +131,22 @@ class Player(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         # GRAVITY DOWN
-        if self.GRAVITY_SIDE == "GRAVITY_DOWN":
+        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
             self.apply_force((0, self.GRAVITY_STRENGHT))
         # GRAVITY UP
-        if self.GRAVITY_SIDE == "GRAVITY_UP":
+        if self.GRAVITY_DIRECTION == "GRAVITY_UP":
             self.apply_force((0, -self.GRAVITY_STRENGHT))
         # GRAVITY LEFT
-        if self.GRAVITY_SIDE == "GRAVITY_LEFT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
             self.apply_force((-self.GRAVITY_STRENGHT, 0))
         # GRAVITY RIGHT
-        if self.GRAVITY_SIDE == "GRAVITY_RIGHT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
             self.apply_force((self.GRAVITY_STRENGHT, 0))
 
     def show(self):
         self.player_rect.x = self.position.x
         self.player_rect.y = self.position.y
-        self.screen.blit(self.player_surface, self.player_rect)
+        self.screen.blit(self.rotated_surface, self.player_rect)
 
     def changeSprite(self, spritePath):
         self.sprite_sheet = pygame.image.load(spritePath)
@@ -167,22 +167,22 @@ class Player(pygame.sprite.Sprite):
         # Collision mur droite
         if self.position.x + self.player_rect.width > screen_width - 64:
             self.position.x = screen_width - 64 - self.player_rect.width
-            if self.GRAVITY_SIDE == "GRAVITY_RIGHT":
+            if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
                 self.on_floor = True
         # Collision mur gauche
         if self.position.x < 64:
             self.position.x = 64
-            if self.GRAVITY_SIDE == "GRAVITY_LEFT":
+            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
                 self.on_floor = True
         # Collision sol
         if self.position.y + self.player_rect.height > screen_height - 64:
             self.position.y = screen_height - 64 - self.player_rect.height
-            if self.GRAVITY_SIDE == "GRAVITY_DOWN":
+            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
                 self.on_floor = True
         # Collision plafond
         if self.position.y < 64:
             self.position.y = 64
-            if self.GRAVITY_SIDE == "GRAVITY_UP":
+            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
                 self.on_floor = True
 
     def set_gravity(self, gravity_direction):
