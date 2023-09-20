@@ -5,7 +5,7 @@ from drone import *
 from enums.level_state_ENUM import *
 
 class EnemyFactory:
-    def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime):
+    def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime, clock):
         self.state = level_state_ENUM.RUNNING
         
         self.minRespawnTime = minRespawnTime*100

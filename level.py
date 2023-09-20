@@ -15,11 +15,11 @@ class Level:
         
         # Récupère les infos du level depuis un fichier Json
 
-        self.get_level_config("config_level.json")
-        self.level_graphic_ressource = pygame.image.load(self.level_graphic_ressource_path)
+        self.get_level_config("level_config.json")
+        self.level_graphic_resource = pygame.image.load(self.level_graphic_resource_path)
         
-        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_ressource],self.csv_path,self.obstacles_ids)
-        self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_enemi ,self.tps_min_spawn, self.tps_max_spawn, self.clock)
+        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_resource],self.csv_path,self.obstacles_ids)
+        self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_ennemis ,self.tps_min_spawn, self.tps_max_spawn, self.clock)
         
 
     def get_level_config(self,configPath):
