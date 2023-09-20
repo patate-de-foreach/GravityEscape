@@ -67,9 +67,7 @@ class Level(game_state.Game_State):
         self.map_manager.draw_map(self.screen)
         self.player.update()
         self.player.show()
-
         Hud(self.screen, self.player).dysplay_life_bar()
-        self.update_obstacles()
 
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame
 
@@ -79,11 +77,6 @@ class Level(game_state.Game_State):
         if self.enemy_factory.state == "FINISH":
             # OUVRIR LES PORTES
             pass
-
-    def update_obstacles(self):
-        for obstacle in self.map_manager.tiles_obstacles:
-            pass
-            # print(obstacle)
 
     def enter_battle(self):
         # handle battle event
