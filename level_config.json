@@ -1,8 +1,9 @@
 {
 	"level1": {
 		"num_level": 1,
-		"csv_path": "assets/levels_csv/battle_area1.csv",
+		"csv_path": "assets/levels_csv/starting_area.csv",
 		"resource_path": "assets/graphics/all_tiles.png",
+		"background_path": "",
 		"obstacle_list": [
 			0
 		],
@@ -12,12 +13,15 @@
 		"tps_min_spawn": 15,
 		"tps_max_spawn": 25,
 		"tiles_size": 64,
-		"music_path": "assets/audio/bgm/roaming.mp3"
+		"roaming_bgm": "roaming",
+		"battle_bgm": "",
+		"battle_bgm_intro": ""
 	},
 	"level2": {
-		"num_level": 1,
-		"csv_path": "",
+		"num_level": 2,
+		"csv_path": "assets/levels_csv/battle_area1.csv",
 		"resource_path": "assets/graphics/all_tiles.png",
+		"background_path": "assets/graphics/background/awesomeCavePixelArt.png",
 		"obstacle_list": [
 			26,
 			33,
@@ -30,6 +34,8 @@
 		"tps_min_spawn": 4,
 		"tps_max_spawn": 7,
 		"tiles_size": 64,
-		"music_path": "assets/audio/bgm/roaming.mp3"
+		"roaming_bgm": "roaming",
+		"battle_bgm": "",
+		"battle_bgm_intro": ""
 	}
 }
