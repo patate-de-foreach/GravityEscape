@@ -1,29 +1,37 @@
 import pygame
 
 class Button():
-    def __init__(self, x, y, image, scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame.transform.scale(image,(int(width * scale), int(height * scale)))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
-        self.clicked = False
+    def __init__(self, image, pos, input, font, color, hover_color, scale):
+        self.image = pygame.transform.scale(image,(int(image.get_width() * scale), int(image.get_height() * scale)))        
+        self.x = pos[0]
+        self.y = pos[1]
+        self.font = font
+        self.color, self.hover_color = color, hover_color
+        self.input = input
 
-    def draw(self, surface):
-        action = False
-        
-        pos = pygame.mouse.get_pos()
+        self.txt = self.font.render(self.input, True, self.color)
 
-        if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
-                self.clicked = True
-                action = True
+        if self.image is None:
+            self.image = self.txt
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+        self.txt_rect = self.txt.get_rect(center=(self.x, self.y))
 
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
+    def __update__(self, screen):
+        if self.image is not None:
+            screen.blit(self.image, self.rect)
+        screen.blit(self.txt, self.txt_rect)
 
-        surface.blit(self.image, (self.rect.x, self.rect.y))
+    def __checkinput__(self, pos):
+        if pos[0] in range(self.rect.left, self.rect.right) and pos[1] in range(self.rect.top, self.rect.bottom):
+            return True
+        return False
+    
+    def __ColorChange__(self, position):
+        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+            self.txt = self.font.render(self.input, True , self.hover_color)
+        else:
+            self.txt = self.font.render(self.input, True, self.color)
 
-        return action
+
 
         
