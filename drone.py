@@ -7,7 +7,7 @@ from ennemi import *
 
 class Drone(Ennemi, pygame.sprite.Sprite):
     def __init__(self, x, y, fenetre):
-        ennemi.Ennemi().__init__(x, y, fenetre)
+        Ennemi.__init__(x, y, fenetre)
         pygame.sprite.Sprite.__init__(self)
         
         self.anim = {
