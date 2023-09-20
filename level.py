@@ -49,12 +49,9 @@ class Level(game_state.Game_State):
         background_surface.set_alpha(120)
         self.screen.blit(background_surface,(0,0))
         self.map_manager.draw_map(self.screen)  # Où 'screen' est la surface Pygame sur laquelle vous voulez dessiner la carte
-
         self.player.update()
         self.player.show()
-
         Hud(self.screen, self.player).dysplay_life_bar()
-        self.update_obstacles()
 
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
         
@@ -64,9 +61,3 @@ class Level(game_state.Game_State):
         if self.enemy_factory.state == "FINISH":
             # OUVRIR LES PORTES 
             pass
-
-    def update_obstacles(self):
-
-        for obstacle in self.map_manager.tiles_obstacles:
-            pass
-            #print(obstacle)

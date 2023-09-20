@@ -50,5 +50,3 @@ class MapManager:
                     tile_index = int(tile_index)
                     tile_to_draw = self.tuiles[tile_index]
                     screen.blit(tile_to_draw, (x * tile_width, y * tile_height))
-                    if tile_index in self.obstacles_ids:
-                        self.tiles_obstacles.append((x,y,tile_to_draw.get_width(),tile_to_draw.get_width()))
