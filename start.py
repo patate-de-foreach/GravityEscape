@@ -7,10 +7,8 @@ class Start:
     def __init__(self, screen):
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         self.BackGround = pygame.image.load("assets/graphics/background/Start_Background.png")
-        self.logo = pygame.image.load("assets/logo.png")
         self.surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.screen = screen
-        self.clock = pygame.time.Clock()
 
     #récupere la font choisi et l'applique au txt demandé
     def get_font(self,size):
@@ -23,38 +21,6 @@ class Start:
         while True:    
             gravity_escape = game.Game(self.screen)
             gravity_escape.run()
-
-
-    # fonction qqui affiche la page avant la page d'accuil
-    def strating(self):
-        #une clock pour que au bout d'un moment cette page disparaisse et affiche la page principale
-        clock = pygame.time.Clock()
-        pygame.time.set_timer(pygame.USEREVENT, 200)
-
-        pygame.display.set_caption("GravityEscape")
-
-        self.screen.fill('black')
-        counter = 10
-        while True:
-
-            # affiche le logo
-            self.screen.blit(self.logo, (310,190))
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit
-                    sys.exit()
-                if event.type == pygame.USEREVENT: 
-                    counter -= 1
-                    if counter > 0:
-                        pass
-                    else:
-                        self.Start_page()
-            
-            pygame.display.flip()
-            clock.tick(60)
-              
-            pygame.display.update()
 
 
     # affiche la page d'accueil
