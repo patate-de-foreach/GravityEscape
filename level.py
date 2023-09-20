@@ -1,5 +1,7 @@
 import json
 import pygame
+
+from audio import Audio
 from mapManager import *
 from ennemiFactory import * 
 
@@ -12,11 +14,8 @@ class Level:
         # Récupère les infos du level depuis un fichier Json
         self.get_level_config("config_level.json")
         self.level_graphic_ressource = pygame.image.load(self.level_graphic_ressource_path)
-        
-        
         self.map_manager = MapManager(self.tiles_size,[self.level_graphic_ressource],self.csv_path)
         self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_enemi ,self.tps_min_spawn, self.tps_max_spawn)
-        
 
     def get_level_config(self,configPath):
         with open(configPath) as json_file:
@@ -32,6 +31,7 @@ class Level:
         self.tps_min_spawn = self.config_json['levels' + str(self.num_lvl)]['tps_min_spawn']
         self.tps_max_spawn = self.config_json['levels' + str(self.num_lvl)]['tps_max_spawn']
         self.tiles_size = self.config_json['levels' + str(self.num_lvl)]['tiles_size']
+        self.background_music = Audio(self.config_json['levels' + str(self.num_lvl)]['soung_path']).play
 
     def update_level(self):
         # Remise à zero de l'affichage
