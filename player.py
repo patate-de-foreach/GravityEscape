@@ -8,7 +8,6 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.screen = fenetre
         self.clock = clock
-        # self.changeSprite(self.anim["idle"])
         self.player_control = Player_Controls(playerControlType)
         self.action_dictionnary = {
             "GRAVITY_UP":{
