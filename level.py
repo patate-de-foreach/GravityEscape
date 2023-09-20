@@ -26,6 +26,7 @@ class Level(game_state.Game_State):
             [self.level_graphic_resource],
             self.csv_path,
             self.obstacles_ids,
+            self.level_background_path,
         )
         self.enemy_factory = EnemyFactory(
             self.screen,
@@ -44,6 +45,7 @@ class Level(game_state.Game_State):
         self.level = level_config["num_level"]
         self.csv_path = level_config["csv_path"]
         self.level_graphic_resource_path = level_config["resource_path"]
+        self.level_background_path = level_config["background_path"]
         self.obstacles_ids = level_config["obstacle_list"]
         self.open_door_id = level_config["open_door"]
         self.closed_door_id = level_config["closed_door"]
@@ -58,12 +60,6 @@ class Level(game_state.Game_State):
     def run(self):
         # Remise à zero de l'affichage
         self.screen.fill("black")
-
-        background_surface = pygame.image.load(
-            "assets/graphics/background/awesomeCavePixelArt.png"
-        ).convert()
-        background_surface.set_alpha(120)
-        self.screen.blit(background_surface, (0, 0))
         self.map_manager.draw_map(self.screen)
         self.player.update()
         self.player.show()

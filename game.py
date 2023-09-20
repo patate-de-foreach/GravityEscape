@@ -24,6 +24,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
+    # ???
     def update(self):
         # Va chercher le current_state et display sa fonction de run
         if (
@@ -36,11 +37,12 @@ class Game:
         while True:
             self.eventHandler()  # event fermeture fenetre
             self.current_state_object = self.get_current_state_object()
+
             # Lance la boucle principale de l'état en cours
             self.current_state_object.run()
 
-            # Vérifie si l'état est terminée
-            self.update()
+            # Vérifie si l'état est terminé
+            self.update()  # ????
             pygame.display.update()
             self.clock.tick(60)
 
