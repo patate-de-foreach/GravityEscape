@@ -50,8 +50,9 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.acceleration = pygame.Vector2(0, 0)
         self.friction = 0.1
-        self.GRAVITY_STRENGHT = 0.8
-        self.jump_force = 20
+       
+        self.GRAVITY_STRENGHT = 2.8
+        self.jump_force = 60
         self.speed = 2
         self.GRAVITY_SIDE = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
         self.health = 10
@@ -178,7 +179,7 @@ class Player(pygame.sprite.Sprite):
             # Calculez une force de répulsion pour les éloigner l'un de l'autre
             repulsion_force = direction.normalize() * (self.max_force * 2)
             self.apply_force(repulsion_force)
-            
+
     def set_gravity(self, gravity_direction):
         self.GRAVITY_SIDE = gravity_direction
         self.flipSprite()

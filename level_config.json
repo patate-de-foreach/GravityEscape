@@ -11,7 +11,8 @@
 		"nbr_ennemis": 0,
 		"tps_min_spawn": 15,
 		"tps_max_spawn": 25,
-		"tiles_size": 64
+		"tiles_size": 64,
+		"soung_path": "assets/audio/bgm/roaming.mp3"
 	},
 	"level2": {
 		"num_level": 1,
@@ -28,6 +29,7 @@
 		"nbr_ennemis": 4,
 		"tps_min_spawn": 4,
 		"tps_max_spawn": 7,
-		"tiles_size": 64
+		"tiles_size": 64,
+		"soung_path": "assets/audio/bgm/roaming.mp3"
 	}
 }

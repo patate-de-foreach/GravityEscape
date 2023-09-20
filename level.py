@@ -1,5 +1,7 @@
 import json
 import pygame
+
+from audio import Audio
 from mapManager import *
 from ennemiFactory import * 
 
@@ -32,7 +34,7 @@ class Level:
         self.tps_min_spawn = self.config_json['level' + str(self.num_lvl)]['tps_min_spawn']
         self.tps_max_spawn = self.config_json['level' + str(self.num_lvl)]['tps_max_spawn']
         self.tiles_size = self.config_json['level' + str(self.num_lvl)]['tiles_size']
-
+        self.background_music = Audio(self.config_json['level' + str(self.num_lvl)]['music_path']).play
 
     def update_level(self):
         # Remise à zero de l'affichage
