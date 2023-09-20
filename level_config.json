@@ -12,7 +12,7 @@
 		"tps_min_spawn": 15,
 		"tps_max_spawn": 25,
 		"tiles_size": 64,
-		"soung_path": "assets/audio/bgm/roaming.mp3"
+		"music_path": "assets/audio/bgm/roaming.mp3"
 	},
 	"level2": {
 		"num_level": 1,
