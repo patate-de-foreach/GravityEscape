@@ -1,9 +1,9 @@
 import pygame
-import start
+import game
 
 pygame.init()
 screen = pygame.display.set_mode((1024, 768))
 
-#Starting page start du jeu
-start_game = start.Start(screen)
-start_game.strating()
+
+gravity_escape = game.Game(screen)
+gravity_escape.run()

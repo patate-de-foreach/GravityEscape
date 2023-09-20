@@ -3,11 +3,13 @@ import pygame
 
 from audio import Audio
 from mapManager import *
-from ennemiFactory import * 
+from ennemiFactory import *
+import game_state
 
-class Level:
+class Level(game_state.Game_State):
 
     def __init__(self, num_lvl, screen, player, clock):
+        super().__init__()
         self.screen = screen
         self.num_lvl = num_lvl
         self.player = player
@@ -38,7 +40,7 @@ class Level:
         self.tiles_size = self.config_json['level' + str(self.num_lvl)]['tiles_size']
         self.background_music = Audio(self.config_json['level' + str(self.num_lvl)]['music_path']).play
 
-    def update_level(self):
+    def run(self):
         # Remise à zero de l'affichage
         self.screen.fill('black')
 
