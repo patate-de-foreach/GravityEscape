@@ -2,6 +2,7 @@ import json
 import pygame
 
 from audio import Audio
+from hud import Hud
 from mapManager import *
 from ennemiFactory import *
 import game_state
@@ -52,6 +53,7 @@ class Level(game_state.Game_State):
         self.player.update()
         self.player.show()
 
+        Hud(self.screen, self.player).dysplay_life_bar()
         self.update_obstacles()
 
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
