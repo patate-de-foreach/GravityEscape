@@ -2,9 +2,11 @@ import random
 
 from ennemi import *
 from drone import *
+from enums.level_state_ENUM import *
 
 class EnemyFactory:
     def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime):
+        self.state = level_state_ENUM.RUNNING
         
         self.minRespawnTime = minRespawnTime*100
         self.maxRespawnTime = maxRespawnTime*100
@@ -20,7 +22,7 @@ class EnemyFactory:
 
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
-        if len(self.enemies)<self.max_enemies and current_time - self.last_spawn_time >= self.spawn_delay:
+        if self.max_enemies > 0 and current_time - self.last_spawn_time >= self.spawn_delay:
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
                 x = random.randint(0, self.screen.get_width())
@@ -36,12 +38,15 @@ class EnemyFactory:
                 y = random.randint(0, self.screen.get_height())
             enemy = Drone(x, y, self.screen)
             self.enemies.append(enemy)
-            
+            self.max_enemies -= 1
+
             # Mettre à jour le temps du dernier spawn et le délai de spawn
             self.last_spawn_time = current_time
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
+        if len(self.enemies) <= 0 and self.max_enemies:
+            self.state = self.state = level_state_ENUM.FINISHED
         for enemy in self.enemies:
             enemy.arrive_and_stop(self.target)
             enemy.update()
@@ -49,6 +54,9 @@ class EnemyFactory:
             
             # Si l'ennemi sort de l'écran, le supprimer
             if not self.screen.get_rect().collidepoint(enemy.position):
+                self.enemies.remove(enemy)
+
+            if enemy.health <= 0:
                 self.enemies.remove(enemy)
 
             # Vérifiez s'il y a une collision entre l'ennemi et la cible

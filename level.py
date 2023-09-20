@@ -14,7 +14,7 @@ class Level:
         self.level_graphic_ressource = pygame.image.load(self.level_graphic_ressource_path)
         
         
-        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_ressource],self.csv_path)
+        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_ressource],self.csv_path,self.obstacles_ids)
         self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_enemi ,self.tps_min_spawn, self.tps_max_spawn)
         
 
@@ -45,9 +45,19 @@ class Level:
         self.player.update()
         self.player.show()
 
+        self.update_obstacles()
+
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
         
         self.enemy_factory.update_enemies()
         self.enemy_factory.draw_enemies()
 
-        
+        if self.enemy_factory.state == "FINISH":
+            # OUVRIR LES PORTES 
+            pass
+
+    def update_obstacles(self):
+
+        for obstacle in self.map_manager.tiles_obstacles:
+            pass
+            #print(obstacle)
