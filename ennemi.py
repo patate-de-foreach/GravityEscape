@@ -11,9 +11,10 @@ class Ennemi:
         self.acceleration = pygame.Vector2(0, 0)
         self.screen = fenetre
 
-
         self.image = pygame.Surface((16,16))
         self.rect = self.image.get_rect(topleft = self.position)
+
+        
 
         self.dist_target = 50
         self.stop_radius = 150
@@ -31,15 +32,7 @@ class Ennemi:
     def show(self):
         pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(int(self.position.x), int(self.position.y), self.hit_box_radius, self.hit_box_radius))
 
-        velocity_line_end = self.position + self.velocity * 10  # Visualisation de la velocité
-        acceleration_line_end = self.position + self.acceleration * 10  # Visualisation de la velocité
-
-        #pygame.draw.line(self.screen, (255, 0, 0), (int(self.position.x), int(self.position.y)), (int(velocity_line_end.x), int(velocity_line_end.y)))
-        #pygame.draw.line(self.screen, (0, 255, 0), (int(self.position.x), int(self.position.y)), (int(acceleration_line_end.x), int(acceleration_line_end.y)))
-
-        angle = math.degrees(self.velocity.as_polar()[1])
-        rotated_triangle = pygame.transform.rotate(pygame.Surface((self.hit_box_radius*2, self.hit_box_radius*2), pygame.SRCALPHA), -angle)
-        self.screen.blit(rotated_triangle, (self.position.x - self.hit_box_radius, self.position.y - self.hit_box_radius))
+        
 
     def get_hitbox(self):
         return pygame.Rect(self.position.x, self.position.y, self.hit_box_radius, self.hit_box_radius)

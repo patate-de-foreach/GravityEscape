@@ -2,6 +2,7 @@ import pygame, sys, math
 
 import player, ennemi, ennemiFactory, obstacle, level, mapManager, main_menu
 from buttons import Button
+import game
 
 pygame.init()
 screen_width = 1024
@@ -137,3 +138,11 @@ Start_page()
 
 #     pygame.display.update()
 #     clock.tick(60)
+import game
+
+pygame.init()
+screen = pygame.display.set_mode((1024, 768))
+gravity_escape = game.Game(screen)
+
+
+gravity_escape.run()
