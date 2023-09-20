@@ -91,7 +91,7 @@ class Player(pygame.sprite.Sprite):
                         function_action()
                 except:
                     pass
-            
+
 
     def go_up(self):
         self.apply_force((0,-self.speed))
@@ -176,6 +176,7 @@ class Player(pygame.sprite.Sprite):
         self.acceleration += force
 
     def avoid_collision(self, obstacle):
+
         # Calculez la direction de l'autre ennemi par rapport à cet ennemi
         direction = pygame.Vector2(self.position.x - obstacle.position.x, self.position.y - obstacle.position.y)
         direction_length = direction.length()
@@ -183,6 +184,7 @@ class Player(pygame.sprite.Sprite):
         if direction_length < self.hit_box_radius * 2:  # Si les ennemis se chevauchent
             # Calculez une force de répulsion pour les éloigner l'un de l'autre
             repulsion_force = direction.normalize() * (self.max_force * 2)
+
             self.apply_force(repulsion_force)
 
     def set_gravity(self, gravity_direction):

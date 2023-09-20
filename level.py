@@ -14,10 +14,12 @@ class Level:
         self.clock = clock
         
         # Récupère les infos du level depuis un fichier Json
-        self.get_level_config("level_config.json")
-        self.level_graphic_resource = pygame.image.load(self.level_graphic_resource_path)
-        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_resource],self.csv_path)
-        self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_ennemis ,self.tps_min_spawn, self.tps_max_spawn, self.clock)
+
+        self.get_level_config("config_level.json")
+        self.level_graphic_ressource = pygame.image.load(self.level_graphic_ressource_path)
+        
+        self.map_manager = MapManager(self.tiles_size,[self.level_graphic_ressource],self.csv_path,self.obstacles_ids)
+        self.enemy_factory = EnemyFactory(self.screen, player, self.nbr_enemi ,self.tps_min_spawn, self.tps_max_spawn, self.clock)
         
 
     def get_level_config(self,configPath):
@@ -48,9 +50,19 @@ class Level:
         self.player.update()
         self.player.show()
 
+        self.update_obstacles()
+
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame (vous pouvez ajuster cela)
         
         self.enemy_factory.update_enemies()
         self.enemy_factory.draw_enemies()
 
-        
+        if self.enemy_factory.state == "FINISH":
+            # OUVRIR LES PORTES 
+            pass
+
+    def update_obstacles(self):
+
+        for obstacle in self.map_manager.tiles_obstacles:
+            pass
+            #print(obstacle)

@@ -44,7 +44,7 @@ class Player_Controls:
 
 
             return return_keys
-        elif self.controller_type == "MANETTE":
+        elif self.controller_type == "MANETTE" and self.joystick != None:
             return_buttons = []
             
 

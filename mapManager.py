@@ -3,9 +3,11 @@ import csv
 
 class MapManager:
 
-    def __init__(self, tile_size, images, map_csv):
+    def __init__(self, tile_size, images, map_csv, obstacles_ids):
         # Gestion tuiles
         self.tuiles = [] # Tuiles à afficher
+        self.obstacles_ids = obstacles_ids
+        self.tiles_obstacles = []
         for image in images:
             self.cut_image_into_tiles(image,tile_size)
         # Gestion map
@@ -48,3 +50,5 @@ class MapManager:
                     tile_index = int(tile_index)
                     tile_to_draw = self.tuiles[tile_index]
                     screen.blit(tile_to_draw, (x * tile_width, y * tile_height))
+                    if tile_index in self.obstacles_ids:
+                        self.tiles_obstacles.append((x,y,tile_to_draw.get_width(),tile_to_draw.get_width()))
