@@ -20,6 +20,7 @@ class Loading:
         
         self.screen.fill('black')
         counter = 10
+        
         while True:
 
             # affiche le logo
