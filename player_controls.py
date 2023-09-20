@@ -12,9 +12,9 @@ class Player_Controls:
             self.joystick_count = pygame.joystick.get_count()
             self.joystick = None  # On initialise la manette à None pour le moment
             if self.joystick_count > 0:
-                # Sélectionnez la première manette disponible
+                # Sélectionne la première manette disponible
                 self.joystick = pygame.joystick.Joystick(0)
-                self.joystick.init()  # Initialisez la manette sélectionnée
+                self.joystick.init()  # Initialise la manette sélectionnée
         elif controllerType == "CLAVIER":
             self.keysMap = {
                 'left' : pygame.K_q,

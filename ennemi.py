@@ -5,16 +5,14 @@ import random
 from utils import *
 
 class Ennemi:
-    def __init__(self, x, y, fenetre):
+    def __init__(self, x, y, fenetre, clock):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.acceleration = pygame.Vector2(0, 0)
         self.screen = fenetre
-
+        self.clock = clock
         self.image = pygame.Surface((16,16))
         self.rect = self.image.get_rect(topleft = self.position)
-
-        
 
         self.dist_target = 50
         self.stop_radius = 150
@@ -25,14 +23,13 @@ class Ennemi:
         self.max_force = 0.25  # Force d'acceleration
 
     def update(self):
+
         self.velocity += self.acceleration
         self.position += self.velocity
         self.acceleration = pygame.Vector2(0, 0)
 
     def show(self):
         pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(int(self.position.x), int(self.position.y), self.hit_box_radius, self.hit_box_radius))
-
-        
 
     def get_hitbox(self):
         return pygame.Rect(self.position.x, self.position.y, self.hit_box_radius, self.hit_box_radius)
@@ -50,7 +47,7 @@ class Ennemi:
 
     # Fonce sur la cible
     def seek(self, target):
-        # Si la distance entre l'ennemi et la target et inférieur à DIST_TARGET alors arreter de seek
+        # Si la distance entre l'ennemi et la target est inférieure à DIST_TARGET, alors arreter de seek
         if(dist(self.position.x, self.position.y, target.position.x, target.position.y) > 50):
 
             desired = target.position - self.position
@@ -105,11 +102,11 @@ class Ennemi:
         self.apply_force(steering)
 
     def avoid_collision(self, other_enemy):
-        # Calculez la direction de l'autre ennemi par rapport à cet ennemi
+        # Calcule la direction de l'autre ennemi par rapport à cet ennemi
         direction = pygame.Vector2(self.position.x - other_enemy.position.x, self.position.y - other_enemy.position.y)
         direction_length = direction.length()
         
         if direction_length < self.hit_box_radius * 2:  # Si les ennemis se chevauchent
-            # Calculez une force de répulsion pour les éloigner l'un de l'autre
+            # Calcule une force de répulsion pour les éloigner l'un de l'autre
             repulsion_force = direction.normalize() * (self.max_force * 2)
             self.apply_force(repulsion_force)
