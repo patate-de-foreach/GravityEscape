@@ -17,7 +17,11 @@ class AudioManager:
     def init_mixer(self):
         mixer.init()
         mixer.music.set_volume(self.bgm_level)
-        self.bgm_paths = {"roaming": "assets/audio/bgm/roaming.mp3"}
+        self.bgm_paths = {
+            "roaming": "assets/audio/bgm/roaming.mp3",
+            "main_menu": "assets/audio/bgm/main_menu.mp3",
+            "main_menu_intro": "assets/audio/bgm/main_menu_intro.mp3",
+        }
 
     ## Change la musique jouée
     # si loop = -1, la musique tourne en boucle

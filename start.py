@@ -1,5 +1,6 @@
 import pygame, sys
 import game
+from audio_manager import AudioManager
 
 from buttons import Button
 import game_state
@@ -17,6 +18,7 @@ class Start(game_state.Game_State):
         self.surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.screen = screen
         self.clock = pygame.time.Clock()
+        AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
     # récupere la font choisi et l'applique au txt demandé
     def get_font(self, size):
