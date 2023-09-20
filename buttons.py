@@ -16,17 +16,17 @@ class Button():
         self.rect = self.image.get_rect(center=(self.x, self.y))
         self.txt_rect = self.txt.get_rect(center=(self.x, self.y))
 
-    def __update__(self, screen):
+    def update(self, screen):
         if self.image is not None:
             screen.blit(self.image, self.rect)
         screen.blit(self.txt, self.txt_rect)
 
-    def __checkinput__(self, pos):
+    def checkinput(self, pos):
         if pos[0] in range(self.rect.left, self.rect.right) and pos[1] in range(self.rect.top, self.rect.bottom):
             return True
         return False
     
-    def __ColorChange__(self, position):
+    def ColorChange(self, position):
         if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
             self.txt = self.font.render(self.input, True , self.hover_color)
         else:
