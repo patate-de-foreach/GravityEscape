@@ -60,10 +60,15 @@ class Player(pygame.sprite.Sprite):
         self.maxSpeed = 1
         self.maxForce = 0.2 # Force d'acceleration
 
+        self.player_surface = pygame.image.load("assets/graphics/entities/hero/idle/idle1.png").convert_alpha()
+        self.player_rect = self.player_surface.get_rect(midbottom = (self.position.x,self.position.y))
+
     def update(self):
         # Convertit les touches appuyées par le joueur en actions
         self.velocity += self.acceleration
         self.position += self.velocity
+        self.player_rect.x = self.position.x
+        self.player_rect.y = self.position.y
         self.acceleration = pygame.Vector2(0, 0)
         self.velocity -= self.velocity * self.friction
         self.apply_gravity()
@@ -159,9 +164,9 @@ class Player(pygame.sprite.Sprite):
         # dt = self.clock.tick(60)
         # self.sprite_animator.update(dt)
         # current_frame = self.sprite_animator.get_current_frame()
-        player_surface = pygame.image.load("assets/graphics/entities/hero/idle/idle1.png").convert_alpha()
-        player_rect = player_surface.get_rect(midbottom = (self.position.x,self.position.y))
-        self.screen.blit(player_surface, player_rect)
+        # player_rect = player_surface.get_rect(midbottom = (self.position.x,self.position.y))
+        self.screen.blit(self.player_surface, self.player_rect)
+        # self.update()
 
     def changeSprite(self, spritePath):
         self.sprite_sheet = pygame.image.load(spritePath)
@@ -185,4 +190,12 @@ class Player(pygame.sprite.Sprite):
         self.flipSprite()
 
     def flipSprite():
+        if self.GRAVITY_SIDE == 'GRAVITY_DOWN':
+            pass
+        if self.GRAVITY_SIDE == 'GRAVITY_LEFT':
+            pass
+        if self.GRAVITY_SIDE == 'GRAVITY_UP':
+            pass
+        if self.GRAVITY_SIDE == 'GRAVITY_RIGHT':
+            pass
         pass
