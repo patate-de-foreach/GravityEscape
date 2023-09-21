@@ -228,19 +228,16 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
 
     def jump(self):
-        if (
-            self.on_floor == True
-            and self.anim_state != "death"
-            or self.is_dead == False
-        ):
-            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
-                self.apply_force((0, self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-                self.apply_force((0, -self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.apply_force((self.jump_force, 0))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.apply_force((-self.jump_force, 0))
+        if self.anim_state != 'death':
+            if self.on_floor == True:
+                if self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                    self.apply_force((0, self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                    self.apply_force((0, -self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                    self.apply_force((self.jump_force, 0))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                    self.apply_force((-self.jump_force, 0))
 
     def apply_gravity(self):
         # GRAVITY DOWN
