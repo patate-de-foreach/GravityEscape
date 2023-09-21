@@ -66,25 +66,30 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.acceleration = pygame.Vector2(0, 0)
 
-        self.friction = 0.1
+        
         self.player_rect = self.rotated_surface.get_rect(
             midbottom=(self.position.x, self.position.y)
         )
 
         
-        self.attack_cooldown = 50
+        self.attack_cooldown = 35
         self.current_cooldown_attack = 0
         self.attack_damage = 10
         self.attack_range = 80
+
         self.is_attacking = False
-        self.GRAVITY_STRENGHT = 2.8
-        self.jump_force = 60
-        self.speed = 2
+        
+        self.friction = 0.1
+        self.GRAVITY_STRENGHT = 2.6
+        self.jump_force = 35
+        self.speed = 1.3
+        self.max_speed = 0.5
+        self.max_force = 0.1  # Force d'acceleration
+
         self.GRAVITY_DIRECTION = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
         self.health = 10
         self.hit_box_radius = 16
-        self.max_speed = 1
-        self.max_force = 0.2  # Force d'acceleration
+        
     
     def import_player_assets(self):
         animation_path = "assets/graphics/entities/hero"
