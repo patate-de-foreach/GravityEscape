@@ -6,16 +6,16 @@ from sprite_animator import *
 from ennemi import *
 
 class Drone(Ennemi, pygame.sprite.Sprite):
-    def __init__(self, x, y, fenetre, clock):
-        Ennemi.__init__(self, x, y, fenetre, clock)
+    def __init__(self, x, y, fenetre):
+        Ennemi.__init__(x, y, fenetre)
         pygame.sprite.Sprite.__init__(self)
         
         self.anim = {
-            "death":"assets/graphics/entities/enemies/drones/1/Death.png",
-            "idle":"assets/graphics/entities/enemies/drones/1/Idle.png",
-            "scan":"assets/graphics/entities/enemies/drones/1/Scan.png",
-            "walk_scan":"assets/graphics/entities/enemies/drones/1/Walk_scan.png",
-            "walk":"assets/graphics/entities/enemies/drones/1/Walk.png",
+            "death":"assets/graphics/entities/drones/1/Death.png",
+            "idle":"assets/graphics/entities/drones/1/Idle.png",
+            "scan":"assets/graphics/entities/drones/1/Scan.png",
+            "walk_scan":"assets/graphics/entities/drones/1/Walk_scan.png",
+            "walk":"assets/graphics/entities/drones/1/Walk.png",
         }
 
         self.changeSprite(self.anim["walk"])
