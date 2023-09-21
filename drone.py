@@ -2,7 +2,6 @@ import pygame
 from sprite_animator import SpriteAnimator
 from ennemi import Ennemi
 
-
 class Drone(Ennemi):
     def __init__(self, x, y, fenetre, clock):
         Ennemi.__init__(self, x, y, fenetre, clock)
