@@ -28,6 +28,7 @@ class Player_Controls:
                 'gravity_right' : pygame.K_RIGHT,
                 'gravity_up' : pygame.K_UP,
                 'gravity_left' : pygame.K_LEFT,
+                'attack': pygame.K_e,
             }
             
 
@@ -57,6 +58,8 @@ class Player_Controls:
                 return_buttons.append("up")
             if self.joystick.get_button(0):
                 return_buttons.append("jump")
+            if self.joystick.get_button(1):
+                return_buttons.append("attack")
             if self.joystick.get_axis(3)>self.joystick_dead_zone:
                 return_buttons.append("gravity_right")
             if self.joystick.get_axis(3)<-self.joystick_dead_zone:

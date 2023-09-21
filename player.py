@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.player_control = Player_Controls(playerControlType)
         self.action_dictionnary = {
             "GRAVITY_UP": {
+                "attack": self.trigger_attack,
                 "left": self.go_left,
                 "right": self.go_right,
                 "jump": self.jump,
@@ -21,6 +22,7 @@ class Player(pygame.sprite.Sprite):
                 "gravity_right": "GRAVITY_RIGHT",
             },
             "GRAVITY_DOWN": {
+                "attack": self.trigger_attack,
                 "left": self.go_left,
                 "right": self.go_right,
                 "jump": self.jump,
@@ -29,6 +31,7 @@ class Player(pygame.sprite.Sprite):
                 "gravity_right": "GRAVITY_RIGHT",
             },
             "GRAVITY_LEFT": {
+                "attack": self.trigger_attack,
                 "up": self.go_up,
                 "down": self.go_down,
                 "jump": self.jump,
@@ -37,6 +40,7 @@ class Player(pygame.sprite.Sprite):
                 "gravity_right": "GRAVITY_RIGHT",
             },
             "GRAVITY_RIGHT": {
+                "attack": self.trigger_attack,
                 "up": self.go_up,
                 "down": self.go_down,
                 "jump": self.jump,
@@ -51,6 +55,12 @@ class Player(pygame.sprite.Sprite):
         self.acceleration = pygame.Vector2(0, 0)
         self.friction = 0.1
 
+        
+        self.attack_cooldown = 50
+        self.current_cooldown_attack = 0
+        self.attack_damage = 10
+        self.attack_range = 80
+        self.is_attacking = False
         self.GRAVITY_STRENGHT = 2.8
         self.jump_force = 60
         self.speed = 2
@@ -80,7 +90,9 @@ class Player(pygame.sprite.Sprite):
         self.velocity -= self.velocity * self.friction
         self.apply_gravity()
         self.check_collisions()
+        self.cooldown_attack()
         self.convert_control_into_action(self.player_control.get_control_pressed())
+        
 
     def convert_control_into_action(self, actionSet):
         for action in actionSet:
@@ -103,6 +115,13 @@ class Player(pygame.sprite.Sprite):
                 except:
                     pass
 
+    def cooldown_attack(self):
+        if self.is_attacking == True:
+            self.current_cooldown_attack -= 1
+        if self.current_cooldown_attack <= 0:
+            self.current_cooldown_attack = 0
+            self.is_attacking = False
+        
     def go_up(self):
         self.apply_force((0, -self.speed))
 
@@ -114,6 +133,11 @@ class Player(pygame.sprite.Sprite):
 
     def go_right(self):
         self.apply_force((self.speed, 0))
+
+    def trigger_attack(self):
+        if self.is_attacking == False and self.current_cooldown_attack == 0:
+            self.is_attacking = True
+            self.current_cooldown_attack = self.attack_cooldown
 
     def jump(self):
         if self.on_floor == True:

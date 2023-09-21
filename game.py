@@ -27,6 +27,9 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.current_state_object != None:
+                    self.current_state_object.mouseClicked()
 
     def update(self):
         # Va chercher le current_state et display sa fonction de run
