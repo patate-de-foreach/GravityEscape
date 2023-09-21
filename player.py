@@ -127,6 +127,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.check_hp()
+        print(self.anim_state)
         # Convertit les touches appuyées par le joueur en actions
         self.is_walking = False
         self.velocity += self.acceleration
@@ -170,48 +171,52 @@ class Player(pygame.sprite.Sprite):
             self.is_attacking = False
 
     def go_up(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.anim_orientation = "flipped"
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.anim_orientation = "unchanged"
-            self.apply_force((0, -self.speed))
-            self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack":
+                    self.anim_state = "walk"
+                if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                    self.anim_orientation = "flipped"
+                elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                    self.anim_orientation = "unchanged"
+                self.apply_force((0, -self.speed))
+                self.is_walking = True
 
     def go_down(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-            self.anim_orientation = "unchanged"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-            self.anim_orientation = "flipped"
-        self.apply_force((0, self.speed))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                self.anim_orientation = "unchanged"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                self.anim_orientation = "flipped"
+            self.apply_force((0, self.speed))
+            self.is_walking = True
 
     def go_left(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-            self.anim_orientation = "flipped"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-            self.anim_orientation = "unchanged"
-        self.apply_force((-self.speed, 0))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                self.anim_orientation = "flipped"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                self.anim_orientation = "unchanged"
+            self.apply_force((-self.speed, 0))
+            self.is_walking = True
 
     def go_right(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-            self.anim_orientation = "unchanged"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-            self.anim_orientation = "flipped"
-        self.apply_force((self.speed, 0))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                self.anim_orientation = "unchanged"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                self.anim_orientation = "flipped"
+            self.apply_force((self.speed, 0))
+            self.is_walking = True
 
     # la frame 3 n'est pas displayed
     def trigger_attack(self):
@@ -223,15 +228,16 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
 
     def jump(self):
-        if self.on_floor == True:
-            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
-                self.apply_force((0, self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-                self.apply_force((0, -self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.apply_force((self.jump_force, 0))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.apply_force((-self.jump_force, 0))
+        if self.anim_state != 'death':
+            if self.on_floor == True:
+                if self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                    self.apply_force((0, self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                    self.apply_force((0, -self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                    self.apply_force((self.jump_force, 0))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                    self.apply_force((-self.jump_force, 0))
 
     def apply_gravity(self):
         # GRAVITY DOWN
