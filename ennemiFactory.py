@@ -23,7 +23,7 @@ class EnemyFactory:
 
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
-        if self.max_enemies > 0 and current_time - self.last_spawn_time >= self.spawn_delay:
+        if current_time - self.last_spawn_time >= self.spawn_delay: # self.max_enemies > 0 and
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
                 x = random.randint(0, self.screen.get_width())
