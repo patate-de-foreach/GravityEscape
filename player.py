@@ -113,6 +113,9 @@ class Player(pygame.sprite.Sprite):
             self.anim_state = "idle"
         animation = self.animations[self.anim_state]
 
+        if self.anim_state == "death" and self.frame_index == 0:
+            AudioManager().play_bgm("game_over", loop=-1, introName="game_over_intro")
+
         if self.frame_index > len(animation) - 1:
             if self.anim_state == "death":
                 self.is_dead = True
@@ -177,7 +180,7 @@ class Player(pygame.sprite.Sprite):
     def go_up(self):
         if self.anim_state != "death":
             if self.on_floor:
-                if self.anim_state != "attack":
+                if self.anim_state != "attack" and self.anim_state != "hurt":
                     self.anim_state = "walk"
                 if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
                     self.anim_orientation = "flipped"
@@ -189,7 +192,7 @@ class Player(pygame.sprite.Sprite):
     def go_down(self):
         if self.anim_state != "death":
             if self.on_floor:
-                if self.anim_state != "attack":
+                if self.anim_state != "attack" and self.anim_state != "hurt":
                     self.anim_state = "walk"
             if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
                 self.anim_orientation = "unchanged"
@@ -201,7 +204,7 @@ class Player(pygame.sprite.Sprite):
     def go_left(self):
         if self.anim_state != "death":
             if self.on_floor:
-                if self.anim_state != "attack":
+                if self.anim_state != "attack" and self.anim_state != "hurt":
                     self.anim_state = "walk"
             if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
                 self.anim_orientation = "flipped"
@@ -213,7 +216,7 @@ class Player(pygame.sprite.Sprite):
     def go_right(self):
         if self.anim_state != "death":
             if self.on_floor:
-                if self.anim_state != "attack":
+                if self.anim_state != "attack" and self.anim_state != "hurt":
                     self.anim_state = "walk"
             if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
                 self.anim_orientation = "unchanged"
@@ -262,16 +265,6 @@ class Player(pygame.sprite.Sprite):
         self.player_rect.y = self.position.y
         self.screen.blit(self.image, self.player_rect)
 
-    def changeSprite(self, spritePath):
-        self.sprite_sheet = pygame.image.load(spritePath)
-        self.sprite_animator = SpriteAnimator(
-            self.sprite_sheet,
-            num_frames=4,
-            frame_width=36,
-            frame_height=78,
-            frame_duration=1000,
-        )
-
     def apply_force(self, force):
         self.acceleration += force
 
@@ -316,12 +309,15 @@ class Player(pygame.sprite.Sprite):
 
     def receive_damage(self, damage):
         self.health -= damage
-        self.anim_state = "hurt"
-        self.animation_speed = 0.1
+        if self.anim_state != "death":
+            self.anim_state = "hurt"
+            self.animation_speed = 0.1
+            self.frame_index = 0
 
     def check_hp(self):
-        if self.health <= 0:
+        if self.health <= 0 and self.anim_state != "death":
             self.health = 0
+            self.frame_index = 0
             self.animation_speed = 0.1
             self.anim_state = "death"
 
