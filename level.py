@@ -5,6 +5,7 @@ from audio_manager import AudioManager
 from mapManager import *
 from ennemiFactory import *
 import game_state
+from power_ups_factory import *
 
 
 class Level(game_state.Game_State):
@@ -37,6 +38,7 @@ class Level(game_state.Game_State):
             self.tps_max_spawn,
             self.clock,
         )
+        self.power_up_factory = Power_ups_factory(self.screen, 600,"HEAL")
 
     def get_level_config(self, configPath):
         with open(configPath) as json_file:
@@ -63,8 +65,11 @@ class Level(game_state.Game_State):
         self.map_manager.draw_map(self.screen)
         self.player.update()
         self.player.show()
-        self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame
 
+        self.power_up_factory.update(self.player)
+        self.power_up_factory.show()
+
+        self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame
         self.enemy_factory.update_enemies()
         self.check_life()
         print(self.player.is_dead)

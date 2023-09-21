@@ -85,7 +85,9 @@ class Player(pygame.sprite.Sprite):
         self.max_force = 0.1  # Force d'acceleration
 
         self.GRAVITY_DIRECTION = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
-        self.health = 10
+        self.max_health = 10
+        self.health = self.max_health
+
         self.hit_box_radius = 16
 
     def import_player_assets(self):
@@ -138,8 +140,8 @@ class Player(pygame.sprite.Sprite):
         self.apply_gravity()
         self.cooldown_attack()
         self.convert_control_into_action(self.player_control.get_control_pressed())
-        self.check_collisions()
         self.animate()
+        self.check_collisions()
 
     def convert_control_into_action(self, actionSet):
         for action in actionSet:
@@ -336,3 +338,9 @@ class Player(pygame.sprite.Sprite):
                 midright=(self.position.x, self.position.y)
             )
         return sprite
+
+    def heal(self, healing_amount):
+        self.health += healing_amount
+        # Vérification que la vie du personnage ne soit pas trop élever
+        if self.health > self.max_health:
+            self.health = self.max_health
