@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.screen = fenetre
         self.clock = clock
 
+        # animation
         self.import_player_assets()
         self.frame_index = 0
         self.animation_speed = 0.15
@@ -101,7 +102,7 @@ class Player(pygame.sprite.Sprite):
             full_path = animation_path + "/" + animation
             self.animations[animation] = import_folder(full_path)
 
-    # fait défiler les frames d'animation (change le contenu de original surface)
+    # fait défiler les frames d'animation
     def animate(self):
         if (
             not self.is_walking
