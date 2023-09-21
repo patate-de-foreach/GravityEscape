@@ -1,11 +1,12 @@
 import pygame
 import sys
+import start
 
 class Credits:
     def __init__(self, screen):
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         # Image de fond
-        fond = pygame.image.load("assets/graphics/background/background_credits.png")
+        fond = pygame.image.load("assets/graphics/background/credits_background.png")
         self.x = SCREEN_WIDTH // 2
         self.y = SCREEN_HEIGHT
         self.fond = pygame.transform.scale(fond, (self.x, self.y))
@@ -56,6 +57,16 @@ class Credits:
             "  Adapté par Diego  ",
             "                    ",
             "                    ",
+            "    Robot Asset     ",
+            "    par             ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
             "                    ",
             "                    ",
             "                    ",
@@ -88,7 +99,8 @@ class Credits:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        running = False
+                        startgame = start.Start(self.screen)
+                        startgame.Start_page()
 
             self.y -= self.vitesse_scroll
             if self.y < -len(self.texte) * 50:
