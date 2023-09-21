@@ -74,10 +74,6 @@ class Level(game_state.Game_State):
             # OUVRIR LES PORTES
             pass
 
-    def enter_battle(self):
-        # handle battle event
-        AudioManager().play_bgm(self.battle_music, introName=self.battle_music_intro)
-
     def check_life(self):
         if self.player.is_dead:
             if self.death_timer < 80:
@@ -87,6 +83,7 @@ class Level(game_state.Game_State):
                     "assets/graphics/background/defeated_screen.jpg"
                 )
                 self.screen.blit(image, (0, 0))
+                # play game over music
         else:
             self.enemy_factory.draw_enemies()
             Hud(self.screen, self.player).dysplay_life_bar()

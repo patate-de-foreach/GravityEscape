@@ -170,46 +170,46 @@ class Player(pygame.sprite.Sprite):
             self.is_attacking = False
 
     def go_up(self):
-        if self.on_floor:
-            if self.anim_state != "attack" and self.anim_state != "death":
+        if self.on_floor and self.anim_state != "death":
+            if self.anim_state != "attack":
                 self.anim_state = "walk"
             if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
                 self.anim_orientation = "flipped"
             elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
                 self.anim_orientation = "unchanged"
-        self.apply_force((0, -self.speed))
-        self.is_walking = True
+            self.apply_force((0, -self.speed))
+            self.is_walking = True
 
     def go_down(self):
-        if self.on_floor:
-            if self.anim_state != "attack" and self.anim_state != "death":
+        if self.on_floor and self.anim_state != "death":
+            if self.anim_state != "attack":
                 self.anim_state = "walk"
-            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.anim_orientation = "unchanged"
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.anim_orientation = "flipped"
+        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+            self.anim_orientation = "unchanged"
+        elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+            self.anim_orientation = "flipped"
         self.apply_force((0, self.speed))
         self.is_walking = True
 
     def go_left(self):
-        if self.on_floor:
-            if self.anim_state != "attack" and self.anim_state != "death":
+        if self.on_floor and self.anim_state != "death":
+            if self.anim_state != "attack":
                 self.anim_state = "walk"
-            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-                self.anim_orientation = "flipped"
-            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-                self.anim_orientation = "unchanged"
+        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+            self.anim_orientation = "flipped"
+        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+            self.anim_orientation = "unchanged"
         self.apply_force((-self.speed, 0))
         self.is_walking = True
 
     def go_right(self):
-        if self.on_floor:
-            if self.anim_state != "attack" and self.anim_state != "death":
+        if self.on_floor and self.anim_state != "death":
+            if self.anim_state != "attack":
                 self.anim_state = "walk"
-            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-                self.anim_orientation = "unchanged"
-            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-                self.anim_orientation = "flipped"
+        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+            self.anim_orientation = "unchanged"
+        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+            self.anim_orientation = "flipped"
         self.apply_force((self.speed, 0))
         self.is_walking = True
 
@@ -305,7 +305,8 @@ class Player(pygame.sprite.Sprite):
                 self.position.y = 64
 
     def check_hp(self):
-        if self.health == 0:
+        if self.health <= 0:
+            self.health = 0
             self.animation_speed = 0.1
             self.anim_state = "death"
 
