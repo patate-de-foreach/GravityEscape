@@ -63,16 +63,6 @@ class Start(game_state.Game_State):
         exit = Button(image = pygame.image.load("assets/graphics/menubuttons/exit.png"), pos=(924,700),
                     input = "", font= Button.get_font(self,size=75), color="#ffffff", hover_color = "red", scale=4)
 
-        exit = Button(
-            image=pygame.image.load("assets/graphics/menubuttons/exit.png"),
-            pos=(924, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
-            scale=4,
-        )
-
         # detecte les changement si il y a un texte au lieu d'une image
         for button in [play, settings, exit, credits, title]:
             button.ColorChange(mouse_pos)
