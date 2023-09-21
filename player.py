@@ -17,9 +17,6 @@ class Player(pygame.sprite.Sprite):
         self.frame_index = 0
         self.animation_speed = 0.15
         self.rotated_surface = self.animations['idle'][self.frame_index]
-        self.player_rect = self.rotated_surface.get_rect(
-            midbottom=(self.position.x, self.position.y)
-        )
 
         self.anim_state = 'idle'
         self.anim_orientation = 'unchanged'
@@ -69,11 +66,14 @@ class Player(pygame.sprite.Sprite):
         self.velocity = pygame.Vector2(0, 0)
         self.acceleration = pygame.Vector2(0, 0)
         self.friction = 0.1
+        self.player_rect = self.rotated_surface.get_rect(
+            midbottom=(self.position.x, self.position.y)
+        )
 
         
         self.attack_cooldown = 50
         self.current_cooldown_attack = 0
-        self.attack_damage = 1
+        self.attack_damage = 10
         self.attack_range = 80
         self.is_attacking = False
         self.GRAVITY_STRENGHT = 2.8
@@ -84,7 +84,6 @@ class Player(pygame.sprite.Sprite):
         self.hit_box_radius = 16
         self.max_speed = 1
         self.max_force = 0.2  # Force d'acceleration
-        
     
     def import_player_assets(self):
         animation_path = "assets/graphics/entities/hero"
