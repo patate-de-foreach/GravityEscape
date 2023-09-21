@@ -14,6 +14,10 @@ class Ennemi:
         self.image = pygame.Surface((16,16))
         self.rect = self.image.get_rect(topleft = self.position)
 
+        self.attack_behavior = "KAMIKAZE"
+
+        self.kamikaze_damage = 1
+        self.cool_down_shot = 300
         self.dist_target = 50
         self.stop_radius = 150
         self.arrival_radius = 50
@@ -110,3 +114,13 @@ class Ennemi:
             # Calcule une force de répulsion pour les éloigner l'un de l'autre
             repulsion_force = direction.normalize() * (self.max_force * 2)
             self.apply_force(repulsion_force)
+    
+    def kamikaze(self, target) :
+        self.health = 0
+        target.health -= self.kamikaze_damage
+    
+    def shot (self, target) :
+        self.cool_down_shot -= 1
+        if self.cool_down_shot<=0:
+            target.health -= self.damage
+            self.cool_down_shot = 300

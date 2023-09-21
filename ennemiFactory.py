@@ -3,6 +3,7 @@ import random
 from ennemi import *
 from drone import *
 from enums.level_state_ENUM import *
+import utils
 
 class EnemyFactory:
     def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime, clock):
@@ -36,6 +37,7 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
+            
             enemy = Drone(x, y, self.screen, self.clock)
             self.enemies.append(enemy)
             self.max_enemies -= 1
@@ -48,7 +50,11 @@ class EnemyFactory:
         if len(self.enemies) <= 0 and self.max_enemies:
             self.state = self.state = level_state_ENUM.FINISHED
         for enemy in self.enemies:
-            enemy.arrive_and_stop(self.target)
+            
+            if enemy.attack_behavior == "KAMIKAZE":
+                enemy.seek(self.target)
+            else:          
+                enemy.arrive_and_stop(self.target)
             enemy.update()
             enemy.show()
             
@@ -58,10 +64,19 @@ class EnemyFactory:
 
             if enemy.health <= 0:
                 self.enemies.remove(enemy)
+            
+
+            dist_enemy_target = utils.dist(self.target.position.x,self.target.position.y,enemy.position.x,enemy.position.y) 
+            
+            if dist_enemy_target <= self.target.attack_range and self.target.is_attacking:
+                enemy.health -= self.target.attack_damage
+
+            if utils.approx(dist_enemy_target,enemy.stop_radius,10):
+                enemy.shot(self.target)
 
             # Vérifiez s'il y a une collision entre l'ennemi et la cible
             if enemy.get_hitbox().colliderect(self.target.player_rect):
-                print("Collision avec la cible !")
+                enemy.kamikaze(self.target)
 
         self.detect_enemy_collisions()
     
