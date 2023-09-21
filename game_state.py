@@ -6,3 +6,6 @@ class Game_State:
 
     def run():
         pass
+
+    def mouseClicked(self):
+        pass

@@ -4,6 +4,7 @@ from audio_manager import AudioManager
 
 from buttons import Button
 import game_state
+import credits
 
 
 # naming : conflit avec "main_menu"
@@ -30,41 +31,19 @@ class Start(game_state.Game_State):
         self.redirect = "level1"
         self.is_finished = True
 
+    def Credits(self):
+        pygame.display.set_caption("GravityEscape - Crédits")
+
+        credit = credits.Credits(self.screen)
+        credit.main()
     # fonction qqui affiche la page avant la page d'accuil
     def run(self):
-        # une clock pour que au bout d'un moment cette page disparaisse et affiche la page principale
-        clock = pygame.time.Clock()
-        pygame.time.set_timer(pygame.USEREVENT, 200)
-
+        
         pygame.display.set_caption("GravityEscape")
-
-        self.screen.fill("black")
-        counter = 10
-
+        
         self.Start_page()
-        """
-        while self.logo_run:
-            
-            # affiche le logo
-            self.screen.blit(self.logo, (310,190))
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit
-                    sys.exit()
-                if event.type == pygame.USEREVENT: 
-                    counter -= 1
-                    if counter > 0:
-                        pass
-                    else:
-                        self.logo_run = False
-                        self.Start_page()
-        """
-        pygame.display.flip()
-        clock.tick(60)
-
-        pygame.display.update()
-
+        
+       
     # affiche la page d'accueil
     def Start_page(self):
         pygame.display.set_caption("GravityEscape - Menu")
@@ -74,7 +53,7 @@ class Start(game_state.Game_State):
         mouse_pos = pygame.mouse.get_pos()
 
         # création des boutons
-        title = Button(
+        self.title = Button(
             image=pygame.image.load("assets/title.png"),
             pos=(530, 125),
             input="",
@@ -84,7 +63,7 @@ class Start(game_state.Game_State):
             scale=1.5,
         )
 
-        play = Button(
+        self.play = Button(
             image=pygame.image.load("assets/graphics/menubuttons/play2.png"),
             pos=(512, 400),
             input="",
@@ -94,7 +73,7 @@ class Start(game_state.Game_State):
             scale=12,
         )
 
-        settings = Button(
+        self.settings = Button(
             image=pygame.image.load("assets/graphics/menubuttons/settings.png"),
             pos=(100, 700),
             input="",
@@ -104,7 +83,7 @@ class Start(game_state.Game_State):
             scale=4,
         )
 
-        credits = Button(
+        self.credits = Button(
             image=pygame.image.load("assets/graphics/menubuttons/credits.png"),
             pos=(512, 700),
             input="",
@@ -114,7 +93,7 @@ class Start(game_state.Game_State):
             scale=4,
         )
 
-        exit = Button(
+        self.exit = Button(
             image=pygame.image.load("assets/graphics/menubuttons/exit.png"),
             pos=(924, 700),
             input="",
@@ -125,29 +104,38 @@ class Start(game_state.Game_State):
         )
 
         # detecte les changement si il y a un texte au lieu d'une image
-        for button in [play, settings, exit, credits, title]:
+        for button in [self.play, self.settings, self.exit, self.credits, self.title]:
             button.ColorChange(mouse_pos)
             button.update(self.screen)
 
         # detecte les clicks de souris et choisi quelle bouton est cliquer et lance la fonction demandé
+        '''
         for event in pygame.event.get():
+            print(event.type == pygame.MOUSEBUTTONDOWN)
             if event.type == pygame.QUIT:
                 pygame.quit
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if play.checkinput(mouse_pos):
-                    self.Play()
-                if settings.checkinput(mouse_pos):
-                    self.settings()
-                if credits.checkinput(mouse_pos):
-                    self.credits()
-                if title.checkinput(mouse_pos):
-                    self.easterEgg()
-                if exit.checkinput(mouse_pos):
-                    pygame.quit()
-                    sys.exit()
+        '''  
 
         pygame.display.update()
 
-    def easterEgg():
+
+    def mouseClicked(self):
+        mouse_pos = pygame.mouse.get_pos()
+        if self.play.checkinput(mouse_pos):
+            self.Play()
+        if self.settings.checkinput(mouse_pos):
+            self.settings()
+        if self.credits.checkinput(mouse_pos):
+            self.Credits()
+        if self.title.checkinput(mouse_pos):
+            self.easterEgg()
+        if self.exit.checkinput(mouse_pos):
+            pygame.quit()
+            sys.exit()
+    
+
+     
+    def easterEgg(self):
         pass
