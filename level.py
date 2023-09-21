@@ -14,6 +14,7 @@ class Level(game_state.Game_State):
         self.num_lvl = num_lvl
         self.player = player
         self.clock = clock
+        self.death_timer = 0
         # Récupère les infos du level depuis un fichier Json
         self.get_level_config("level_config.json")
         self.level_graphic_resource = pygame.image.load(
@@ -71,14 +72,16 @@ class Level(game_state.Game_State):
             # OUVRIR LES PORTES
             pass
 
-    def enter_battle(self):
-        # handle battle event
-        AudioManager().play_bgm(self.battle_music, introName=self.battle_music_intro)
-
     def check_life(self):
-        if self.player.health > 0:
+        if self.player.is_dead:
+            if self.death_timer < 100:
+                self.death_timer += 1
+            else:
+                image = pygame.image.load(
+                    "assets/graphics/background/defeated_screen.jpg"
+                )
+                self.screen.blit(image, (0, 0))
+                # play game over music
+        else:
             self.enemy_factory.draw_enemies()
             Hud(self.screen, self.player).dysplay_life_bar()
-        else:
-            image = pygame.image.load('assets/graphics/background/defeated_screen.jpg')
-            self.screen.blit(image, (0, 0))

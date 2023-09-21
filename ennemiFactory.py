@@ -5,12 +5,15 @@ from drone import *
 from enums.level_state_ENUM import *
 import utils
 
+
 class EnemyFactory:
-    def __init__(self, screen, target, max_enemies, minRespawnTime, maxRespawnTime, clock):
+    def __init__(
+        self, screen, target, max_enemies, minRespawnTime, maxRespawnTime, clock
+    ):
         self.state = level_state_ENUM.RUNNING
-        
-        self.minRespawnTime = minRespawnTime*100
-        self.maxRespawnTime = maxRespawnTime*100
+
+        self.minRespawnTime = minRespawnTime * 100
+        self.maxRespawnTime = maxRespawnTime * 100
 
         self.last_spawn_time = 0  # Temps du dernier spawn
         self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
@@ -25,17 +28,17 @@ class EnemyFactory:
         current_time = pygame.time.get_ticks()
 
         if current_time - self.last_spawn_time >= self.spawn_delay:
-            side = random.choice(['top', 'bottom', 'left', 'right'])
-            if side == 'top':
+            side = random.choice(["top", "bottom", "left", "right"])
+            if side == "top":
                 x = random.randint(0, self.screen.get_width())
                 y = 0
-            elif side == 'bottom':
+            elif side == "bottom":
                 x = random.randint(0, self.screen.get_width())
                 y = self.screen.get_height()
-            elif side == 'left':
+            elif side == "left":
                 x = 0
                 y = random.randint(0, self.screen.get_height())
-            elif side == 'right':
+            elif side == "right":
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
 
@@ -44,23 +47,22 @@ class EnemyFactory:
 
             # Mettre à jour le temps du dernier spawn et le délai de spawn
             self.last_spawn_time = current_time
-            self.minRespawnTime = int(self.minRespawnTime * 0.9)
-            self.maxRespawnTime = int(self.maxRespawnTime * 0.9)
+            self.minRespawnTime = int(self.minRespawnTime * 0.99)
+            self.maxRespawnTime = int(self.maxRespawnTime * 0.99)
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
-            print(enemy.max_speed)
+            # print(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
         if len(self.enemies) <= 0 and self.max_enemies:
             self.state = self.state = level_state_ENUM.FINISHED
         for enemy in self.enemies:
-
             if enemy.attack_behavior == "KAMIKAZE":
                 enemy.seek(self.target)
             else:
                 enemy.arrive_and_stop(self.target)
             enemy.update()
             enemy.show()
-            
+
             # Si l'ennemi sort de l'écran, le supprimer
             if not self.screen.get_rect().collidepoint(enemy.position):
                 self.enemies.remove(enemy)
@@ -68,12 +70,20 @@ class EnemyFactory:
             if enemy.current_health <= 0:
                 self.enemies.remove(enemy)
 
-            dist_enemy_target = utils.dist(self.target.position.x,self.target.position.y,enemy.position.x,enemy.position.y)
+            dist_enemy_target = utils.dist(
+                self.target.position.x,
+                self.target.position.y,
+                enemy.position.x,
+                enemy.position.y,
+            )
 
-            if dist_enemy_target <= self.target.attack_range and self.target.is_attacking:
+            if (
+                dist_enemy_target <= self.target.attack_range
+                and self.target.is_attacking
+            ):
                 enemy.current_health -= self.target.attack_damage
 
-            if utils.approx(dist_enemy_target,enemy.stop_radius,10):
+            if utils.approx(dist_enemy_target, enemy.stop_radius, 10):
                 enemy.shot(self.target)
 
             # Vérifiez s'il y a une collision entre l'ennemi et la cible
@@ -81,14 +91,14 @@ class EnemyFactory:
                 enemy.kamikaze(self.target)
 
         self.detect_enemy_collisions()
-    
+
     def draw_enemies(self):
         for enemy in self.enemies:
             enemy.show()
 
     def get_enemy_count(self):
         return len(self.enemies)
-    
+
     def detect_enemy_collisions(self):
         for i, enemy1 in enumerate(self.enemies):
             for j, enemy2 in enumerate(self.enemies):

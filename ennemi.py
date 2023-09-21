@@ -1,5 +1,3 @@
-import pygame
-import math
 import random
 
 from utils import *
@@ -63,7 +61,6 @@ class Ennemi:
             desired = target.position - self.position
 
             if abs(desired.x) + abs(desired.y) <= 20:
-                print("Captured !!!")
                 target.pos = pygame.Vector2(random.randint(0, pygame.display.get_surface().get_width()), random.randint(0, pygame.display.get_surface().get_height()))
 
             desired.scale_to_length(self.max_speed)
