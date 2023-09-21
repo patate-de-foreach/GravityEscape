@@ -14,8 +14,7 @@ class Settings(game_state.Game_State):
             self.sound_state = True
 
 
-    def get_font(self, size):
-            return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
+ 
 
 
     def run(self):
