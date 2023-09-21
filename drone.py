@@ -1,9 +1,6 @@
 import pygame
-import math
-import random
-from utils import *
-from sprite_animator import *
-from ennemi import *
+from sprite_animator import SpriteAnimator
+from ennemi import Ennemi
 
 
 class Drone(Ennemi):

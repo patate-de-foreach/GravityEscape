@@ -33,10 +33,6 @@ class SpriteAnimator:
             self.frame_timer = 0
             self.current_frame = (self.current_frame + 1) % self.num_frames
 
-    def load_explosion_fx(self):
-        explosion_fx_path = "assets/graphics/effects"
-        self.explosion_anim = import_folder(explosion_fx_path)
-
     def get_current_frame(self):
         # Renvoie le frame actuel
         return self.frames[self.current_frame]
