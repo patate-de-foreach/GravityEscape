@@ -1,6 +1,4 @@
 import pygame
-import sys
-import start
 
 class Credits:
     def __init__(self, screen):
@@ -25,6 +23,8 @@ class Credits:
         self.police = pygame.font.Font("assets/font/BrokenRobot.ttf", 40)
         self.texte = [
             "---Gravity Escape---",
+            "                    ",
+            "      CREDITS       ",
             "                    ",
             "Par Patate de Foreach",
             "                    ",
@@ -52,18 +52,8 @@ class Credits:
             "                    ",
             "     --ASSETS--     ",
             "                    ",
-            "   ButtonAssetPack  ",
-            "     par Adwitr     ",
-            "  Adapté par Diego  ",
-            "                    ",
-            "                    ",
-            "    Robot Asset     ",
-            "    par             ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
+            "      Pris sur      ",
+            "       Itch.io      ",
             "                    ",
             "                    ",
             "                    ",
