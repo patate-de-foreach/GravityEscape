@@ -1,6 +1,7 @@
 import pygame, sys
 import game
 import main_menu
+import credits2
 
 from buttons import Button
 
@@ -17,7 +18,7 @@ class Start:
     def Play(self):
         pygame.display.set_caption("GravityEscape - In-Game")
 
-        gravity_escape = game.Game(self.screen,)
+        gravity_escape = game.Game(self.screen)
         gravity_escape.run()
 
     def settings(self):
@@ -27,10 +28,10 @@ class Start:
         settings_menu.draw_settings()
 
     def credits(self):
-        pygame.display.set_caption("GravityEscape - In-Game")
+        pygame.display.set_caption("GravityEscape - Crédits")
 
-        gravity_escape = game.Game(self.screen)
-        gravity_escape.run()
+        credit = credits2.Credits(self.screen)
+        credit.main()
 
     # affiche la page d'accueil
     def Start_page(self):
