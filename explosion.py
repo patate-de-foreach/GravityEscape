@@ -1,6 +1,5 @@
 from utils import import_folder
 
-
 class Explosion:
     def __init__(self, screen, position):
         self.screen = screen

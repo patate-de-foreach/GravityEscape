@@ -25,6 +25,8 @@ class EnemyFactory:
         self.enemies = []
         self.max_enemies = max_enemies
 
+        self.explosion_manager = ExplosionManager()
+
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
 
@@ -53,6 +55,7 @@ class EnemyFactory:
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
+
         if len(self.enemies) <= 0 and self.max_enemies:
             self.state = self.state = level_state_ENUM.FINISHED
         for enemy in self.enemies:
@@ -94,6 +97,7 @@ class EnemyFactory:
         self.detect_enemy_collisions()
 
     def draw_enemies(self):
+        self.explosion_manager.animate_explosions()
         for enemy in self.enemies:
             enemy.show()
 
