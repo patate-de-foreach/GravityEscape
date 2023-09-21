@@ -21,6 +21,8 @@ class AudioManager:
             "roaming": "assets/audio/bgm/roaming.mp3",
             "main_menu": "assets/audio/bgm/main_menu.mp3",
             "main_menu_intro": "assets/audio/bgm/main_menu_intro.mp3",
+            "game_over": "assets/audio/bgm/game_over.mp3",
+            "game_over_intro": "assets/audio/bgm/game_over_intro.mp3",
         }
 
     ## Change la musique jouée
