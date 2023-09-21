@@ -93,6 +93,8 @@ class Level(game_state.Game_State):
             if self.death_timer < 100:
                 self.death_timer += 1
             else:
+               print("ici")
+               self.save_score("score.txt",str(self.end_run - self.start_run))
                self.menu_dead()
         else:
             Hud(self.screen, self.player).dysplay_live_score(self.start_run)
@@ -106,4 +108,11 @@ class Level(game_state.Game_State):
         self.redirect = "defeated"
         self.is_finished = True
 
+    def save_score(self, filename, score):
+        try:
+            with open(filename, 'a') as file:
+                file.write(score+'\n')
+            print(f"Score sauvegardé dans {filename}")
+        except IOError as e:
+            print(f"Erreur lors de la sauvegarde du score : {e}")
         
