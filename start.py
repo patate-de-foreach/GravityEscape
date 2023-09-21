@@ -1,6 +1,6 @@
 import pygame, sys
 from audio_manager import AudioManager
-
+import json
 from buttons import Button
 import game_state, credits, histoire
 
@@ -24,6 +24,11 @@ class Start(game_state.Game_State):
 
     # fonction qui apelle le jeu
     def Play(self):
+        if self.type == True:
+            self.sauvegarder_controller_type("CLAVIER")
+        elif self.type == False:
+            self.sauvegarder_controller_type("MANETTE")
+
         pygame.display.set_caption("GravityEscape - Histoire")
 
         hisoire = histoire.Histoire(self.screen)
@@ -135,3 +140,18 @@ class Start(game_state.Game_State):
 
     def easterEgg(self):
         pass
+
+    def sauvegarder_controller_type(self,controller_type, nom_fichier = "setting.json"):
+        # Créer un dictionnaire contenant l'option 'controller_type'
+        data = {
+            'controller_type': controller_type
+        }
+
+        # Sauvegarder le dictionnaire dans un fichier JSON
+        with open(nom_fichier, 'w') as fichier_json:
+            json.dump(data, fichier_json)
+
+    # Exemple d'utilisation
+    controller_type = "Type de contrôleur"
+    nom_fichier = "config.json"
+    sauvegarder_controller_type(controller_type, nom_fichier)
