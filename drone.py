@@ -25,6 +25,8 @@ class Drone(Ennemi):
         self.sprite_animator.update(dt)
         current_frame = self.sprite_animator.get_current_frame()
         self.screen.blit(current_frame, (self.position.x, self.position.y))
+        self.draw_life_bar(self.position.x, self.position.y)
+
 
     def changeSprite(self, spritePath):
         self.sprite_sheet = pygame.image.load(spritePath)
