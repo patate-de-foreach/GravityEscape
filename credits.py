@@ -4,7 +4,7 @@ class Credits:
     def __init__(self, screen):
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         # Image de fond
-        fond = pygame.image.load("assets/graphics/background/credits_background.png")
+        fond = pygame.image.load("assets/graphics/background/GravityRobot.png")
         self.x = SCREEN_WIDTH // 2
         self.y = SCREEN_HEIGHT
         self.fond = pygame.transform.scale(fond, (self.x, self.y))
@@ -60,6 +60,8 @@ class Credits:
             "                    ",
             "                    ",
             "                    ",
+            "      MERCI !!!     ",
+            "                    ",
             "                    ",
 
         ]
@@ -89,13 +91,12 @@ class Credits:
                     running = False
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        #startgame = start.Start(self.screen)
-                        #startgame.Start_page()
                         running = False
 
             self.y -= self.vitesse_scroll
-            if self.y < -len(self.texte) * 50:
-                self.y = self.y
+            if self.y < -len(self.texte) * 30:
+                self.vitesse_scroll = 0
+
 
             self.screen.fill(self.blanc)
             self.afficher_texte()

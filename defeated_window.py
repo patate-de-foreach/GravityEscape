@@ -6,15 +6,12 @@ from player import *
 import game_state
 
 class Defeated(game_state.Game_State):
-    def __init__(self, screen, player, end, start):
+    def __init__(self, screen):
         super().__init__()
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         self.BackGround = pygame.image.load(
             "assets/graphics/background/defeated_screen.jpg"
         )
-        self.player = player
-        self.end = end
-        self.start = start
         self.surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.screen = screen
         # AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
@@ -29,7 +26,6 @@ class Defeated(game_state.Game_State):
 
     def update(self):
         self.screen.blit(self.BackGround, (0,0))
-        Hud(self.screen, self.player).dysplay_end_score(self.start, self.end)
 
         mouse_pos = pygame.mouse.get_pos()
 
