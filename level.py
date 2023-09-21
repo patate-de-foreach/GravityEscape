@@ -17,9 +17,9 @@ class Level(game_state.Game_State):
         super().__init__()
         self.screen = screen
         self.num_lvl = num_lvl
-        screen_width , screen_height = self.screen.get_size()
+        screen_width, screen_height = self.screen.get_size()
         self.clock = clock
-        self.player = Player(screen_width/2, 100, self.screen, "CLAVIER", self.clock)
+        self.player = Player(screen_width / 2, 100, self.screen, "CLAVIER", self.clock)
 
         self.death_timer = 0
         self.start_run = time.perf_counter()
@@ -30,7 +30,9 @@ class Level(game_state.Game_State):
             self.level_graphic_resource_path
         )
 
-        AudioManager().play_bgm(self.background_music, loop=-1)
+        AudioManager().play_bgm(
+            self.battle_music, loop=-1, introName=self.battle_music_intro
+        )
 
         self.map_manager = MapManager(
             self.tiles_size,
@@ -46,7 +48,7 @@ class Level(game_state.Game_State):
             self.tps_max_spawn,
             self.clock,
         )
-        self.power_up_factory = Power_ups_factory(self.screen, 600,"HEAL")
+        self.power_up_factory = Power_ups_factory(self.screen, 600, "HEAL")
 
     def get_level_config(self, configPath):
         with open(configPath) as json_file:
@@ -63,7 +65,6 @@ class Level(game_state.Game_State):
         self.tps_min_spawn = level_config["tps_min_spawn"]
         self.tps_max_spawn = level_config["tps_max_spawn"]
         self.tiles_size = level_config["tiles_size"]
-        self.background_music = level_config["roaming_bgm"]
         self.battle_music = level_config["battle_bgm"]
         self.battle_music_intro = level_config["battle_bgm_intro"]
 
@@ -89,7 +90,6 @@ class Level(game_state.Game_State):
         if self.player.is_dead:
             if self.end_run == 0.0:
                 self.end_run = time.perf_counter()
-                print(self.end_run - self.start_run)
             if self.death_timer < 100:
                 self.death_timer += 1
             else:

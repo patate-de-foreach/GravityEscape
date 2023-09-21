@@ -18,7 +18,7 @@ class Power_ups_factory():
             self.respawn_counter = 0
             #créé un nouveau powerup
             if self.type == "HEAL":
-                new_power_up = Heal_power_up(self.screen,pygame.Vector2(randint(64, 960),randint(64, 704)),healing_amount = 5)
+                new_power_up = Heal_power_up(self.screen,pygame.Vector2(randint(64, 1024-64-32),randint(64, 768-64-32)),healing_amount = 5)
             #l'ajouter a la liste
             self.power_ups_list.append(new_power_up)
 

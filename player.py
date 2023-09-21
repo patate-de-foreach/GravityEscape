@@ -323,8 +323,9 @@ class Player(pygame.sprite.Sprite):
             self.anim_state = "death"
 
     def set_gravity(self, gravity_direction):
-        self.GRAVITY_DIRECTION = gravity_direction
-        AudioManager().player_sounds["gravity"].play()
+        if self.anim_state != 'death':
+            self.GRAVITY_DIRECTION = gravity_direction
+            AudioManager().player_sounds["gravity"].play()
 
     def flipSprite(self, sprite):
         if self.anim_orientation == "flipped":

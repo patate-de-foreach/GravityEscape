@@ -18,11 +18,13 @@ class AudioManager:
         mixer.init()
         mixer.music.set_volume(self.bgm_level)
         self.bgm_paths = {
-            "roaming": "assets/audio/bgm/roaming.mp3",
+            "credits": "assets/audio/bgm/credits.mp3",
             "main_menu": "assets/audio/bgm/main_menu.mp3",
             "main_menu_intro": "assets/audio/bgm/main_menu_intro.mp3",
             "game_over": "assets/audio/bgm/game_over.mp3",
             "game_over_intro": "assets/audio/bgm/game_over_intro.mp3",
+            "battle_intro": "assets/audio/bgm/battle.mp3",
+            "battle": "assets/audio/bgm/battle_intro.mp3",
         }
 
     ## Change la musique jouée
