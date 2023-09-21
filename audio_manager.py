@@ -23,8 +23,8 @@ class AudioManager:
             "main_menu_intro": "assets/audio/bgm/main_menu_intro.mp3",
             "game_over": "assets/audio/bgm/game_over.mp3",
             "game_over_intro": "assets/audio/bgm/game_over_intro.mp3",
-            "battle_intro": "assets/audio/bgm/battle.mp3",
-            "battle": "assets/audio/bgm/battle_intro.mp3",
+            "battle_intro": "assets/audio/bgm/battle_intro.mp3",
+            "battle": "assets/audio/bgm/battle.mp3",
         }
 
     ## Change la musique jouée
