@@ -64,6 +64,10 @@ class Game:
                 self.main_menu = start.Start(self.screen)
             return self.main_menu
         elif self.current_state == "level1":
+            if self.defeated !=None:
+                self.defeated.is_finished = False
+            if self.main_menu !=None:
+                self.main_menu.is_finished = False
             if self.level1 == None or self.level1.is_finished == True:
                 self.level1 = level.Level(1, self.screen, self.clock)
             return self.level1
