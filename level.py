@@ -80,7 +80,7 @@ class Level(game_state.Game_State):
 
     def check_life(self):
         if self.player.is_dead:
-            if self.death_timer < 100:
+            if self.death_timer < 80:
                 self.death_timer += 1
             else:
                 image = pygame.image.load(
