@@ -1,10 +1,8 @@
 import pygame, sys
-import game
 from audio_manager import AudioManager
 
 from buttons import Button
-import game_state
-import credits
+import game_state, credits, histoire
 
 
 # naming : conflit avec "main_menu"
@@ -18,7 +16,6 @@ class Start(game_state.Game_State):
         self.logo = pygame.image.load("assets/logo.png")
         self.surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.screen = screen
-        self.clock = pygame.time.Clock()
         AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
     # récupere la font choisi et l'applique au txt demandé
@@ -27,8 +24,18 @@ class Start(game_state.Game_State):
 
     # fonction qui apelle le jeu
     def Play(self):
-        pygame.display.set_caption("GravityEscape - In-Game")
+        pygame.display.set_caption("GravityEscape - Histoire")
+
+        hisoire = histoire.Histoire(self.screen)
+        hisoire.main()
+
         self.redirect = "level1"
+        self.is_finished = True
+
+    def Settings(self):
+        pygame.display.set_caption("GravityEscape - Settings")
+
+        self.redirect = "settings"
         self.is_finished = True
 
     def Credits(self):
@@ -64,7 +71,7 @@ class Start(game_state.Game_State):
         )
 
         self.play = Button(
-            image=pygame.image.load("assets/graphics/menubuttons/play2.png"),
+            image=pygame.image.load("assets/graphics/menubuttons/play.png"),
             pos=(512, 400),
             input="",
             font=self.get_font(75),
@@ -115,7 +122,7 @@ class Start(game_state.Game_State):
         if self.play.checkinput(mouse_pos):
             self.Play()
         if self.settings.checkinput(mouse_pos):
-            self.settings()
+            self.Settings()
         if self.credits.checkinput(mouse_pos):
             self.Credits()
         if self.title.checkinput(mouse_pos):
