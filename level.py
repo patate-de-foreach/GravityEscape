@@ -5,6 +5,7 @@ from audio_manager import AudioManager
 from mapManager import *
 from ennemiFactory import *
 import game_state
+import defeated_window
 
 
 class Level(game_state.Game_State):
@@ -77,11 +78,18 @@ class Level(game_state.Game_State):
             if self.death_timer < 100:
                 self.death_timer += 1
             else:
-                image = pygame.image.load(
-                    "assets/graphics/background/defeated_screen.jpg"
-                )
-                self.screen.blit(image, (0, 0))
-                # play game over music
+               self.menu_dead()
         else:
             self.enemy_factory.draw_enemies()
             Hud(self.screen, self.player).dysplay_life_bar()
+
+    def menu_dead(self):
+        #  image = pygame.image.load(
+        #             "assets/graphics/background/defeated_screen.jpg"
+        #         )
+        #         self.screen.blit(image, (0, 0))
+        #         # play game over music  
+        pygame.display.set_caption("GravityEscape - Defeated")
+
+        credit = defeated_window.Defeated(self.screen)
+        credit.update()
