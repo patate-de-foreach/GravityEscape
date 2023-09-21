@@ -5,3 +5,6 @@ def dist(x1,y1,x2,y2):
 
 def hw():
     print("Hello World !")
+
+def approx(num, targetNum, approximation):
+   return num>targetNum-approximation and num<targetNum + approximation
