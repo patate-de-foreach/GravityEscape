@@ -6,15 +6,18 @@ from mapManager import *
 from ennemiFactory import *
 import game_state
 from power_ups_factory import *
+from player import *
 
 
 class Level(game_state.Game_State):
-    def __init__(self, num_lvl, screen, player, clock):
+    def __init__(self, num_lvl, screen, clock):
         super().__init__()
         self.screen = screen
         self.num_lvl = num_lvl
-        self.player = player
+        screen_width , screen_height = self.screen.get_size()
         self.clock = clock
+        self.player = Player(screen_width/2, 100, self.screen, "CLAVIER", self.clock)
+
         self.death_timer = 0
         # Récupère les infos du level depuis un fichier Json
         self.get_level_config("level_config.json")
@@ -32,7 +35,7 @@ class Level(game_state.Game_State):
         )
         self.enemy_factory = EnemyFactory(
             self.screen,
-            player,
+            self.player,
             self.nbr_ennemis,
             self.tps_min_spawn,
             self.tps_max_spawn,
