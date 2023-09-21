@@ -7,7 +7,7 @@ from ennemi import *
 
 class Drone(Ennemi):
     def __init__(self, x, y, fenetre, clock):
-        super().__init__(self, x, y, fenetre, clock)
+        Ennemi.__init__(self, x, y, fenetre, clock)
         
         self.anim = {
             "death":"assets/graphics/entities/enemies/drones/1/Death.png",
