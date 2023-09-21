@@ -58,7 +58,7 @@ class Player(pygame.sprite.Sprite):
         
         self.attack_cooldown = 50
         self.current_cooldown_attack = 0
-        self.attack_damage = 10
+        self.attack_damage = 1
         self.attack_range = 80
         self.is_attacking = False
         self.GRAVITY_STRENGHT = 2.8

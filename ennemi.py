@@ -22,6 +22,7 @@ class Ennemi:
         self.stop_radius = 150
         self.arrival_radius = 50
         self.health = 10
+        self.current_health = 10
         self.hit_box_radius = 16
         self.max_speed = 4
         self.max_force = 0.25  # Force d'acceleration
@@ -34,6 +35,11 @@ class Ennemi:
 
     def show(self):
         pygame.draw.rect(self.screen, (255, 0, 0), pygame.Rect(int(self.position.x), int(self.position.y), self.hit_box_radius, self.hit_box_radius))
+
+    def draw_life_bar(self, pos_x, pos_y):
+        grey_bar = pygame.draw.rect(self.screen, 'grey', (pos_x, pos_y, 50, 8))
+        # Dessiner la barre de vie actuelle (rectangle vert)
+        pygame.draw.rect(self.screen, 'green', (pos_x, pos_y, (grey_bar.width * self.current_health)/self.health, 8))
 
     def get_hitbox(self):
         return pygame.Rect(self.position.x, self.position.y, self.hit_box_radius, self.hit_box_radius)
@@ -116,7 +122,7 @@ class Ennemi:
             self.apply_force(repulsion_force)
     
     def kamikaze(self, target) :
-        self.health = 0
+        self.current_health = 0
         target.health -= self.kamikaze_damage
     
     def shot (self, target) :

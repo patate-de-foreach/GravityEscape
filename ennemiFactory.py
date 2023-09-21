@@ -62,14 +62,13 @@ class EnemyFactory:
             if not self.screen.get_rect().collidepoint(enemy.position):
                 self.enemies.remove(enemy)
 
-            if enemy.health <= 0:
+            if enemy.current_health <= 0:
                 self.enemies.remove(enemy)
-
 
             dist_enemy_target = utils.dist(self.target.position.x,self.target.position.y,enemy.position.x,enemy.position.y)
 
             if dist_enemy_target <= self.target.attack_range and self.target.is_attacking:
-                enemy.health -= self.target.attack_damage
+                enemy.current_health -= self.target.attack_damage
 
             if utils.approx(dist_enemy_target,enemy.stop_radius,10):
                 enemy.shot(self.target)
