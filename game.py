@@ -8,12 +8,8 @@ import start
 
 class Game:
     def __init__(self, screen):
-        SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         self.screen = screen
         self.clock = pygame.time.Clock()
-        self.Player = player.Player(
-            SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, screen, "CLAVIER", self.clock
-        )
 
         # Initialisation à None des game_states
         self.main_menu = None
@@ -65,5 +61,5 @@ class Game:
             return self.main_menu
         elif self.current_state == "level1":
             if self.level1 == None:
-                self.level1 = level.Level(1, self.screen, self.Player, self.clock)
+                self.level1 = level.Level(1, self.screen, self.clock)
             return self.level1
