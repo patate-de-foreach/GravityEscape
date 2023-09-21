@@ -9,12 +9,8 @@ import defeated_window
 
 class Game:
     def __init__(self, screen):
-        SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         self.screen = screen
         self.clock = pygame.time.Clock()
-        self.Player = player.Player(
-            SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, screen, "CLAVIER", self.clock
-        )
 
         # Initialisation à None des game_states
         self.main_menu = None

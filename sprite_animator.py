@@ -1,8 +1,11 @@
 import pygame
+from utils import import_folder
+
 
 class SpriteAnimator:
-    def __init__(self, sprite_sheet, num_frames, frame_width, frame_height, frame_duration):
-        
+    def __init__(
+        self, sprite_sheet, num_frames, frame_width, frame_height, frame_duration
+    ):
         self.sprite_sheet = sprite_sheet
         self.num_frames = num_frames
         self.frame_width = frame_width
@@ -18,7 +21,9 @@ class SpriteAnimator:
     def load_frames(self):
         # Divise la feuille de sprites en images individuelles
         for i in range(self.num_frames):
-            frame = self.sprite_sheet.subsurface((i * self.frame_width, 0, self.frame_width, self.frame_height))
+            frame = self.sprite_sheet.subsurface(
+                (i * self.frame_width, 0, self.frame_width, self.frame_height)
+            )
             self.frames.append(frame)
 
     def update(self, dt):
@@ -36,4 +41,3 @@ class SpriteAnimator:
         # Réinitialise l'animation au premier frame
         self.current_frame = 0
         self.frame_timer = 0
-

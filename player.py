@@ -12,6 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.screen = fenetre
         self.clock = clock
 
+        # animation
         self.import_player_assets()
         self.frame_index = 0
         self.animation_speed = 0.15
@@ -85,7 +86,9 @@ class Player(pygame.sprite.Sprite):
         self.max_force = 0.1  # Force d'acceleration
 
         self.GRAVITY_DIRECTION = "GRAVITY_DOWN"  # anciennement GRAVITY_SIDE
-        self.health = 10
+        self.max_health = 10
+        self.health = self.max_health
+
         self.hit_box_radius = 16
 
     def import_player_assets(self):
@@ -101,15 +104,19 @@ class Player(pygame.sprite.Sprite):
             full_path = animation_path + "/" + animation
             self.animations[animation] = import_folder(full_path)
 
-    # fait défiler les frames d'animation (change le contenu de original surface)
+    # fait défiler les frames d'animation
     def animate(self):
         if (
             not self.is_walking
             and self.anim_state != "attack"
             and self.anim_state != "death"
+            and self.anim_state != "hurt"
         ):
             self.anim_state = "idle"
         animation = self.animations[self.anim_state]
+
+        if self.anim_state == "death" and self.frame_index == 0:
+            AudioManager().play_bgm("game_over", loop=-1, introName="game_over_intro")
 
         if self.frame_index > len(animation) - 1:
             if self.anim_state == "death":
@@ -117,9 +124,11 @@ class Player(pygame.sprite.Sprite):
                 self.frame_index = len(animation) - 1
             else:
                 self.frame_index = 0
-                if self.anim_state == "attack":
+                if self.anim_state == "attack" or self.anim_state == "hurt":
+                    self.frame_index = len(animation) - 1
                     self.anim_state = "idle"
                     self.animation_speed = 0.15
+
         else:
             self.frame_index += self.animation_speed
 
@@ -170,68 +179,73 @@ class Player(pygame.sprite.Sprite):
             self.is_attacking = False
 
     def go_up(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.anim_orientation = "flipped"
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.anim_orientation = "unchanged"
-            self.apply_force((0, -self.speed))
-            self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack" and self.anim_state != "hurt":
+                    self.anim_state = "walk"
+                if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                    self.anim_orientation = "flipped"
+                elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                    self.anim_orientation = "unchanged"
+                self.apply_force((0, -self.speed))
+                self.is_walking = True
 
     def go_down(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-            self.anim_orientation = "unchanged"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-            self.anim_orientation = "flipped"
-        self.apply_force((0, self.speed))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack" and self.anim_state != "hurt":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                self.anim_orientation = "unchanged"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                self.anim_orientation = "flipped"
+            self.apply_force((0, self.speed))
+            self.is_walking = True
 
     def go_left(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-            self.anim_orientation = "flipped"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-            self.anim_orientation = "unchanged"
-        self.apply_force((-self.speed, 0))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack" and self.anim_state != "hurt":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                self.anim_orientation = "flipped"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                self.anim_orientation = "unchanged"
+            self.apply_force((-self.speed, 0))
+            self.is_walking = True
 
     def go_right(self):
-        if self.on_floor and self.anim_state != "death":
-            if self.anim_state != "attack":
-                self.anim_state = "walk"
-        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-            self.anim_orientation = "unchanged"
-        elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
-            self.anim_orientation = "flipped"
-        self.apply_force((self.speed, 0))
-        self.is_walking = True
+        if self.anim_state != "death":
+            if self.on_floor:
+                if self.anim_state != "attack" and self.anim_state != "hurt":
+                    self.anim_state = "walk"
+            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                self.anim_orientation = "unchanged"
+            elif self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                self.anim_orientation = "flipped"
+            self.apply_force((self.speed, 0))
+            self.is_walking = True
 
-    # la frame 3 n'est pas displayed
     def trigger_attack(self):
-        if self.is_attacking == False and self.current_cooldown_attack == 0:
-            self.is_attacking = True
-            self.current_cooldown_attack = self.attack_cooldown
-            self.anim_state = "attack"
-            self.animation_speed = 0.13
-            self.frame_index = 0
+        if self.anim_state != "death":
+            if self.is_attacking == False and self.current_cooldown_attack == 0:
+                self.is_attacking = True
+                self.current_cooldown_attack = self.attack_cooldown
+                self.anim_state = "attack"
+                self.animation_speed = 0.13
+                self.frame_index = 0
 
     def jump(self):
-        if self.on_floor == True:
-            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
-                self.apply_force((0, self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-                self.apply_force((0, -self.jump_force))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-                self.apply_force((self.jump_force, 0))
-            elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-                self.apply_force((-self.jump_force, 0))
+        if self.anim_state != "death":
+            if self.on_floor == True:
+                if self.GRAVITY_DIRECTION == "GRAVITY_UP":
+                    self.apply_force((0, self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+                    self.apply_force((0, -self.jump_force))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+                    self.apply_force((self.jump_force, 0))
+                elif self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+                    self.apply_force((-self.jump_force, 0))
 
     def apply_gravity(self):
         # GRAVITY DOWN
@@ -251,16 +265,6 @@ class Player(pygame.sprite.Sprite):
         self.player_rect.x = self.position.x
         self.player_rect.y = self.position.y
         self.screen.blit(self.image, self.player_rect)
-
-    def changeSprite(self, spritePath):
-        self.sprite_sheet = pygame.image.load(spritePath)
-        self.sprite_animator = SpriteAnimator(
-            self.sprite_sheet,
-            num_frames=4,
-            frame_width=36,
-            frame_height=78,
-            frame_duration=1000,
-        )
 
     def apply_force(self, force):
         self.acceleration += force
@@ -304,9 +308,17 @@ class Player(pygame.sprite.Sprite):
             if self.position.y < 64:
                 self.position.y = 64
 
+    def receive_damage(self, damage):
+        self.health -= damage
+        if self.anim_state != "death":
+            self.anim_state = "hurt"
+            self.animation_speed = 0.1
+            self.frame_index = 0
+
     def check_hp(self):
-        if self.health <= 0:
+        if self.health <= 0 and self.anim_state != "death":
             self.health = 0
+            self.frame_index = 0
             self.animation_speed = 0.1
             self.anim_state = "death"
 
@@ -337,3 +349,9 @@ class Player(pygame.sprite.Sprite):
                 midright=(self.position.x, self.position.y)
             )
         return sprite
+
+    def heal(self, healing_amount):
+        self.health += healing_amount
+        # Vérification que la vie du personnage ne soit pas trop élever
+        if self.health > self.max_health:
+            self.health = self.max_health

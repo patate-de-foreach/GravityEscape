@@ -37,16 +37,17 @@ class Start(game_state.Game_State):
 
         credit = credits.Credits(self.screen)
         credit.main()
+
     # fonction qqui affiche la page avant la page d'accuil
     def run(self):
-        
         pygame.display.set_caption("GravityEscape")
+
         self.Start_page()
-        
-       
+
     # affiche la page d'accueil
     def Start_page(self):
-        pygame.display.set_caption("GravityEscape - Menu")
+        if pygame.display.get_caption != "GravityEscape - Menu":
+            pygame.display.set_caption("GravityEscape - Menu")
 
         self.screen.blit(self.BackGround, (0, 0))
 
@@ -123,8 +124,6 @@ class Start(game_state.Game_State):
         if self.exit.checkinput(mouse_pos):
             pygame.quit()
             sys.exit()
-    
 
-     
     def easterEgg(self):
         pass
