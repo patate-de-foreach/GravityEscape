@@ -16,11 +16,11 @@ class Start(game_state.Game_State):
         self.logo = pygame.image.load("assets/logo.png")
         self.surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SRCALPHA)
         self.screen = screen
-        AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
-    # récupere la font choisi et l'applique au txt demandé
-    def get_font(self, size):
-        return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
+        self.type = True
+
+
+        AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
     # fonction qui apelle le jeu
     def Play(self):
@@ -57,62 +57,59 @@ class Start(game_state.Game_State):
 
         self.screen.blit(self.BackGround, (0, 0))
 
-        mouse_pos = pygame.mouse.get_pos()
-
         # création des boutons
         self.title = Button(
             image=pygame.image.load("assets/title.png"),
             pos=(530, 125),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=1.5,
         )
 
         self.play = Button(
             image=pygame.image.load("assets/graphics/menubuttons/play.png"),
             pos=(512, 400),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=12,
         )
 
         self.settings = Button(
             image=pygame.image.load("assets/graphics/menubuttons/settings.png"),
             pos=(100, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=4,
         )
 
         self.credits = Button(
             image=pygame.image.load("assets/graphics/menubuttons/credits.png"),
             pos=(512, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
+            scale=4,
+        )
+
+
+        if self.type == True:
+            self.type_gameplay = Button(
+                image=pygame.image.load("assets/graphics/menubuttons/Bouton_souris.png"),
+                pos=(512, 575),
+                scale=5,
+            )
+        else:
+            self.type_gameplay = Button(
+                image=pygame.image.load("assets/graphics/menubuttons/Bouton_Manette.png"),
+                pos=(512, 575),
+                scale=5,
+            )
+
+        self.credits = Button(
+            image=pygame.image.load("assets/graphics/menubuttons/credits.png"),
+            pos=(512, 700),
             scale=4,
         )
 
         self.exit = Button(
             image=pygame.image.load("assets/graphics/menubuttons/exit.png"),
             pos=(924, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=4,
         )
 
         # detecte les changement si il y a un texte au lieu d'une image
-        for button in [self.play, self.settings, self.exit, self.credits, self.title]:
-            button.ColorChange(mouse_pos)
+        for button in [self.play, self.settings, self.exit, self.credits, self.title, self.type_gameplay]:
             button.update(self.screen)
 
         pygame.display.update()
@@ -125,6 +122,11 @@ class Start(game_state.Game_State):
             self.Settings()
         if self.credits.checkinput(mouse_pos):
             self.Credits()
+        if self.type_gameplay.checkinput(mouse_pos):
+            if self.type == True:
+                 self.type = False
+            else:
+                 self.type = True
         if self.title.checkinput(mouse_pos):
             self.easterEgg()
         if self.exit.checkinput(mouse_pos):

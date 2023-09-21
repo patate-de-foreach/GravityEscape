@@ -1,37 +1,25 @@
 import pygame
 
 class Button():
-    def __init__(self, image, pos, input, font, color, hover_color, scale):
+    def __init__(self, image, pos, scale):
+        # prends l'image du bouton et la rescale selon la variable scale
         self.image = pygame.transform.scale(image,(int(image.get_width() * scale), int(image.get_height() * scale)))        
+        # prends la hauteur et la largeur
         self.x = pos[0]
         self.y = pos[1]
-        self.font = font
-        self.color, self.hover_color = color, hover_color
-        self.input = input
 
-        self.txt = self.font.render(self.input, True, self.color)
-
-        if self.image is None:
-            self.image = self.txt
+        # prends le rect de l'image et prends le centre selon x et y
         self.rect = self.image.get_rect(center=(self.x, self.y))
-        self.txt_rect = self.txt.get_rect(center=(self.x, self.y))
 
+    # fonction qui actualise l'ecran et l'image
     def update(self, screen):
-        if self.image is not None:
-            screen.blit(self.image, self.rect)
-        screen.blit(self.txt, self.txt_rect)
+        screen.blit(self.image, self.rect)
 
     def checkinput(self, pos):
         if pos[0] in range(self.rect.left, self.rect.right) and pos[1] in range(self.rect.top, self.rect.bottom):
             return True
         return False
     
-    def ColorChange(self, position):
-        if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
-            self.txt = self.font.render(self.input, True , self.hover_color)
-        else:
-            self.txt = self.font.render(self.input, True, self.color)
-
 
 
         
