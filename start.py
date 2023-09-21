@@ -1,7 +1,7 @@
 import pygame, sys
 import game
 import main_menu
-import credits2
+import credits
 
 from buttons import Button
 
@@ -30,7 +30,7 @@ class Start:
     def credits(self):
         pygame.display.set_caption("GravityEscape - Crédits")
 
-        credit = credits2.Credits(self.screen)
+        credit = credits.Credits(self.screen)
         credit.main()
 
     # affiche la page d'accueil
