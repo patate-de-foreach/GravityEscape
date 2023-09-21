@@ -3,11 +3,9 @@ import csv
 
 
 class MapManager:
-    def __init__(self, tile_size, images, map_csv, obstacles_ids, background_path):
+    def __init__(self, tile_size, images, map_csv, background_path):
         # Gestion tuiles
         self.tuiles = []  # Tuiles à afficher
-        self.obstacles_ids = obstacles_ids
-        self.tiles_obstacles = []
         self.background_path = background_path
 
         if background_path != "":
