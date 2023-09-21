@@ -94,19 +94,16 @@ class Level(game_state.Game_State):
                 self.death_timer += 1
             else:
                self.menu_dead()
-               Hud(self.screen, self.player).dysplay_end_score(self.start_run, self.end_run)
         else:
             Hud(self.screen, self.player).dysplay_live_score(self.start_run)
             self.enemy_factory.draw_enemies()
             Hud(self.screen, self.player).dysplay_life_bar()
 
     def menu_dead(self):
-        #  image = pygame.image.load(
-        #             "assets/graphics/background/defeated_screen.jpg"
-        #         )
-        #         self.screen.blit(image, (0, 0))
-        #         # play game over music  
+    
         pygame.display.set_caption("GravityEscape - Defeated")
-
+        
         self.redirect = "defeated"
         self.is_finished = True
+
+        

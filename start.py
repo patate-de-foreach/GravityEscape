@@ -32,6 +32,12 @@ class Start(game_state.Game_State):
         self.redirect = "level1"
         self.is_finished = True
 
+    def Settings(self):
+        pygame.display.set_caption("GravityEscape - Settings")
+
+        self.redirect = "settings"
+        self.is_finished = True
+
     def Credits(self):
         pygame.display.set_caption("GravityEscape - Crédits")
 
@@ -116,7 +122,7 @@ class Start(game_state.Game_State):
         if self.play.checkinput(mouse_pos):
             self.Play()
         if self.settings.checkinput(mouse_pos):
-            self.settings()
+            self.Settings()
         if self.credits.checkinput(mouse_pos):
             self.Credits()
         if self.title.checkinput(mouse_pos):

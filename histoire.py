@@ -6,8 +6,7 @@ class Histoire:
     def __init__(self, screen):
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         # Image de fond
-        fond = pygame.image.load("assets/graphics/background/GravityRobot.png")
-        self.touches = pygame.image.load("assets/graphics/touches/touches.png")
+        fond = pygame.image.load("assets/graphics/touches/touches.png")
 
         self.x = SCREEN_WIDTH // 2
         self.y = SCREEN_HEIGHT
@@ -16,7 +15,7 @@ class Histoire:
         self.screen = screen
 
         # Vitesse de défilement du texte (ajustez selon vos besoins)
-        self.vitesse_scroll = 1.2
+        self.vitesse_scroll = 1.3
 
         # Couleurs
         self.blanc = (255, 255, 255)
@@ -66,7 +65,9 @@ class Histoire:
             "que réserve le destin",
             "à ce robot en quête",
             "de liberté.        ",
-            "                   ,"
+            "                   ",
+            "                   ",
+            "                   ",
             "   À la faveur     ",
             "d'une expérience passée,",
             "il a été doté du pouvoir",
@@ -82,8 +83,8 @@ class Histoire:
             "                    ",
             "                    ",
             "                    ",
-            "Jeté dans une pièce,",
-            "  son but survivre  ",
+            "Jetté dans une pièce,",
+            "son but est de survivre",
             "  a des vagues de   ",
             "       Robots       ",
             "                    ",
@@ -111,8 +112,8 @@ class Histoire:
             y_pos += 50  # Espacement entre les lignes de texte
 
 
+
     def main(self):
-        global y
 
         running = True
         while running:
@@ -120,20 +121,17 @@ class Histoire:
                 if event.type == pygame.QUIT:
                     running = False
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        #startgame = start.Start(self.screen)
-                        #startgame.Start_page()
-                    
+                    if event.key == pygame.K_ESCAPE:                  
                         running = False
 
             self.y -= self.vitesse_scroll
             if self.y < -len(self.texte) * 45:
                 self.vitesse_scroll = 0
-                self.screen.blit(self.touches, (0, 0))
 
 
             self.screen.fill(self.blanc)
             self.afficher_texte()
+            # self.screen.blit(self.touches, (0, 0))
             pygame.display.flip()
             self.clock.tick(60)
 
