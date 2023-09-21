@@ -65,6 +65,7 @@ class Player(pygame.sprite.Sprite):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
         self.acceleration = pygame.Vector2(0, 0)
+
         self.friction = 0.1
         self.player_rect = self.rotated_surface.get_rect(
             midbottom=(self.position.x, self.position.y)
@@ -131,9 +132,9 @@ class Player(pygame.sprite.Sprite):
         self.acceleration = pygame.Vector2(0, 0)
         self.velocity -= self.velocity * self.friction
         self.apply_gravity()
-        self.check_collisions()
         self.cooldown_attack()
         self.convert_control_into_action(self.player_control.get_control_pressed())
+        self.check_collisions()
         self.animate()
         print(self.is_walking)
 
@@ -259,25 +260,43 @@ class Player(pygame.sprite.Sprite):
         screen_width, screen_height = self.screen.get_size()
         self.on_floor = False
         # Collision mur droite
-        if self.position.x + self.player_rect.width > screen_width - 64:
-            self.position.x = screen_width - 64 - self.player_rect.width
-            if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
+            if self.position.x + self.player_rect.height > screen_width - 64:
+                self.position.x = screen_width - 64 - self.player_rect.height
                 self.on_floor = True
+        else:
+            if self.position.x + self.player_rect.width > screen_width - 64:
+                self.position.x = screen_width - 64 - self.player_rect.width
+
         # Collision mur gauche
-        if self.position.x < 64:
-            self.position.x = 64
-            if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+        if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
+            if self.position.x < 64:
+                self.position.x = 64
                 self.on_floor = True
+        else:
+            if self.position.x < 64:
+                self.position.x = 64
+                
         # Collision sol
-        if self.position.y + self.player_rect.height > screen_height - 64:
-            self.position.y = screen_height - 64 - self.player_rect.height
-            if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+        if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
+            if self.position.y + self.player_rect.height > screen_height - 64:
+                self.position.y = screen_height - 64 - self.player_rect.height
                 self.on_floor = True
+        else:
+            if self.position.y + self.player_rect.width > screen_height - 64:
+                print("ici")
+                self.position.y = screen_height - 64 - self.player_rect.width
+            
         # Collision plafond
-        if self.position.y < 64:
-            self.position.y = 64
-            if self.GRAVITY_DIRECTION == "GRAVITY_UP":
+        if self.GRAVITY_DIRECTION == "GRAVITY_UP":
+            if self.position.y < 64:
+                self.position.y = 64
                 self.on_floor = True
+        else:
+            if self.position.y < 64:
+                self.position.y = 64
+                
+                    
 
     def set_gravity(self, gravity_direction):
         self.GRAVITY_DIRECTION = gravity_direction

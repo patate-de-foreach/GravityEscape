@@ -23,6 +23,7 @@ class EnemyFactory:
 
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
+
         if current_time - self.last_spawn_time >= self.spawn_delay:
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
