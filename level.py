@@ -88,7 +88,6 @@ class Level(game_state.Game_State):
         if self.player.is_dead:
             if self.end_run == 0.0:
                 self.end_run = time.perf_counter()
-                print(self.end_run - self.start_run)
             if self.death_timer < 100:
                 self.death_timer += 1
             else:

@@ -4,7 +4,8 @@ from ennemi import *
 from drone import *
 from enums.level_state_ENUM import *
 import utils
-
+from explosion import Explosion
+from explosionManager import *
 
 class EnemyFactory:
     def __init__(
@@ -50,7 +51,6 @@ class EnemyFactory:
             self.minRespawnTime = int(self.minRespawnTime * 0.99)
             self.maxRespawnTime = int(self.maxRespawnTime * 0.99)
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
-            # print(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
         if len(self.enemies) <= 0 and self.max_enemies:
@@ -68,6 +68,7 @@ class EnemyFactory:
                 self.enemies.remove(enemy)
 
             if enemy.current_health <= 0:
+                self.explosion_manager.add_explosion(self.screen, enemy.position)
                 self.enemies.remove(enemy)
 
             dist_enemy_target = utils.dist(
