@@ -10,7 +10,6 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.screen = fenetre
         self.clock = clock
-        # self.changeSprite(self.anim["idle"])
         self.player_control = Player_Controls(playerControlType)
         self.action_dictionnary = {
             "GRAVITY_UP": {
@@ -81,7 +80,7 @@ class Player(pygame.sprite.Sprite):
         self.acceleration = pygame.Vector2(0, 0)
         self.velocity -= self.velocity * self.friction
         self.apply_gravity()
-        self.border()
+        self.check_collisions()
         self.convert_control_into_action(self.player_control.get_control_pressed())
 
     def convert_control_into_action(self, actionSet):
@@ -161,7 +160,7 @@ class Player(pygame.sprite.Sprite):
     def apply_force(self, force):
         self.acceleration += force
 
-    def border(self):
+    def check_collisions(self):
         screen_width, screen_height = self.screen.get_size()
         self.on_floor = False
         # Collision mur droite
