@@ -107,6 +107,7 @@ class Player(pygame.sprite.Sprite):
             not self.is_walking
             and self.anim_state != "attack"
             and self.anim_state != "death"
+            and self.anim_state != "hurt"
         ):
             self.anim_state = "idle"
         animation = self.animations[self.anim_state]
@@ -117,9 +118,11 @@ class Player(pygame.sprite.Sprite):
                 self.frame_index = len(animation) - 1
             else:
                 self.frame_index = 0
-                if self.anim_state == "attack":
+                if self.anim_state == "attack" or self.anim_state == "hurt":
+                    self.frame_index = len(animation) - 1
                     self.anim_state = "idle"
                     self.animation_speed = 0.15
+
         else:
             self.frame_index += self.animation_speed
 
@@ -218,17 +221,17 @@ class Player(pygame.sprite.Sprite):
             self.apply_force((self.speed, 0))
             self.is_walking = True
 
-    # la frame 3 n'est pas displayed
     def trigger_attack(self):
-        if self.is_attacking == False and self.current_cooldown_attack == 0:
-            self.is_attacking = True
-            self.current_cooldown_attack = self.attack_cooldown
-            self.anim_state = "attack"
-            self.animation_speed = 0.13
-            self.frame_index = 0
+        if self.anim_state != "death":
+            if self.is_attacking == False and self.current_cooldown_attack == 0:
+                self.is_attacking = True
+                self.current_cooldown_attack = self.attack_cooldown
+                self.anim_state = "attack"
+                self.animation_speed = 0.13
+                self.frame_index = 0
 
     def jump(self):
-        if self.anim_state != 'death':
+        if self.anim_state != "death":
             if self.on_floor == True:
                 if self.GRAVITY_DIRECTION == "GRAVITY_UP":
                     self.apply_force((0, self.jump_force))
@@ -309,6 +312,11 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.position.y < 64:
                 self.position.y = 64
+
+    def receive_damage(self, damage):
+        self.health -= damage
+        self.anim_state = "hurt"
+        self.animation_speed = 0.1
 
     def check_hp(self):
         if self.health <= 0:
