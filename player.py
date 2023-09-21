@@ -93,7 +93,7 @@ class Player(pygame.sprite.Sprite):
         self.check_collisions()
         self.cooldown_attack()
         self.convert_control_into_action(self.player_control.get_control_pressed())
-        print(self.is_attacking, self.current_cooldown_attack )
+        
 
     def convert_control_into_action(self, actionSet):
         for action in actionSet:
