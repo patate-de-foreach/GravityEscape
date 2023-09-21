@@ -1,6 +1,5 @@
-import pygame, sys
+import pygame
 from buttons import Button
-from hud import Hud
 from player import *
 
 import game_state
@@ -16,10 +15,6 @@ class Defeated(game_state.Game_State):
         self.screen = screen
         # AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
-
-    def get_font(self, size):
-        return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
-    
     def run(self):
         self.update()
 
@@ -27,30 +22,19 @@ class Defeated(game_state.Game_State):
     def update(self):
         self.screen.blit(self.BackGround, (0,0))
 
-        mouse_pos = pygame.mouse.get_pos()
-
         self.replay = Button(
             image=pygame.image.load("assets/graphics/menubuttons/playagain.png"),
             pos=(350, 600),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=8,
         )
 
         self.home = Button(
             image=pygame.image.load("assets/graphics/menubuttons/Home.png"),
             pos=(650, 600),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=8,
         )
 
         for button in [self.replay, self.home]:
-            button.ColorChange(mouse_pos)
             button.update(self.screen)
 
         pygame.display.update()

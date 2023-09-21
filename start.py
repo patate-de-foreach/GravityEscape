@@ -57,62 +57,39 @@ class Start(game_state.Game_State):
 
         self.screen.blit(self.BackGround, (0, 0))
 
-        mouse_pos = pygame.mouse.get_pos()
-
         # création des boutons
         self.title = Button(
             image=pygame.image.load("assets/title.png"),
             pos=(530, 125),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=1.5,
         )
 
         self.play = Button(
             image=pygame.image.load("assets/graphics/menubuttons/play.png"),
             pos=(512, 400),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=12,
         )
 
         self.settings = Button(
             image=pygame.image.load("assets/graphics/menubuttons/settings.png"),
             pos=(100, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=4,
         )
 
         self.credits = Button(
             image=pygame.image.load("assets/graphics/menubuttons/credits.png"),
             pos=(512, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=4,
         )
 
         self.exit = Button(
             image=pygame.image.load("assets/graphics/menubuttons/exit.png"),
             pos=(924, 700),
-            input="",
-            font=self.get_font(75),
-            color="#ffffff",
-            hover_color="red",
             scale=4,
         )
 
         # detecte les changement si il y a un texte au lieu d'une image
         for button in [self.play, self.settings, self.exit, self.credits, self.title]:
-            button.ColorChange(mouse_pos)
             button.update(self.screen)
 
         pygame.display.update()

@@ -1,6 +1,5 @@
 import pygame
-import sys
-import start
+
 
 class Histoire:
     def __init__(self, screen):

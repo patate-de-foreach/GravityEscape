@@ -4,7 +4,6 @@ from ennemi import *
 from drone import *
 from enums.level_state_ENUM import *
 import utils
-from explosion import Explosion
 from explosionManager import *
 
 class EnemyFactory:
