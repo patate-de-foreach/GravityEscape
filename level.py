@@ -62,12 +62,10 @@ class Level(game_state.Game_State):
         self.map_manager.draw_map(self.screen)
         self.player.update()
         self.player.show()
-        Hud(self.screen, self.player).dysplay_life_bar()
-
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame
 
         self.enemy_factory.update_enemies()
-        self.enemy_factory.draw_enemies()
+        self.check_life()
 
         if self.enemy_factory.state == "FINISH":
             # OUVRIR LES PORTES
@@ -76,3 +74,11 @@ class Level(game_state.Game_State):
     def enter_battle(self):
         # handle battle event
         AudioManager().play_bgm(self.battle_music, introName=self.battle_music_intro)
+
+    def check_life(self):
+        if self.player.health > 0:
+            self.enemy_factory.draw_enemies()
+            Hud(self.screen, self.player).dysplay_life_bar()
+        else:
+            image = pygame.image.load('assets/graphics/background/defeated_screen.jpg')
+            self.screen.blit(image, (0, 0))

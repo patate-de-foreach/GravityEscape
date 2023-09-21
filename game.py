@@ -1,6 +1,9 @@
-import pygame, sys
+import pygame
+import sys
 
-import game, player, ennemi, ennemiFactory, obstacle, level, mapManager, start
+import level
+import player
+import start
 
 
 class Game:
