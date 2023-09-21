@@ -14,7 +14,7 @@ class Histoire:
         self.screen = screen
 
         # Vitesse de défilement du texte (ajustez selon vos besoins)
-        self.vitesse_scroll = 1
+        self.vitesse_scroll = 1.2
 
         # Couleurs
         self.blanc = (255, 255, 255)
@@ -63,7 +63,9 @@ class Histoire:
             " pas la seule surprise",
             "que réserve le destin",
             "à ce robot en quête",
-            "de liberté. À la faveur",
+            "de liberté.        ",
+            "                   ,"
+            "   À la faveur     ",
             "d'une expérience passée,",
             "il a été doté du pouvoir",
             "extraordinaire de manipuler",
@@ -78,7 +80,19 @@ class Histoire:
             "                    ",
             "                    ",
             "                    ",
+            "Jeté dans une pièce,",
+            "  son but survivre  ",
+            "  a des vagues de   ",
+            "       Robots       ",
             "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            "                    ",
+            " APPUYEZ SUR [ECHAP]",
+            "        POUR        ",
+            "      CONTINUER     ",
 
             
 
@@ -111,8 +125,8 @@ class Histoire:
                         running = False
 
             self.y -= self.vitesse_scroll
-            if self.y < -len(self.texte) * 20:
-                self.y = self.y
+            if self.y < -len(self.texte) * 45:
+                self.vitesse_scroll = 0
 
             self.screen.fill(self.blanc)
             self.afficher_texte()
