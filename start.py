@@ -108,18 +108,7 @@ class Start(game_state.Game_State):
             button.ColorChange(mouse_pos)
             button.update(self.screen)
 
-        # detecte les clicks de souris et choisi quelle bouton est cliquer et lance la fonction demandé
-        '''
-        for event in pygame.event.get():
-            print(event.type == pygame.MOUSEBUTTONDOWN)
-            if event.type == pygame.QUIT:
-                pygame.quit
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-        '''  
-
         pygame.display.update()
-
 
     def mouseClicked(self):
         mouse_pos = pygame.mouse.get_pos()
