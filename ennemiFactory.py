@@ -37,7 +37,7 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
-            
+
             enemy = Drone(x, y, self.screen, self.clock)
             self.enemies.append(enemy)
             self.max_enemies -= 1
@@ -50,10 +50,10 @@ class EnemyFactory:
         if len(self.enemies) <= 0 and self.max_enemies:
             self.state = self.state = level_state_ENUM.FINISHED
         for enemy in self.enemies:
-            
+
             if enemy.attack_behavior == "KAMIKAZE":
                 enemy.seek(self.target)
-            else:          
+            else:
                 enemy.arrive_and_stop(self.target)
             enemy.update()
             enemy.show()
@@ -64,10 +64,10 @@ class EnemyFactory:
 
             if enemy.health <= 0:
                 self.enemies.remove(enemy)
-            
 
-            dist_enemy_target = utils.dist(self.target.position.x,self.target.position.y,enemy.position.x,enemy.position.y) 
-            
+
+            dist_enemy_target = utils.dist(self.target.position.x,self.target.position.y,enemy.position.x,enemy.position.y)
+
             if dist_enemy_target <= self.target.attack_range and self.target.is_attacking:
                 enemy.health -= self.target.attack_damage
 

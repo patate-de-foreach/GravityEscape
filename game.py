@@ -1,6 +1,9 @@
-import pygame, sys
+import pygame
+import sys
 
-import game, player, ennemi, ennemiFactory, obstacle, level, mapManager, start
+import level
+import player
+import start
 
 
 class Game:
@@ -24,6 +27,9 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.current_state_object != None:
+                    self.current_state_object.mouseClicked()
 
     def update(self):
         # Va chercher le current_state et display sa fonction de run
