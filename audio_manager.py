@@ -30,6 +30,7 @@ class AudioManager:
         if introName != "":
             mixer.music.load(self.bgm_paths[introName])
             mixer.music.queue(self.bgm_paths[bgmName], loops=loop)
+            mixer.music.play()
         else:
             mixer.music.load(self.bgm_paths[bgmName])
             mixer.music.play(loops=loop)
