@@ -141,7 +141,6 @@ class Player(pygame.sprite.Sprite):
         self.convert_control_into_action(self.player_control.get_control_pressed())
         self.check_collisions()
         self.animate()
-        print(self.is_walking)
 
     def convert_control_into_action(self, actionSet):
         for action in actionSet:
@@ -289,7 +288,6 @@ class Player(pygame.sprite.Sprite):
                 self.on_floor = True
         else:
             if self.position.y + self.player_rect.width > screen_height - 64:
-                print("ici")
                 self.position.y = screen_height - 64 - self.player_rect.width
             
         # Collision plafond

@@ -47,7 +47,6 @@ class EnemyFactory:
             self.minRespawnTime = int(self.minRespawnTime * 0.9)
             self.maxRespawnTime = int(self.maxRespawnTime * 0.9)
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
-            print(enemy.max_speed)
 
     def update_enemies(self):
         if len(self.enemies) <= 0 and self.max_enemies:
