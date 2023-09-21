@@ -3,8 +3,7 @@ import game
 from audio_manager import AudioManager
 
 from buttons import Button
-import game_state
-import credits
+import game_state, credits, histoire
 
 
 # naming : conflit avec "main_menu"
@@ -27,7 +26,11 @@ class Start(game_state.Game_State):
 
     # fonction qui apelle le jeu
     def Play(self):
-        pygame.display.set_caption("GravityEscape - In-Game")
+        pygame.display.set_caption("GravityEscape - Histoire")
+
+        hisoire = histoire.Histoire(self.screen)
+        hisoire.main()
+
         self.redirect = "level1"
         self.is_finished = True
 

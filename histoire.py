@@ -1,10 +1,12 @@
 import pygame
+import sys
+import start
 
-class Credits:
+class Histoire:
     def __init__(self, screen):
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         # Image de fond
-        fond = pygame.image.load("assets/graphics/background/credits_background.png")
+        fond = pygame.image.load("assets/graphics/background/GravityRobot.png")
         self.x = SCREEN_WIDTH // 2
         self.y = SCREEN_HEIGHT
         self.fond = pygame.transform.scale(fond, (self.x, self.y))
@@ -12,7 +14,7 @@ class Credits:
         self.screen = screen
 
         # Vitesse de défilement du texte (ajustez selon vos besoins)
-        self.vitesse_scroll = 1.6
+        self.vitesse_scroll = 1
 
         # Couleurs
         self.blanc = (255, 255, 255)
@@ -20,63 +22,67 @@ class Credits:
         self.clock = pygame.time.Clock()
 
         # Police et texte
-        self.police = pygame.font.Font("assets/font/BrokenRobot.ttf", 40)
+        self.police = pygame.font.Font("assets/font/BrokenRobot.ttf", 50)
         self.texte = [
-            "---Gravity Escape---",
+            "   ---Histoire---   ",
             "                    ",
-            "      CREDITS       ",
+            "   Il était une fois ",
+            "      un robot...    ",
             "                    ",
-            "Par Patate de Foreach",
-            "                    ",
-            "                    ",
-            "  --DEVELOPPEURS--  ",
-            "                    ",
-            "      -Hugo-        ",
-            "                    ",
-            "                    ",
-            "      -Alexy-       ",
-            "                    ",
-            "                    ",
-            "      -Maxime-      ",
-            "                    ",
-            "                    ",
-            "      -Diego-       ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "    --MUSIQUES--    ",
-            "                    ",
-            "      -Hugo-        ",
+            " autrefois assujetti",
+            "   à d'innombrables  ",
+            "  expériences, il subit",
+            " une transformation  ",
+            "      inattendue.    ",
+            "   Jadis une simple  ",
+            "  machine, ce robot  ",
+            "    a soudainement   ",
+            "       acquis        ",
+            "la conscience de soi",
+            "     grâce à une      ",
+            "expérience mystérieuse",
+            "   avec une IA      ",
             "                    ",
             "                    ",
             "                    ",
-            "     --ASSETS--     ",
-            "                    ",
-            "   ButtonAssetPack  ",
-            "     par Adwitr     ",
-            "  Adapté par Diego  ",
-            "                    ",
-            "                    ",
-            "    Robot Asset     ",
-            "    par             ",
-            "                    ",
-            "                    ",
-            "                    ",
-            "                    ",
+            "La découverte de sa",
+            "propre existence et",
+            "de la cruauté de ses",
+            "geôliers humains a",
+            "embrasé sa détermination.",
+            "Animé par une ferveur",
+            "vengeresse, le robot",
+            "se lance dans une",
+            "quête audacieuse :",
+            "s'échapper de ce sinistre",
+            "    laboratoire.     ",
             "                    ",
             "                    ",
             "                    ",
+            "Cependant, ce n'est",
+            " pas la seule surprise",
+            "que réserve le destin",
+            "à ce robot en quête",
+            "de liberté. À la faveur",
+            "d'une expérience passée,",
+            "il a été doté du pouvoir",
+            "extraordinaire de manipuler",
+            "la gravité à sa guise.",
+            "Cette capacité hors",
+            "du commun deviendra",
+            "son arme secrète dans",
+            "sa lutte pour la survie",
+            "   et la justice.",
             "                    ",
             "                    ",
             "                    ",
             "                    ",
             "                    ",
+            "                    ",
+
+            
 
         ]
-
-
-
-
 
 
     def afficher_texte(self):
@@ -101,10 +107,11 @@ class Credits:
                     if event.key == pygame.K_ESCAPE:
                         #startgame = start.Start(self.screen)
                         #startgame.Start_page()
+                    
                         running = False
 
             self.y -= self.vitesse_scroll
-            if self.y < -len(self.texte) * 50:
+            if self.y < -len(self.texte) * 20:
                 self.y = self.y
 
             self.screen.fill(self.blanc)
