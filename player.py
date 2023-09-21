@@ -3,6 +3,7 @@ import math
 from player_controls import *
 from sprite_animator import SpriteAnimator
 from audio_manager import AudioManager
+from utils import import_folder
 
 
 class Player(pygame.sprite.Sprite):
@@ -10,6 +11,17 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.screen = fenetre
         self.clock = clock
+
+
+        self.import_player_assets()
+        self.frame_index = 0
+        self.animation_speed = 0.15
+        # self.image = self.animations['idle'][self.frame_index]
+        self.original_surface = self.animations['idle'][self.frame_index]
+        self.rotated_surface = self.animations['idle'][self.frame_index]
+
+        self.status = 'idle'
+
         self.player_control = Player_Controls(playerControlType)
         self.action_dictionnary = {
             "GRAVITY_UP": {
@@ -69,18 +81,36 @@ class Player(pygame.sprite.Sprite):
         self.hit_box_radius = 16
         self.max_speed = 1
         self.max_force = 0.2  # Force d'acceleration
-
-        self.original_surface = pygame.image.load(
-            "assets/graphics/entities/hero/idle/idle1.png"
-        ).convert_alpha()
-        self.rotated_surface = pygame.image.load(
-            "assets/graphics/entities/hero/idle/idle1.png"
-        ).convert_alpha()
         self.player_rect = self.rotated_surface.get_rect(
             midbottom=(self.position.x, self.position.y)
         )
+    
+    def import_player_assets(self):
+        animation_path = "assets/graphics/entities/hero"
+        self.animations = {
+            'attack':[],
+            'death':[],
+            'hurt':[],
+            'idle':[],
+            'init':[],
+            'walk':[]
+        }
+        for animation in self.animations.keys():
+            full_path = animation_path + '/' + animation
+            self.animations[animation] = import_folder(full_path)
+            # self.flipped_animations[animation] = import_folder(full_path)
+
+    #fait défiler les frames d'animation (change le contenu de original surface)
+    def animate(self):
+        animation = self.animations['walk']
+
+        self.frame_index += self.animation_speed
+        if self.frame_index >= len(animation):
+            self.frame_index = 0
+        self.image = self.flipSprite(animation[int(self.frame_index)])
 
     def update(self):
+        # self.image = self.rotated_surface
         # Convertit les touches appuyées par le joueur en actions
         self.velocity += self.acceleration
         self.position += self.velocity
@@ -92,7 +122,7 @@ class Player(pygame.sprite.Sprite):
         self.check_collisions()
         self.cooldown_attack()
         self.convert_control_into_action(self.player_control.get_control_pressed())
-        
+        self.animate()
 
     def convert_control_into_action(self, actionSet):
         for action in actionSet:
@@ -167,7 +197,7 @@ class Player(pygame.sprite.Sprite):
     def show(self):
         self.player_rect.x = self.position.x
         self.player_rect.y = self.position.y
-        self.screen.blit(self.rotated_surface, self.player_rect)
+        self.screen.blit(self.image, self.player_rect)
 
     def changeSprite(self, spritePath):
         self.sprite_sheet = pygame.image.load(spritePath)
@@ -208,27 +238,27 @@ class Player(pygame.sprite.Sprite):
 
     def set_gravity(self, gravity_direction):
         self.GRAVITY_DIRECTION = gravity_direction
-        self.flipSprite()
+        
         AudioManager().player_sounds["gravity"].play()
 
-    def flipSprite(self):
+    def flipSprite(self, sprite):
         if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
-            self.rotated_surface = self.original_surface
-            self.player_rect = self.rotated_surface.get_rect(
+            self.player_rect = sprite.get_rect(
                 midbottom=(self.position.x, self.position.y)
             )
         if self.GRAVITY_DIRECTION == "GRAVITY_LEFT":
-            self.rotated_surface = pygame.transform.rotate(self.original_surface, -90)
+            sprite = pygame.transform.rotate(sprite, -90)
             self.player_rect = self.rotated_surface.get_rect(
                 midleft=(self.position.x, self.position.y)
             )
         if self.GRAVITY_DIRECTION == "GRAVITY_UP":
-            self.rotated_surface = pygame.transform.rotate(self.original_surface, 180)
+            sprite = pygame.transform.rotate(sprite, 180)
             self.player_rect = self.rotated_surface.get_rect(
                 midtop=(self.position.x, self.position.y)
             )
         if self.GRAVITY_DIRECTION == "GRAVITY_RIGHT":
-            self.rotated_surface = pygame.transform.rotate(self.original_surface, 90)
+            sprite = pygame.transform.rotate(sprite, 90)
             self.player_rect = self.rotated_surface.get_rect(
                 midright=(self.position.x, self.position.y)
             )
+        return sprite
