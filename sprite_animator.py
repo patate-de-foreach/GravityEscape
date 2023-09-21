@@ -23,7 +23,7 @@ class SpriteAnimator:
 
     def update(self, dt):
         # Met à jour le frame actuel de l'animation
-        self.frame_timer += dt
+        self.frame_timer += dt.get_time()
         if self.frame_timer >= self.frame_duration:
             self.frame_timer = 0
             self.current_frame = (self.current_frame + 1) % self.num_frames
