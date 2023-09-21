@@ -4,6 +4,7 @@ import sys
 import level
 import player
 import start
+import defeated_window
 
 
 class Game:
@@ -18,6 +19,7 @@ class Game:
         # Initialisation à None des game_states
         self.main_menu = None
         self.level1 = None
+        self.defeated = None
 
         # Début du jeu state initial
         self.set_state("main_menu")
@@ -67,3 +69,7 @@ class Game:
             if self.level1 == None:
                 self.level1 = level.Level(1, self.screen, self.Player, self.clock)
             return self.level1
+        elif self.current_state == "defeated":
+            if self.defeated == None:
+                self.defeated = defeated_window.Defeated(self.screen)
+            return self.defeated

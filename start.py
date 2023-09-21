@@ -41,7 +41,6 @@ class Start(game_state.Game_State):
     def run(self):
         
         pygame.display.set_caption("GravityEscape")
-        
         self.Start_page()
         
        
@@ -65,7 +64,7 @@ class Start(game_state.Game_State):
         )
 
         self.play = Button(
-            image=pygame.image.load("assets/graphics/menubuttons/play2.png"),
+            image=pygame.image.load("assets/graphics/menubuttons/play.png"),
             pos=(512, 400),
             input="",
             font=self.get_font(75),

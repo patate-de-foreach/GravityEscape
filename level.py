@@ -91,5 +91,5 @@ class Level(game_state.Game_State):
         #         # play game over music  
         pygame.display.set_caption("GravityEscape - Defeated")
 
-        credit = defeated_window.Defeated(self.screen)
-        credit.update()
+        self.redirect = "defeated"
+        self.is_finished = True

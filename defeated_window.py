@@ -18,14 +18,18 @@ class Defeated(game_state.Game_State):
     def get_font(self, size):
         return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
     
+    def run(self):
+        self.update()
+
+
     def update(self):
         self.screen.blit(self.BackGround, (0,0))
 
         mouse_pos = pygame.mouse.get_pos()
 
         self.replay = Button(
-            image=pygame.image.load("assets/graphics/menubuttons/play2.png"),
-            pos=(400, 600),
+            image=pygame.image.load("assets/graphics/menubuttons/playagain.png"),
+            pos=(350, 600),
             input="",
             font=self.get_font(75),
             color="#ffffff",
@@ -35,7 +39,7 @@ class Defeated(game_state.Game_State):
 
         self.home = Button(
             image=pygame.image.load("assets/graphics/menubuttons/Home.png"),
-            pos=(700, 600),
+            pos=(650, 600),
             input="",
             font=self.get_font(75),
             color="#ffffff",
@@ -49,9 +53,12 @@ class Defeated(game_state.Game_State):
 
         pygame.display.update()
 
+        
     def mouseClicked(self):
         mouse_pos = pygame.mouse.get_pos()
         if self.replay.checkinput(mouse_pos):
-           print("replay")
-        if self.replay.checkinput(mouse_pos):
-           print("home")
+            self.redirect = "level1"
+            self.is_finished = True
+        if self.home.checkinput(mouse_pos):
+            self.redirect = "main_menu"
+            self.is_finished = True
