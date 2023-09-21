@@ -305,7 +305,7 @@ class Player(pygame.sprite.Sprite):
                 self.position.y = 64
 
     def check_hp(self):
-        if self.health == 0:
+        if self.health <= 0:
             self.animation_speed = 0.1
             self.anim_state = "death"
 
