@@ -6,7 +6,7 @@ from enums.level_state_ENUM import *
 import utils
 
 class EnemyFactory:
-    def __init__(self, screen, target, max_enemies ,minRespawnTime, maxRespawnTime, clock):
+    def __init__(self, screen, target, max_enemies, minRespawnTime, maxRespawnTime, clock):
         self.state = level_state_ENUM.RUNNING
         
         self.minRespawnTime = minRespawnTime*100
@@ -23,7 +23,7 @@ class EnemyFactory:
 
     def create_enemy(self):
         current_time = pygame.time.get_ticks()
-        if self.max_enemies > 0 and current_time - self.last_spawn_time >= self.spawn_delay:
+        if current_time - self.last_spawn_time >= self.spawn_delay:
             side = random.choice(['top', 'bottom', 'left', 'right'])
             if side == 'top':
                 x = random.randint(0, self.screen.get_width())
@@ -40,11 +40,13 @@ class EnemyFactory:
 
             enemy = Drone(x, y, self.screen, self.clock)
             self.enemies.append(enemy)
-            self.max_enemies -= 1
 
             # Mettre à jour le temps du dernier spawn et le délai de spawn
             self.last_spawn_time = current_time
+            self.minRespawnTime = int(self.minRespawnTime * 0.95)
+            self.maxRespawnTime = int(self.maxRespawnTime * 0.95)
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
+            print(self.minRespawnTime, self.maxRespawnTime)
 
     def update_enemies(self):
         if len(self.enemies) <= 0 and self.max_enemies:
