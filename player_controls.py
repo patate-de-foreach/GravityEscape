@@ -1,7 +1,5 @@
 import pygame
 
-import player
-
 class Player_Controls:
     
     def __init__(self, controllerType):

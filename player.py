@@ -1,7 +1,5 @@
 import pygame
-import math
 from player_controls import *
-from sprite_animator import SpriteAnimator
 from audio_manager import AudioManager
 from utils import import_folder
 
