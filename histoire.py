@@ -7,6 +7,8 @@ class Histoire:
         SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.get_surface().get_size()
         # Image de fond
         fond = pygame.image.load("assets/graphics/background/GravityRobot.png")
+        self.touches = pygame.image.load("assets/graphics/touches/touches.png")
+
         self.x = SCREEN_WIDTH // 2
         self.y = SCREEN_HEIGHT
         self.fond = pygame.transform.scale(fond, (self.x, self.y))
@@ -127,6 +129,8 @@ class Histoire:
             self.y -= self.vitesse_scroll
             if self.y < -len(self.texte) * 45:
                 self.vitesse_scroll = 0
+                self.screen.blit(self.touches, (0, 0))
+
 
             self.screen.fill(self.blanc)
             self.afficher_texte()

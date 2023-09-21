@@ -48,7 +48,7 @@ class Game:
 
             # Lance la boucle principale de l'état en cours
             self.current_state_object.run()
-
+            print(self.current_state_object)
             # Vérifie si l'état est terminé
             self.update()
             pygame.display.update()
@@ -66,7 +66,7 @@ class Game:
                 self.main_menu = start.Start(self.screen)
             return self.main_menu
         elif self.current_state == "level1":
-            if self.level1 == None:
+            if self.level1 == None or self.level1.is_finished == True:
                 self.level1 = level.Level(1, self.screen, self.Player, self.clock)
             return self.level1
         elif self.current_state == "defeated":
