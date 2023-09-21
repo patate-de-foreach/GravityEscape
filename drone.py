@@ -5,10 +5,9 @@ from utils import *
 from sprite_animator import *
 from ennemi import *
 
-class Drone(Ennemi, pygame.sprite.Sprite):
+class Drone(Ennemi):
     def __init__(self, x, y, fenetre, clock):
-        Ennemi.__init__(self, x, y, fenetre, clock)
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__(self, x, y, fenetre, clock)
         
         self.anim = {
             "death":"assets/graphics/entities/enemies/drones/1/Death.png",
