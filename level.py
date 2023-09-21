@@ -1,4 +1,6 @@
 import json
+import time
+
 import pygame
 from hud import Hud
 from audio_manager import AudioManager
@@ -15,6 +17,8 @@ class Level(game_state.Game_State):
         self.player = player
         self.clock = clock
         self.death_timer = 0
+        self.start_run = time.perf_counter()
+        self.end_run = 0.0
         # Récupère les infos du level depuis un fichier Json
         self.get_level_config("level_config.json")
         self.level_graphic_resource = pygame.image.load(
@@ -74,6 +78,9 @@ class Level(game_state.Game_State):
 
     def check_life(self):
         if self.player.is_dead:
+            if self.end_run == 0.0:
+                self.end_run = time.perf_counter()
+                print(self.end_run - self.start_run)
             if self.death_timer < 100:
                 self.death_timer += 1
             else:
@@ -81,7 +88,8 @@ class Level(game_state.Game_State):
                     "assets/graphics/background/defeated_screen.jpg"
                 )
                 self.screen.blit(image, (0, 0))
-                # play game over music
+                Hud(self.screen, self.player).dysplay_end_score(self.start_run, self.end_run)
         else:
+            Hud(self.screen, self.player).dysplay_live_score(self.start_run)
             self.enemy_factory.draw_enemies()
             Hud(self.screen, self.player).dysplay_life_bar()

@@ -130,7 +130,6 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.check_hp()
-        print(self.anim_state)
         # Convertit les touches appuyées par le joueur en actions
         self.is_walking = False
         self.velocity += self.acceleration
