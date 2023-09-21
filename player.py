@@ -74,7 +74,6 @@ class Player(pygame.sprite.Sprite):
         # Convertit les touches appuyées par le joueur en actions
         self.velocity += self.acceleration
         self.position += self.velocity
-        # print(self.player_rect.x,self.position.x)
         self.player_rect.x = self.position.x
         self.player_rect.y = self.position.y
         self.acceleration = pygame.Vector2(0, 0)
@@ -93,7 +92,6 @@ class Player(pygame.sprite.Sprite):
                     if gravity_direction:
                         self.set_gravity(gravity_direction)
                 except Exception as error:
-                    print("An exception occurred:", error)
                     pass
             else:
                 try:

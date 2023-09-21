@@ -46,14 +46,6 @@ class Player_Controls:
             return return_keys
         elif self.controller_type == "MANETTE" and self.joystick != None:
             return_buttons = []
-            
-
-            
-            for i in range(11):
-                if self.joystick.get_button(i):
-                    print("bouton",i,"actif")
-
-            print(self.joystick.get_axis(4))
 
             if self.joystick.get_axis(0)>self.joystick_dead_zone:
                 return_buttons.append("right")

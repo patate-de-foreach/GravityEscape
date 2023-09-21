@@ -61,7 +61,8 @@ class EnemyFactory:
 
             # Vérifiez s'il y a une collision entre l'ennemi et la cible
             if enemy.get_hitbox().colliderect(self.target.player_rect):
-                print("Collision avec la cible !")
+                self.target.health -= 1
+
 
         self.detect_enemy_collisions()
     

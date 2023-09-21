@@ -62,12 +62,15 @@ class Level(game_state.Game_State):
         self.map_manager.draw_map(self.screen)
         self.player.update()
         self.player.show()
-        Hud(self.screen, self.player).dysplay_life_bar()
-
         self.enemy_factory.create_enemy()  # Crée un ennemi à chaque frame
 
         self.enemy_factory.update_enemies()
-        self.enemy_factory.draw_enemies()
+        if self.player.health > 0:
+            self.enemy_factory.draw_enemies()
+            Hud(self.screen, self.player).dysplay_life_bar()
+        else:
+            image = pygame.image.load('assets/graphics/background/defeated_screen.jpg')
+            self.screen.blit(image, (0, 0))
 
         if self.enemy_factory.state == "FINISH":
             # OUVRIR LES PORTES
