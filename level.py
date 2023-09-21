@@ -93,7 +93,8 @@ class Level(game_state.Game_State):
             if self.death_timer < 100:
                 self.death_timer += 1
             else:
-               print("ici")
+               
+               Hud(self.screen, self.player).dysplay_end_score(str(self.end_run - self.start_run))
                self.save_score("score.txt",str(self.end_run - self.start_run))
                self.menu_dead()
         else:

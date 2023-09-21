@@ -26,7 +26,7 @@ class Defeated(game_state.Game_State):
 
     def update(self):
         self.screen.blit(self.BackGround, (0,0))
-
+        self.display_end_score(self.get_last_line("score.txt"))
         mouse_pos = pygame.mouse.get_pos()
 
         self.replay = Button(
@@ -64,3 +64,31 @@ class Defeated(game_state.Game_State):
         if self.home.checkinput(mouse_pos):
             self.redirect = "main_menu"
             self.is_finished = True
+        
+    def get_last_line(self,filename):
+        try:
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                if lines:
+                    last_line = lines[-1].strip()  # Supprime les espaces et les sauts de ligne
+                    return last_line
+                else:
+                    return None  # Le fichier est vide
+        except IOError as e:
+            print(f"Erreur lors de la lecture du fichier : {e}")
+            return None  # Une erreur s'est produite lors de la lecture du fichier
+
+    def display_end_score(self,score):
+        self.police = pygame.font.Font("assets/font/BrokenRobot.ttf", 40)
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = pygame.display.get_surface().get_size()
+        
+        text_dysplay = "Votre score :"
+        text_dysplay_surface = self.police.render(text_dysplay, True, (255, 255, 255))
+        text_dysplay_rect = text_dysplay_surface.get_rect(
+            center=(self.SCREEN_WIDTH // 2, (self.SCREEN_HEIGHT // 2) - 250))
+        self.screen.blit(text_dysplay_surface, text_dysplay_rect)
+
+        text_score = str(score)
+        text_score_surface = self.police.render(text_score[0:len(text_score) - 11], True, (255, 255, 255))
+        text_score_rect = text_score_surface.get_rect(center=(self.SCREEN_WIDTH // 2, (self.SCREEN_HEIGHT // 2) - 200))
+        self.screen.blit(text_score_surface, text_score_rect)
