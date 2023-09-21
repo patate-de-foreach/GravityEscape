@@ -1,9 +1,11 @@
 import pygame
-import game
+# import loading
+import start
 
 pygame.init()
 screen = pygame.display.set_mode((1024, 768))
-
-
-gravity_escape = game.Game(screen)
-gravity_escape.run()
+# loading page du jeu
+# loading_page = loading.Loading(screen)
+# loading_page.starting()
+startgame = start.Start(screen)
+startgame.Start_page()

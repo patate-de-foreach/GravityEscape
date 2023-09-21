@@ -16,9 +16,9 @@ class Mainmenu():
 
         # etat du jeu ( en pause ou non)
         self.game_paused = False
-        # etat du menu : main ou settings
+        #etat du menu : main ou settings 
         self.menu_state = "main"
-        # etat du son ( activé / desactivé)
+        #etat du son ( activer / desactiver)
         self.sound_state = True
 
         self.mouse_pos = pygame.mouse.get_pos()
@@ -54,7 +54,8 @@ class Mainmenu():
         # setting_img = pygame.image.load("assets/graphics/menubuttons/settings.png").convert_alpha()
         # self.settings_button = buttons.Button(self.screen_width/2-150, self.screen_height/2+50, setting_img, 6)
 
-    # Affichage du menu settings
+        
+    #Affichage du menu settings
     def draw_settings(self):
         state_sound = True
 
@@ -106,33 +107,20 @@ class Mainmenu():
         pass
 
 
-        # image + boutton Son -OFF
-        nosound_img = pygame.image.load(
-            "assets/graphics/menubuttons/nosound.png"
-        ).convert_alpha()
-        self.nosound_button = buttons.Button(
-            self.screen_width / 2 - 60, self.screen_height / 3 + 10, nosound_img, 6
-        )
 
-        # image + boutton RETOUR
-        back_img = pygame.image.load(
-            "assets/graphics/menubuttons/goback.png"
-        ).convert_alpha()
-        self.back_button = buttons.Button(
-            self.screen_width / 2 - 450, self.screen_height / 3 - 150, back_img, 5
-        )
 
     # def draw_text(text, font, text_col, x, y, screen):
     #     img = font.render(text, True, text_col)
     #     screen.blit(img, (x,y))
 
-    # Actualisation des etats du menu
+    
+    #Actualisation des etats du menu
     def update_menu(self):
-        # si le jeu est en pause : dessiner le menu principal (main)
+        #si le jeu est en pause : dessiner le menu principal (main)
         if self.game_paused == False:
             self.draw_pause_menu()
 
-            # si letat du menu est main, dessiner les boutons respectifs
+            # si letat du menu est main dessiner les boutons respectifs
             if self.menu_state == "main":
                 if self.resume_button.draw(self.screen):
                     self.game_paused = False
@@ -140,8 +128,8 @@ class Mainmenu():
                     pass
                 if self.settings_button.draw(self.screen):
                     self.menu_state = "settings"
-
-            # sinon l'etat settings et donc, dessiner les boutons respectifs
+            
+            # sinon letat settings et donc dessiner les boutons respectifs
             if self.menu_state == "settings":
                 self.draw_settings()
                 if self.sound_state == True:
@@ -150,6 +138,7 @@ class Mainmenu():
                 else:
                     if self.nosound_button.draw(self.screen):
                         self.sound_state = True
-
+                
                 if self.back_button.draw(self.screen):
                     self.menu_state = "main"
+    

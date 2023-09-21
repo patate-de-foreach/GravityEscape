@@ -36,7 +36,7 @@ class EnemyFactory:
             elif side == 'right':
                 x = self.screen.get_width()
                 y = random.randint(0, self.screen.get_height())
-            enemy = Drone(x, y, self.screen, self.clock)
+            enemy = Drone(x, y, self.screen, clock)
             self.enemies.append(enemy)
             self.max_enemies -= 1
 
@@ -60,7 +60,7 @@ class EnemyFactory:
                 self.enemies.remove(enemy)
 
             # Vérifiez s'il y a une collision entre l'ennemi et la cible
-            if enemy.get_hitbox().colliderect(self.target.player_rect):
+            if enemy.get_hitbox().colliderect(self.target.get_hitbox()):
                 print("Collision avec la cible !")
 
         self.detect_enemy_collisions()

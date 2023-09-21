@@ -24,10 +24,10 @@ class Player_Controls:
                 'up' : pygame.K_z,
                 'down' : pygame.K_s,
                 'jump' : pygame.K_SPACE,
-                'gravity_down' : pygame.K_DOWN,
-                'gravity_right' : pygame.K_RIGHT,
-                'gravity_up' : pygame.K_UP,
-                'gravity_left' : pygame.K_LEFT,
+                'gravity_down' : pygame.K_1,
+                'gravity_right' : pygame.K_2,
+                'gravity_up' : pygame.K_3,
+                'gravity_left' : pygame.K_4,
             }
             
 
