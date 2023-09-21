@@ -20,7 +20,8 @@ class Player(pygame.sprite.Sprite):
         self.original_surface = self.animations['idle'][self.frame_index]
         self.rotated_surface = self.animations['idle'][self.frame_index]
 
-        self.status = 'idle'
+        self.anim_state = 'idle'
+        self.anim_orientation = 'unchanged'
 
         self.player_control = Player_Controls(playerControlType)
         self.action_dictionnary = {
@@ -102,12 +103,16 @@ class Player(pygame.sprite.Sprite):
 
     #fait défiler les frames d'animation (change le contenu de original surface)
     def animate(self):
-        animation = self.animations['walk']
+        animation = self.animations[self.anim_state]
 
         self.frame_index += self.animation_speed
         if self.frame_index >= len(animation):
             self.frame_index = 0
         self.image = self.flipSprite(animation[int(self.frame_index)])
+    
+    def set_anim_state(self, state):
+        self.anim_state = state
+        
 
     def update(self):
         # self.image = self.rotated_surface
@@ -137,11 +142,11 @@ class Player(pygame.sprite.Sprite):
                     pass
             else:
                 try:
-                    function_action = self.action_dictionnary[self.GRAVITY_DIRECTION][
+                    action_function = self.action_dictionnary[self.GRAVITY_DIRECTION][
                         action
                     ]
-                    if function_action:
-                        function_action()
+                    if action_function:
+                        action_function()
                 except:
                     pass
 
@@ -153,15 +158,40 @@ class Player(pygame.sprite.Sprite):
             self.is_attacking = False
         
     def go_up(self):
+        if self.on_floor:
+            self.set_anim_state('walk')
+            if self.GRAVITY_DIRECTION == 'GRAVITY_LEFT':
+                self.anim_orientation = 'flipped'
+            elif self.GRAVITY_DIRECTION == 'GRAVITY_RIGHT':
+                self.anim_orientation = 'unchanged'
         self.apply_force((0, -self.speed))
+        
 
     def go_down(self):
+        if self.on_floor:
+            self.set_anim_state('walk')
+            if self.GRAVITY_DIRECTION == 'GRAVITY_LEFT':
+                self.anim_orientation = 'unchanged'
+            elif self.GRAVITY_DIRECTION == 'GRAVITY_RIGHT':
+                self.anim_orientation = 'flipped'
         self.apply_force((0, self.speed))
 
     def go_left(self):
+        if self.on_floor:
+            self.set_anim_state('walk')
+            if self.GRAVITY_DIRECTION == 'GRAVITY_DOWN':
+                self.anim_orientation = 'flipped'
+            elif self.GRAVITY_DIRECTION == 'GRAVITY_UP':
+                self.anim_orientation = 'unchanged'
         self.apply_force((-self.speed, 0))
 
     def go_right(self):
+        if self.on_floor:
+            self.set_anim_state('walk')
+            if self.GRAVITY_DIRECTION == 'GRAVITY_DOWN':
+                self.anim_orientation = 'unchanged'
+            elif self.GRAVITY_DIRECTION == 'GRAVITY_UP':
+                self.anim_orientation = 'flipped'
         self.apply_force((self.speed, 0))
 
     def trigger_attack(self):
@@ -242,6 +272,8 @@ class Player(pygame.sprite.Sprite):
         AudioManager().player_sounds["gravity"].play()
 
     def flipSprite(self, sprite):
+        if self.anim_orientation == 'flipped':
+            sprite = pygame.transform.flip(sprite, flip_x=True, flip_y=False)
         if self.GRAVITY_DIRECTION == "GRAVITY_DOWN":
             self.player_rect = sprite.get_rect(
                 midbottom=(self.position.x, self.position.y)
