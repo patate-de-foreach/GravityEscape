@@ -43,10 +43,10 @@ class EnemyFactory:
 
             # Mettre à jour le temps du dernier spawn et le délai de spawn
             self.last_spawn_time = current_time
-            self.minRespawnTime = int(self.minRespawnTime * 0.95)
-            self.maxRespawnTime = int(self.maxRespawnTime * 0.95)
+            self.minRespawnTime = int(self.minRespawnTime * 0.9)
+            self.maxRespawnTime = int(self.maxRespawnTime * 0.9)
             self.spawn_delay = random.randint(self.minRespawnTime, self.maxRespawnTime)
-            print(self.minRespawnTime, self.maxRespawnTime)
+            print(enemy.max_speed)
 
     def update_enemies(self):
         if len(self.enemies) <= 0 and self.max_enemies:

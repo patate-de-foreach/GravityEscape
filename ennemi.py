@@ -39,7 +39,7 @@ class Ennemi:
     def draw_life_bar(self, pos_x, pos_y):
         grey_bar = pygame.draw.rect(self.screen, 'grey', (pos_x, pos_y, 50, 8))
         # Dessiner la barre de vie actuelle (rectangle vert)
-        pygame.draw.rect(self.screen, 'green', (pos_x, pos_y, (grey_bar.width * self.current_health)/self.health, 8))
+        pygame.draw.rect(self.screen, (58,138,24), (pos_x, pos_y, (grey_bar.width * self.current_health)/self.health, 8))
 
     def get_hitbox(self):
         return pygame.Rect(self.position.x, self.position.y, self.hit_box_radius, self.hit_box_radius)
