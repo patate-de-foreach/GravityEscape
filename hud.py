@@ -21,14 +21,14 @@ class Hud:
             bottomleft=((self.SCREEN_WIDTH // 2) - 440, (self.SCREEN_HEIGHT // 2) + 370))
         self.screen.blit(text_live_score_surface, text_live_score_rect)
 
-    def dysplay_end_score(self, start_run, end_run):
+    def dysplay_end_score(self, score):
         text_dysplay = "Votre score :"
         text_dysplay_surface = self.police.render(text_dysplay, True, (255, 255, 255))
         text_dysplay_rect = text_dysplay_surface.get_rect(
             center=(self.SCREEN_WIDTH // 2, (self.SCREEN_HEIGHT // 2) - 250))
         self.screen.blit(text_dysplay_surface, text_dysplay_rect)
 
-        text_score = str(end_run - start_run)
+        text_score = str(score)
         text_score_surface = self.police.render(text_score[0:len(text_score) - 11], True, (255, 255, 255))
         text_score_rect = text_score_surface.get_rect(center=(self.SCREEN_WIDTH // 2, (self.SCREEN_HEIGHT // 2) - 200))
         self.screen.blit(text_score_surface, text_score_rect)
