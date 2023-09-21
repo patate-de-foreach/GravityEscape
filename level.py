@@ -67,8 +67,6 @@ class Level(game_state.Game_State):
 
         self.enemy_factory.update_enemies()
         self.check_life()
-        print(self.player.is_dead)
-        print(self.death_timer)
 
         if self.enemy_factory.state == "FINISH":
             # OUVRIR LES PORTES
@@ -76,7 +74,7 @@ class Level(game_state.Game_State):
 
     def check_life(self):
         if self.player.is_dead:
-            if self.death_timer < 80:
+            if self.death_timer < 100:
                 self.death_timer += 1
             else:
                 image = pygame.image.load(
