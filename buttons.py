@@ -16,6 +16,10 @@ class Button():
         self.rect = self.image.get_rect(center=(self.x, self.y))
         self.txt_rect = self.txt.get_rect(center=(self.x, self.y))
 
+    #récupere la font choisi et l'applique au txt demandé
+    def get_font(self,size):
+        return pygame.font.Font("assets/font/BrokenRobot.ttf", size)
+    
     def update(self, screen):
         if self.image is not None:
             screen.blit(self.image, self.rect)

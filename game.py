@@ -20,6 +20,7 @@ class Game:
         self.set_state("main_menu")
 
     def eventHandler(self):
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
