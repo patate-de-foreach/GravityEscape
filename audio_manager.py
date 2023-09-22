@@ -10,7 +10,13 @@ class AudioManager:
 
     def init_player_sfx(self):
         self.gravity = mixer.Sound("assets/audio/sfx/gravity.mp3")
-        self.player_sounds = {"gravity": self.gravity}
+        self.attack = mixer.Sound("assets/audio/sfx/attack_sound.mp3")
+        self.hurt = mixer.Sound("assets/audio/sfx/hurt_sound.mp3")
+        self.player_sounds = {
+            "gravity": self.gravity,
+            "attack": self.attack,
+            "hurt": self.hurt,
+        }
         for player_sound in self.player_sounds.values():
             player_sound.set_volume(self.sfx_level)
 
