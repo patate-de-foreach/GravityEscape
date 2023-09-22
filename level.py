@@ -19,8 +19,7 @@ class Level(game_state.Game_State):
         self.num_lvl = num_lvl
         screen_width, screen_height = self.screen.get_size()
         self.clock = clock
-        self.player = Player(screen_width / 2, 100, self.screen, "CLAVIER", self.clock)
-
+        self.player = Player(screen_width / 2, 100, self.screen, self.charger_controller_type(), self.clock)
         self.death_timer = 0
         self.start_run = time.perf_counter()
         self.end_run = 0.0
@@ -117,3 +116,22 @@ class Level(game_state.Game_State):
         except IOError as e:
             print(f"Erreur lors de la sauvegarde du score : {e}")
         
+    def charger_controller_type(self,nom_fichier = "setting.json"):
+        try:
+            # Ouvrir le fichier JSON en lecture
+            with open(nom_fichier, 'r') as fichier_json:
+                # Charger les données JSON depuis le fichier
+                data = json.load(fichier_json)
+
+                # Vérifier si l'option 'controller_type' existe dans les données
+                if 'controller_type' in data:
+                    return data['controller_type']
+                else:
+                    print("L'option 'controller_type' n'a pas été trouvée dans le fichier JSON.")
+                    return None
+        except FileNotFoundError:
+            print(f"Le fichier {nom_fichier} n'a pas été trouvé.")
+            return None
+        except json.JSONDecodeError:
+            print(f"Erreur de décodage JSON dans le fichier {nom_fichier}.")
+        return None

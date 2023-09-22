@@ -46,7 +46,7 @@ class Game:
 
             # Lance la boucle principale de l'état en cours
             self.current_state_object.run()
-            print(self.current_state_object)
+          
             # Vérifie si l'état est terminé
             self.update()
             pygame.display.update()
