@@ -308,12 +308,12 @@ class Player(pygame.sprite.Sprite):
                 self.position.y = 64
 
     def receive_damage(self, damage):
-        self.health -= damage
-        AudioManager().player_sounds["hurt"].play()
         if self.anim_state != "death":
+            self.health -= damage
             self.anim_state = "hurt"
             self.animation_speed = 0.1
             self.frame_index = 0
+            AudioManager().player_sounds["hurt"].play()
 
     def check_hp(self):
         if self.health <= 0 and self.anim_state != "death":

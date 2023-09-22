@@ -19,7 +19,13 @@ class Level(game_state.Game_State):
         self.num_lvl = num_lvl
         screen_width, screen_height = self.screen.get_size()
         self.clock = clock
-        self.player = Player(screen_width / 2, 100, self.screen, self.charger_controller_type(), self.clock)
+        self.player = Player(
+            screen_width / 2,
+            100,
+            self.screen,
+            self.charger_controller_type(),
+            self.clock,
+        )
         self.death_timer = 0
         self.start_run = time.perf_counter()
         self.end_run = 0.0
@@ -92,42 +98,46 @@ class Level(game_state.Game_State):
             if self.death_timer < 100:
                 self.death_timer += 1
             else:
-               
-               Hud(self.screen, self.player).dysplay_end_score(str(self.end_run - self.start_run))
-               self.save_score("score.txt",str(self.end_run - self.start_run))
-               self.menu_dead()
+                Hud(self.screen, self.player).display_end_score(
+                    str(self.end_run - self.start_run)
+                )
+                self.save_score(
+                    "score.txt", str(self.end_run - self.start_run).split(".", 1)[0]
+                )
+                self.menu_dead()
         else:
-            Hud(self.screen, self.player).dysplay_live_score(self.start_run)
+            Hud(self.screen, self.player).display_live_score(self.start_run)
             self.enemy_factory.draw_enemies()
-            Hud(self.screen, self.player).dysplay_life_bar()
+            Hud(self.screen, self.player).display_life_bar()
 
     def menu_dead(self):
-    
         pygame.display.set_caption("GravityEscape - Defeated")
-        
+
         self.redirect = "defeated"
         self.is_finished = True
 
     def save_score(self, filename, score):
         try:
-            with open(filename, 'a') as file:
-                file.write(score+'\n')
+            with open(filename, "a") as file:
+                file.write(score + "\n")
             print(f"Score sauvegardé dans {filename}")
         except IOError as e:
             print(f"Erreur lors de la sauvegarde du score : {e}")
-        
-    def charger_controller_type(self,nom_fichier = "setting.json"):
+
+    def charger_controller_type(self, nom_fichier="setting.json"):
         try:
             # Ouvrir le fichier JSON en lecture
-            with open(nom_fichier, 'r') as fichier_json:
+            with open(nom_fichier, "r") as fichier_json:
                 # Charger les données JSON depuis le fichier
                 data = json.load(fichier_json)
 
                 # Vérifier si l'option 'controller_type' existe dans les données
-                if 'controller_type' in data:
-                    return data['controller_type']
+                if "controller_type" in data:
+                    return data["controller_type"]
                 else:
-                    print("L'option 'controller_type' n'a pas été trouvée dans le fichier JSON.")
+                    print(
+                        "L'option 'controller_type' n'a pas été trouvée dans le fichier JSON."
+                    )
                     return None
         except FileNotFoundError:
             print(f"Le fichier {nom_fichier} n'a pas été trouvé.")

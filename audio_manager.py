@@ -3,7 +3,7 @@ from pygame import mixer
 
 class AudioManager:
     def __init__(self):
-        self.bgm_level = 0.4
+        self.bgm_level = 0.6
         self.sfx_level = 0.8
         self.init_player_sfx()
         self.init_mixer()
