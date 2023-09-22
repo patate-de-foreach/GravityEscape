@@ -229,6 +229,7 @@ class Player(pygame.sprite.Sprite):
             if self.is_attacking == False and self.current_cooldown_attack == 0:
                 self.is_attacking = True
                 self.current_cooldown_attack = self.attack_cooldown
+                AudioManager().player_sounds["attack"].play()
                 self.anim_state = "attack"
                 self.animation_speed = 0.13
                 self.frame_index = 0
@@ -307,11 +308,12 @@ class Player(pygame.sprite.Sprite):
                 self.position.y = 64
 
     def receive_damage(self, damage):
-        self.health -= damage
         if self.anim_state != "death":
+            self.health -= damage
             self.anim_state = "hurt"
             self.animation_speed = 0.1
             self.frame_index = 0
+            AudioManager().player_sounds["hurt"].play()
 
     def check_hp(self):
         if self.health <= 0 and self.anim_state != "death":
@@ -321,7 +323,7 @@ class Player(pygame.sprite.Sprite):
             self.anim_state = "death"
 
     def set_gravity(self, gravity_direction):
-        if self.anim_state != 'death':
+        if self.anim_state != "death":
             self.GRAVITY_DIRECTION = gravity_direction
             AudioManager().player_sounds["gravity"].play()
 

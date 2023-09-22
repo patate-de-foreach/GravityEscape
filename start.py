@@ -19,7 +19,6 @@ class Start(game_state.Game_State):
 
         self.type = True
 
-
         AudioManager().play_bgm("main_menu", introName="main_menu_intro", loop=-1)
 
     # fonction qui apelle le jeu
@@ -45,7 +44,7 @@ class Start(game_state.Game_State):
 
     def Credits(self):
         pygame.display.set_caption("GravityEscape - Crédits")
-
+        AudioManager().play_bgm("credits", loop=-1)
         credit = credits.Credits(self.screen)
         credit.main()
 
@@ -87,16 +86,19 @@ class Start(game_state.Game_State):
             scale=4,
         )
 
-
         if self.type == True:
             self.type_gameplay = Button(
-                image=pygame.image.load("assets/graphics/menubuttons/Bouton_souris.png"),
+                image=pygame.image.load(
+                    "assets/graphics/menubuttons/Bouton_souris.png"
+                ),
                 pos=(512, 575),
                 scale=5,
             )
         else:
             self.type_gameplay = Button(
-                image=pygame.image.load("assets/graphics/menubuttons/Bouton_Manette.png"),
+                image=pygame.image.load(
+                    "assets/graphics/menubuttons/Bouton_Manette.png"
+                ),
                 pos=(512, 575),
                 scale=5,
             )
@@ -114,7 +116,14 @@ class Start(game_state.Game_State):
         )
 
         # detecte les changement si il y a un texte au lieu d'une image
-        for button in [self.play, self.settings, self.exit, self.credits, self.title, self.type_gameplay]:
+        for button in [
+            self.play,
+            self.settings,
+            self.exit,
+            self.credits,
+            self.title,
+            self.type_gameplay,
+        ]:
             button.update(self.screen)
 
         pygame.display.update()
@@ -129,9 +138,9 @@ class Start(game_state.Game_State):
             self.Credits()
         if self.type_gameplay.checkinput(mouse_pos):
             if self.type == True:
-                 self.type = False
+                self.type = False
             else:
-                 self.type = True
+                self.type = True
         if self.title.checkinput(mouse_pos):
             self.easterEgg()
         if self.exit.checkinput(mouse_pos):
@@ -141,14 +150,12 @@ class Start(game_state.Game_State):
     def easterEgg(self):
         pass
 
-    def sauvegarder_controller_type(self,controller_type, nom_fichier = "setting.json"):
+    def sauvegarder_controller_type(self, controller_type, nom_fichier="setting.json"):
         # Créer un dictionnaire contenant l'option 'controller_type'
-        data = {
-            'controller_type': controller_type
-        }
+        data = {"controller_type": controller_type}
 
         # Sauvegarder le dictionnaire dans un fichier JSON
-        with open(nom_fichier, 'w') as fichier_json:
+        with open(nom_fichier, "w") as fichier_json:
             json.dump(data, fichier_json)
 
     # Exemple d'utilisation
